@@ -22,7 +22,7 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
-        registry.enableSimpleBroker("/topic"); //Message broker destination prefix
+        registry.enableSimpleBroker("/topic"); //Server to Client prefix
         registry.setApplicationDestinationPrefixes("/app"); //Client to server destination prefix
     }
 

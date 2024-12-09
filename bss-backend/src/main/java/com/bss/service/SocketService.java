@@ -13,7 +13,7 @@ public class SocketService {
     private final SimpMessagingTemplate simpMessagingTemplate;
 
 
-    public  void  sendMessage(String msg){
+    public void sendMessage(String msg){
         log.info("----- msg sent -----{}",msg);
         simpMessagingTemplate.convertAndSend("/topic/updates",msg);
     }
