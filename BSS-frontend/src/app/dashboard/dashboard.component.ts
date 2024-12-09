@@ -42,7 +42,7 @@ export class DashboardComponent implements OnInit{
   constructor(
     private webSocketService: WebsocketService,
     private apiService: ApiService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
@@ -56,14 +56,21 @@ export class DashboardComponent implements OnInit{
 
     //subscribe to the IR sensor topic
     this.webSocketService
-    .subscribeToTopic<boolean>('/topic/ir-sensor')
-    .subscribe((message: boolean) => {
+    .subscribeToTopic<string>('/topic/ir-sensor')
+    .subscribe((message: string) => {
       console.log('Received message IR:', message);
-      this.irData = message;
+      console.log('Type of message:', typeof message);
+      if(message === 'true'){
+        this.irData = true;
+      }else{
+        this.irData = false;
+      }
     });
 
 
-
+    this.swapInterval = setInterval(() => {
+      this.toggleSwapState();  
+    }, 3000);
   }
 
   getUserDetails(rfId: string) {
@@ -80,11 +87,6 @@ export class DashboardComponent implements OnInit{
   isSwapping = false;  
   swapInterval: any;
 
-  ngOnInit(): void {
-    this.swapInterval = setInterval(() => {
-      this.toggleSwapState();  
-    }, 3000);
-  }
 
   toggleSwapState() {
     this.isSwapping = !this.isSwapping; 
