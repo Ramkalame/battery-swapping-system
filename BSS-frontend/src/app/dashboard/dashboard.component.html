@@ -39,8 +39,10 @@
                 <div class="battery-box-p">
                     <div class="battery-box-heading"><p>बैटरी-5</p></div>
                     <div class="battery-box">
-                        <img src="./assets/charges-battery.png" alt="charges-battery.png">
-                    </div>
+                        <img [@batterySwapAnimation]="isSwapping ? 'open' : 'closed'" 
+                        src="./assets/{{isSwapping ? 'open-door1.jpeg' : 'charges-battery.png'}}" 
+                        alt="battery-image">
+                                        </div>
                 </div>
                 <div class="battery-box-p">
                     <div class="battery-box-heading"><p>बैटरी-6</p></div>
