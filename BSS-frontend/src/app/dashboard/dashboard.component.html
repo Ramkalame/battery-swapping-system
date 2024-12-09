@@ -13,39 +13,53 @@
             </div>
             <div class="batteries-box">
                 <div class="battery-box-p">
-                    <div class="battery-box-heading"><p>बैटरी-1</p></div>
+                    <div class="battery-box-heading">
+                        <p>बैटरी-1</p>
+                    </div>
+                    <div class="battery-box">
+                        <img src="./assets/dead-battery.png" alt="dead-battery" *ngIf="irData">
+                        <img src="./assets/charges-battery.png" alt="charges-battery" *ngIf="!irData">
+                    </div>
+                </div>
+                <div class="battery-box-p">
+                    <div class="battery-box-heading">
+                        <p>बैटरी-2</p>
+                    </div>
                     <div class="battery-box">
                         <img src="./assets/charges-battery.png" alt="charges-battery.png">
                     </div>
                 </div>
                 <div class="battery-box-p">
-                    <div class="battery-box-heading"><p>बैटरी-2</p></div>
+                    <div class="battery-box-heading">
+                        <p>बैटरी-3</p>
+                    </div>
                     <div class="battery-box">
                         <img src="./assets/charges-battery.png" alt="charges-battery.png">
                     </div>
                 </div>
                 <div class="battery-box-p">
-                    <div class="battery-box-heading"><p>बैटरी-3</p></div>
-                    <div class="battery-box">
-                        <img src="./assets/charges-battery.png" alt="charges-battery.png">
+                    <div class="battery-box-heading">
+                        <p>बैटरी-4</p>
                     </div>
-                </div>
-                <div class="battery-box-p">
-                    <div class="battery-box-heading"><p>बैटरी-4</p></div>
                     <div class="battery-box">
                         <img src="./assets/dead-battery.png" alt="charges-battery.png">
                     </div>
                 </div>
                 <div class="battery-box-p">
-                    <div class="battery-box-heading"><p>बैटरी-5</p></div>
+                    <div class="battery-box-heading">
+                        <p>बैटरी-5</p>
+                    </div>
                     <div class="battery-box">
                         <img [@batterySwapAnimation]="isSwapping ? 'open' : 'closed'" 
                         src="./assets/{{isSwapping ? 'drawer.png' : 'charges-battery.png'}}" 
                         alt="battery-image">
+
                     </div>
                 </div>
                 <div class="battery-box-p">
-                    <div class="battery-box-heading"><p>बैटरी-6</p></div>
+                    <div class="battery-box-heading">
+                        <p>बैटरी-6</p>
+                    </div>
                     <div class="battery-box">
                         <img src="./assets/dead-battery.png" alt="charges-battery.png">
                     </div>
@@ -71,9 +85,9 @@
                             <p>बिना चार्ज</p>
                         </div>
                     </div>
+                </div>
             </div>
-            </div>
-            
+
         </div>
         <div class="client-details">
             <div class="client-details-heading">
@@ -90,6 +104,7 @@
                 <p>नाम: <span>{{selectedUser.userName}}</span> </p>
                 <p>इंजन संख्या: <span>{{selectedUser.engineNumber}}</span> </p>
                 <p>मोबाइल नंबर: <span>{{selectedUser.mobileNumber}}</span> </p>
+
             </div>
         </div>
     </div>
