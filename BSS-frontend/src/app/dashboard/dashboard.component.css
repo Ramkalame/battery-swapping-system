@@ -3,6 +3,17 @@
     width: 100vw;
     height: 700px;
 }
+/* ======================== header======================= */
+.header{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100px;
+}
+.instruction p{
+    font-size: 40px;
+    margin-left: 20px;
+}
 .image-banner{
     width: 300px;
     height: 100px;
@@ -11,13 +22,14 @@
     width: 100%;
     height: 100%;
 }
+/* ================================= hero section========================= */
 .hero-sec{
     display: flex;
 
 }
 .available-batteries{
     width: 910px;
-    height: 700px;
+    height: 800px;
     background-color: #250EA8;
     display: flex;
     flex-direction: column;
@@ -54,17 +66,22 @@
     color: white;
 }
 .battery-box{
-    height: 150px;
+    height: 180px;
     width: 200px;
-    background-color: white;
+    background-color: #fff;
     border-radius: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
+.batteries-box img{
+    z-index: 1;
+    height: 150px;
+    width: 100px;
+}
 /* ============================================ cleint details -========================================== */
 .client-details-heading{
-    height: 50px;
+    height: 100px;
     color: white;
     display: flex;
     justify-content: center;
@@ -75,17 +92,18 @@
 }
 .client-details{
     background-color: #6148EF;
-    height: 700px;
+    height: 800px;
     width: 460px;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: flex-start;
     align-items: center;
 }
 .client-profile-img-box{
     border-radius: 50%;
     width: 170px;
     height: 170px;
+    margin-bottom: 50px;
 }
 .client-profile-img{
     display: flex;
@@ -102,6 +120,9 @@
     padding-left: 30px;
     color: white;
     font-weight: bold;
+}
+.about-client p{
+    margin-bottom: 20px;
 }
 /* ================================== indicator ========================= */
 .status-indicators{
@@ -130,6 +151,19 @@
     background-color: white;
     border-radius: 50%;
     margin-right: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.indicator-icon img{
+    width: 40px;
+    height: 40px;
+}
+.indicator-text{
+    color: white;
+}
+.ibattery{
+    object-fit: contain;
 }
 
 
