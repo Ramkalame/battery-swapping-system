@@ -34,15 +34,34 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+<<<<<<< HEAD
 
 		<!-- https://mvnrepository.com/artifact/com.fazecast/jSerialComm -->
+=======
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-websocket</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-messaging</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+		</dependency>
+>>>>>>> 25a8388b5088bf51bb7d6dcf4ce9ab740aeed320
 		<dependency>
 			<groupId>com.fazecast</groupId>
 			<artifactId>jSerialComm</artifactId>
 			<version>2.10.4</version>
 		</dependency>
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 25a8388b5088bf51bb7d6dcf4ce9ab740aeed320
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
