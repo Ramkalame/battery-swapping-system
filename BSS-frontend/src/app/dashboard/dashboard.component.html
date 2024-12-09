@@ -83,11 +83,11 @@
                     <img src="./assets/user.png" alt="user" class="user-profile">
                 </div>
             </div>
-            <div class="about-client">
-                <p>ग्राहक आईडी:</p>
-                <p>नाम:</p>
-                <p>पता:</p>
-                <p>मोबाइल नंबर:</p>
+            <div class="about-client" *ngIf="selectedUser">
+                <p>ग्राहक आईडी:{{selectedUser.userId}}</p>
+                <p>नाम:{{selectedUser.userName}}</p>
+                <p>इंजन संख्या:{{selectedUser.engineNumber}}</p>
+                <p>मोबाइल नंबर:{{selectedUser.mobileNumber}}</p>
             </div>
         </div>
     </div>

@@ -18,7 +18,7 @@ public class UsbListenerService {
     @PostConstruct
     public void init() {
 
-        serialPort = SerialPort.getCommPort("COM4");
+        serialPort = SerialPort.getCommPort("COM5");
         serialPort.setComPortParameters(9600, 8, 1, 0);
         serialPort.setComPortTimeouts(SerialPort.TIMEOUT_READ_BLOCKING, 1000, 0); // Reduced timeout to 1 second
 
@@ -40,7 +40,8 @@ public class UsbListenerService {
                             continue; // Retry if no data or empty data
                         }
 
-                        socketService.sendMessage(formatToPlanString(asciiToString(logRawData(buffer,numRead))));
+                        socketService.sendIrMessage(formatToPlaneStringOfIr(asciiToHex(logRawData(buffer,numRead))));
+                        //socketService.sendRfidMessage(formatToPlaneString(asciiToHex(logRawData(buffer,numRead))));
 
                     }
                 } catch (Exception e) {
@@ -74,7 +75,7 @@ public class UsbListenerService {
         }
     }
 
-    // Log raw data exactly as it appears (e.g., "0, 13 CF 38 DA")
+    // Log raw data
     private String logRawData(byte[] buffer, int length) {
         StringBuilder rawData = new StringBuilder();
         for (int i = 0; i < length; i++) {
@@ -88,7 +89,7 @@ public class UsbListenerService {
     }
 
 
-    private String asciiToString(String asciiCodes) {
+    private String asciiToHex(String asciiCodes) {
         // Split the input string by commas to get individual ASCII codes
         String[] codes = asciiCodes.split(",\\s*");
         StringBuilder result = new StringBuilder();
@@ -105,7 +106,7 @@ public class UsbListenerService {
         return result.toString();
     }
 
-    private String formatToPlanString(String asciiCodes) {
+    private String formatToPlaneString(String asciiCodes) {
         // Split the input string by commas to get individual ASCII codes
         String[] codes = asciiCodes.split("[,\\s]+");
         StringBuilder result = new StringBuilder();
@@ -114,7 +115,21 @@ public class UsbListenerService {
             // Just append the code directly (no conversion needed)
             result.append(code.trim());
         }
-        return result.toString();
+        return result.substring(1,9);
+    }
+
+    private boolean formatToPlaneStringOfIr(String asciiCodes) {
+        // Split the input string by commas to get individual ASCII codes
+        String[] codes = asciiCodes.split("[,\\s]+");
+        StringBuilder result = new StringBuilder();
+        // Loop through the codes and append each code to the result
+        for (String code : codes) {
+            // Just append the code directly (no conversion needed)
+            result.append(code.trim());
+        }
+        String resultValue = result.substring(0,1);
+        return Boolean.parseBoolean(resultValue);
+
     }
 
 }

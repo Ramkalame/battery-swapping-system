@@ -16,7 +16,7 @@ public class SocketController {
 
     @PostMapping("/{msg}")
     public void sendMsg(@PathVariable("msg") String msg){
-        socketService.sendMessage(msg);
+        socketService.sendRfidMessage(msg);
     }
 
 

@@ -13,9 +13,14 @@ public class SocketService {
     private final SimpMessagingTemplate simpMessagingTemplate;
 
 
-    public void sendMessage(String msg){
-        log.info("----- msg sent -----{}",msg);
-        simpMessagingTemplate.convertAndSend("/topic/updates",msg);
+    public void sendRfidMessage(String msg){
+        log.info("-----RF msg sent -----{}",msg);
+        simpMessagingTemplate.convertAndSend("/topic/rf-id",msg);
+    }
+
+    public void sendIrMessage(boolean msg){
+        log.info("-----IR msg sent -----{}",msg);
+        simpMessagingTemplate.convertAndSend("/topic/ir-sensor",msg);
     }
 
 
