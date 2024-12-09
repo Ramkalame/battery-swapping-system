@@ -10,4 +10,5 @@ public class BssBackendApplication {
 		SpringApplication.run(BssBackendApplication.class, args);
 	}
 
+
 }
