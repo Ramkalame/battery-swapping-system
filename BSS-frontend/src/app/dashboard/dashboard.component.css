@@ -1,7 +1,8 @@
 .container{
-    background-color: #fff;
+    background-color: #3F62F0;
     width: 100vw;
-    height: 100vh;
+    height: 1020px;
+
 }
 /* ======================== header======================= */
 .header{
@@ -9,6 +10,9 @@
     justify-content: flex-start;
     align-items: center;
     height: 100px;
+    background-color: #8AA1FD;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3); 
+    border-radius: 8px;
 }
 .instruction{
     display: flex;
@@ -36,7 +40,6 @@
 .available-batteries{
     width: 910px;
     height: 800px;
-    background-color: #250EA8;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -60,8 +63,8 @@
     flex-wrap: wrap;
     justify-content: space-around;
     align-items: center;
+    background-color: #8AA1FD;
     padding: 10px;
-    background-color: #6148EF;
     margin-top: 50px;
     
 }
@@ -81,7 +84,6 @@
     align-items: center;
 }
 .batteries-box img{
-    z-index: 1;
     height: 150px;
     width: 100px;
 }
@@ -97,13 +99,14 @@
     font-size: 20px;
 }
 .client-details{
-    background-color: #6148EF;
+    background-color: #8AA1FD;
     height: 800px;
     width: 460px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    margin-top: 1px;
 }
 .client-profile-img-box{
     border-radius: 50%;
