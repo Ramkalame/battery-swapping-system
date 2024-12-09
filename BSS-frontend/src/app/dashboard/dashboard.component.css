@@ -1,7 +1,7 @@
 .container{
     background-color: #fff;
     width: 100vw;
-    height: 700px;
+    height: 100vh;
 }
 /* ======================== header======================= */
 .header{
@@ -9,6 +9,12 @@
     justify-content: flex-start;
     align-items: center;
     height: 100px;
+}
+.instruction{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
 }
 .instruction p{
     font-size: 40px;
