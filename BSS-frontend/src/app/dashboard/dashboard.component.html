@@ -40,9 +40,9 @@
                     <div class="battery-box-heading"><p>बैटरी-5</p></div>
                     <div class="battery-box">
                         <img [@batterySwapAnimation]="isSwapping ? 'open' : 'closed'" 
-                        src="./assets/{{isSwapping ? 'open-door1.jpeg' : 'charges-battery.png'}}" 
+                        src="./assets/{{isSwapping ? 'drawer.png' : 'charges-battery.png'}}" 
                         alt="battery-image">
-                                        </div>
+                    </div>
                 </div>
                 <div class="battery-box-p">
                     <div class="battery-box-heading"><p>बैटरी-6</p></div>
@@ -86,10 +86,10 @@
                 </div>
             </div>
             <div class="about-client" *ngIf="selectedUser">
-                <p>ग्राहक आईडी:{{selectedUser.userId}}</p>
-                <p>नाम:{{selectedUser.userName}}</p>
-                <p>इंजन संख्या:{{selectedUser.engineNumber}}</p>
-                <p>मोबाइल नंबर:{{selectedUser.mobileNumber}}</p>
+                <p>ग्राहक आईडी: <span>{{selectedUser.userId}}</span></p>
+                <p>नाम: <span>{{selectedUser.userName}}</span> </p>
+                <p>इंजन संख्या: <span>{{selectedUser.engineNumber}}</span> </p>
+                <p>मोबाइल नंबर: <span>{{selectedUser.mobileNumber}}</span> </p>
             </div>
         </div>
     </div>

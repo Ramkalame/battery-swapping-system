@@ -9,7 +9,8 @@ export const routes: Routes = [
         component:HomeComponent
     },
     {
-        path:"dashboard/:rfId",
+        // path:"dashboard/:rfId",
+        path:"dashboard",
         component:DashboardComponent
     },
     {

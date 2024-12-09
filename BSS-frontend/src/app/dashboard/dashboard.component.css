@@ -105,20 +105,27 @@
     justify-content: flex-start;
     align-items: center;
 }
-.client-profile-img-box{
-    border-radius: 50%;
-    width: 170px;
-    height: 170px;
-    margin-bottom: 50px;
-}
 .client-profile-img{
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-bottom: 50px;
 }
+.client-profile-img-box{
+    border-radius: 50%;
+    width: 180px;
+    height: 180px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #D9DCE1;
+}
+
+
 .user-profile{
-    width: 170px;
-    height: 170px;
+    width: 150px;
+    height: 150px;
     border-radius: 50%;
 }
 .about-client{

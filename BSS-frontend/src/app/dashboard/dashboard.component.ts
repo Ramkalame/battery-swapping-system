@@ -39,6 +39,10 @@ export class DashboardComponent implements OnInit{
   rfId!: string;
   irData!: boolean;
 
+  
+  isSwapping = false;  
+  swapInterval: any;
+
   constructor(
     private webSocketService: WebsocketService,
     private apiService: ApiService,
@@ -75,16 +79,13 @@ export class DashboardComponent implements OnInit{
         console.log('Something Went Wrong');
       },
     });
-  }
 
-  isSwapping = false;  
-  swapInterval: any;
-
-  ngOnInit(): void {
     this.swapInterval = setInterval(() => {
       this.toggleSwapState();  
     }, 3000);
   }
+
+
 
   toggleSwapState() {
     this.isSwapping = !this.isSwapping; 
