@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class UsbListenerService {
+public class UsbListenerRFService {
 
     private final SocketService socketService;
     private SerialPort serialPort;
@@ -18,13 +18,13 @@ public class UsbListenerService {
     @PostConstruct
     public void init() {
 
-        serialPort = SerialPort.getCommPort("COM5");
+        serialPort = SerialPort.getCommPort("COM4");
         serialPort.setComPortParameters(9600, 8, 1, 0);
         serialPort.setComPortTimeouts(SerialPort.TIMEOUT_READ_BLOCKING, 1000, 0); // Reduced timeout to 1 second
 
         logAvailablePorts();
         if (serialPort.openPort()) {
-            log.info("Serial port opened successfully!");
+            log.info("COM4 Serial port opened successfully!");
 
             new Thread(() -> {
                 log.info("Reading thread started.");
@@ -40,8 +40,7 @@ public class UsbListenerService {
                             continue; // Retry if no data or empty data
                         }
 
-                        socketService.sendIrMessage(formatToPlaneStringOfIr(asciiToHex(logRawData(buffer,numRead))));
-                        //socketService.sendRfidMessage(formatToPlaneString(asciiToHex(logRawData(buffer,numRead))));
+                        socketService.sendRfidMessage(formatToPlaneString(asciiToHex(logRawData(buffer,numRead))));
 
                     }
                 } catch (Exception e) {
@@ -51,7 +50,7 @@ public class UsbListenerService {
                 }
             }).start();
         } else {
-            log.error("Failed to open the serial port.");
+            log.error("Failed to open the COM4 serial port.");
         }
     }
 
@@ -116,20 +115,6 @@ public class UsbListenerService {
             result.append(code.trim());
         }
         return result.substring(1,9);
-    }
-
-    private boolean formatToPlaneStringOfIr(String asciiCodes) {
-        // Split the input string by commas to get individual ASCII codes
-        String[] codes = asciiCodes.split("[,\\s]+");
-        StringBuilder result = new StringBuilder();
-        // Loop through the codes and append each code to the result
-        for (String code : codes) {
-            // Just append the code directly (no conversion needed)
-            result.append(code.trim());
-        }
-        String resultValue = result.substring(0,1);
-        return Boolean.parseBoolean(resultValue);
-
     }
 
 }
