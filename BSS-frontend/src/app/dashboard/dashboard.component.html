@@ -39,8 +39,10 @@
                 <div class="battery-box-p">
                     <div class="battery-box-heading"><p>बैटरी-5</p></div>
                     <div class="battery-box">
-                        <img src="./assets/charges-battery.png" alt="charges-battery.png">
-                    </div>
+                        <img [@batterySwapAnimation]="isSwapping ? 'open' : 'closed'" 
+                        src="./assets/{{isSwapping ? 'open-door1.jpeg' : 'charges-battery.png'}}" 
+                        alt="battery-image">
+                                        </div>
                 </div>
                 <div class="battery-box-p">
                     <div class="battery-box-heading"><p>बैटरी-6</p></div>
@@ -83,11 +85,11 @@
                     <img src="./assets/user.png" alt="user" class="user-profile">
                 </div>
             </div>
-            <div class="about-client">
-                <p>ग्राहक आईडी:</p>
-                <p>नाम:</p>
-                <p>पता:</p>
-                <p>मोबाइल नंबर:</p>
+            <div class="about-client" *ngIf="selectedUser">
+                <p>ग्राहक आईडी:{{selectedUser.userId}}</p>
+                <p>नाम:{{selectedUser.userName}}</p>
+                <p>इंजन संख्या:{{selectedUser.engineNumber}}</p>
+                <p>मोबाइल नंबर:{{selectedUser.mobileNumber}}</p>
             </div>
         </div>
     </div>
