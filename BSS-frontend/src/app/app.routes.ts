@@ -10,7 +10,7 @@ export const routes: Routes = [
     },
     {
         // path:"dashboard/:rfId",
-        path:"dashboard",
+        path:"dashboard/:rfId",
         component:DashboardComponent
     },
     {

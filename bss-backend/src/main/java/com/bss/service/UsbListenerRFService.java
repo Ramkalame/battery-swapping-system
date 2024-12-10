@@ -18,13 +18,13 @@ public class UsbListenerRFService {
     @PostConstruct
     public void init() {
 
-        serialPort = SerialPort.getCommPort("COM4");
+        serialPort = SerialPort.getCommPort("COM7");
         serialPort.setComPortParameters(9600, 8, 1, 0);
         serialPort.setComPortTimeouts(SerialPort.TIMEOUT_READ_BLOCKING, 1000, 0); // Reduced timeout to 1 second
 
         logAvailablePorts();
         if (serialPort.openPort()) {
-            log.info("COM4 Serial port opened successfully!");
+            log.info("COM7 Serial port opened successfully!");
 
             new Thread(() -> {
                 log.info("Reading thread started.");
@@ -39,9 +39,13 @@ public class UsbListenerRFService {
                             log.warn("No data or empty data read, retrying...");
                             continue; // Retry if no data or empty data
                         }
-
-                        socketService.sendRfidMessage(formatToPlaneString(asciiToHex(logRawData(buffer,numRead))));
-
+                        String mainMsg = formatToPlaneString(asciiToHex(logRawData(buffer,numRead)));
+                        if (mainMsg.startsWith("RF")){
+                            socketService.sendRfidMessage(mainMsg.substring(2));
+                        }
+                        if (mainMsg.startsWith("SD")){
+                            socketService.sendSolenoidMessage(mainMsg.substring(2));
+                        }
                     }
                 } catch (Exception e) {
                     log.error("Error reading from serial port", e);
@@ -114,7 +118,7 @@ public class UsbListenerRFService {
             // Just append the code directly (no conversion needed)
             result.append(code.trim());
         }
-        return result.substring(1,9);
+        return result.toString();
     }
 
 }
