@@ -1,7 +1,7 @@
 .container{
     background-color: #3F62F0;
     width: 100vw;
-    height: 1020px;
+    height: 100vh;
 
 }
 /* ======================== header======================= */
@@ -9,7 +9,7 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    height: 100px;
+    height: 50px;
     background-color: #8AA1FD;
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3); 
     border-radius: 8px;
@@ -21,12 +21,13 @@
     width: 100vw;
 }
 .instruction p{
-    font-size: 40px;
+    font-size: 30px;
     margin-left: 20px;
+    color: white;
 }
 .image-banner{
-    width: 300px;
-    height: 100px;
+    width: 200px;
+    height: 50px;
 }
 .banner1{
     width: 100%;
@@ -39,7 +40,7 @@
 }
 .available-batteries{
     width: 910px;
-    height: 800px;
+    height: 550px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -55,9 +56,24 @@
 .available-batteries-heading h6{
     font-size: 20px;
 }
+.battery-box-p{
+    height: 180px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    margin-left: 40px;
+}
+
+.battery-indicator-div{
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    width: 100%;
+}
 .batteries-box{
-    width: 730px;
-    height: 500px;
+    width: 600px;
+    height: 400px;
     border-radius: 15px;
     display: flex;
     flex-wrap: wrap;
@@ -65,8 +81,7 @@
     align-items: center;
     background-color: #8AA1FD;
     padding: 10px;
-    margin-top: 50px;
-    
+    margin-top: 25px;  
 }
 .battery-box-heading{
     display: flex;
@@ -74,9 +89,10 @@
     align-items: center;
     color: white;
 }
+
 .battery-box{
-    height: 180px;
-    width: 200px;
+    height: 150px;
+    width: 120px;
     background-color: #fff;
     border-radius: 10px;
     display: flex;
@@ -84,8 +100,8 @@
     align-items: center;
 }
 .batteries-box img{
-    height: 150px;
-    width: 100px;
+    height: 100px;
+    width: 60px;
 }
 /* ============================================ cleint details -========================================== */
 .client-details-heading{
@@ -100,7 +116,7 @@
 }
 .client-details{
     background-color: #8AA1FD;
-    height: 800px;
+    height: 550px;
     width: 460px;
     display: flex;
     flex-direction: column;
@@ -110,8 +126,8 @@
 }
 .client-profile-img-box{
     border-radius: 50%;
-    width: 170px;
-    height: 170px;
+    width: 120px;
+    height: 130px;
     margin-bottom: 50px;
 }
 .client-profile-img{
@@ -119,10 +135,14 @@
     justify-content: center;
     align-items: center;
 }
+.client-profile-img img{
+    width: 100%;
+    height: 100%;
+    background-color: #D9DCE1;
+}
 .user-profile{
-    width: 170px;
-    height: 170px;
-    border-radius: 50%;
+    object-fit: contain;
+    border-radius: 10px;
 }
 .about-client{
     width: 100%;
@@ -131,32 +151,35 @@
     font-weight: bold;
 }
 .about-client p{
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 /* ================================== indicator ========================= */
 .status-indicators{
-    width: 100%;
+    width: 200px;
     display: flex;
     justify-content: flex-start;
-    padding-left: 200px;
     margin-top: 30px;
 }
 .barttery-status-indicator{
-    height: 200px;
+    height: 50px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
 }
+.indicator-heading{
+    width: 100%;
+    color: white;
+    font-size: 20px;
+}
 .indicator-box{
     display: flex;
     justify-content: flex-start;
     width: 200px;
-    margin-bottom: 10px;
 }
 .indicator-icon{
-    height: 60px;
-    width: 60px;
+    height: 40px;
+    width: 40px;
     background-color: white;
     border-radius: 50%;
     margin-right: 10px;
@@ -165,8 +188,8 @@
     align-items: center;
 }
 .indicator-icon img{
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
 }
 .indicator-text{
     color: white;
