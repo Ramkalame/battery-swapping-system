@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class UsbListenerService {
+public class UsbListenerRFService {
 
     private final SocketService socketService;
     private SerialPort serialPort;
@@ -24,7 +24,7 @@ public class UsbListenerService {
 
         logAvailablePorts();
         if (serialPort.openPort()) {
-            log.info("Serial port opened successfully!");
+            log.info("COM4 Serial port opened successfully!");
 
             new Thread(() -> {
                 log.info("Reading thread started.");
@@ -40,7 +40,7 @@ public class UsbListenerService {
                             continue; // Retry if no data or empty data
                         }
 
-                        socketService.sendMessage(formatToPlanString(asciiToString(logRawData(buffer,numRead))));
+                        socketService.sendRfidMessage(formatToPlaneString(asciiToHex(logRawData(buffer,numRead))));
 
                     }
                 } catch (Exception e) {
@@ -50,7 +50,7 @@ public class UsbListenerService {
                 }
             }).start();
         } else {
-            log.error("Failed to open the serial port.");
+            log.error("Failed to open the COM4 serial port.");
         }
     }
 
@@ -74,7 +74,7 @@ public class UsbListenerService {
         }
     }
 
-    // Log raw data exactly as it appears (e.g., "0, 13 CF 38 DA")
+    // Log raw data
     private String logRawData(byte[] buffer, int length) {
         StringBuilder rawData = new StringBuilder();
         for (int i = 0; i < length; i++) {
@@ -88,7 +88,7 @@ public class UsbListenerService {
     }
 
 
-    private String asciiToString(String asciiCodes) {
+    private String asciiToHex(String asciiCodes) {
         // Split the input string by commas to get individual ASCII codes
         String[] codes = asciiCodes.split(",\\s*");
         StringBuilder result = new StringBuilder();
@@ -105,7 +105,7 @@ public class UsbListenerService {
         return result.toString();
     }
 
-    private String formatToPlanString(String asciiCodes) {
+    private String formatToPlaneString(String asciiCodes) {
         // Split the input string by commas to get individual ASCII codes
         String[] codes = asciiCodes.split("[,\\s]+");
         StringBuilder result = new StringBuilder();
@@ -114,7 +114,7 @@ public class UsbListenerService {
             // Just append the code directly (no conversion needed)
             result.append(code.trim());
         }
-        return result.toString();
+        return result.substring(1,9);
     }
 
 }

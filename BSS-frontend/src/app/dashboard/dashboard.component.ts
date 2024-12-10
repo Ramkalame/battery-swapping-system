@@ -1,13 +1,18 @@
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { User } from '../models/User';
+import { ApiService } from '../services/api.service';
+import { WebsocketService } from '../services/websocket.service';
 import { Component, OnInit } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+
 
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [RouterModule, CommonModule],
+
+  imports: [RouterModule,CommonModule],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
   animations: [
@@ -28,15 +33,66 @@ import { Router, RouterModule } from '@angular/router';
 export class DashboardComponent implements OnInit{
   isBatteryInserted: boolean = false; 
   isBatteryCharged: boolean = false;
+  selectedUser!: User;
 
+
+  rfId!: string;
+  irData!: boolean;
+
+  
   isSwapping = false;  
   swapInterval: any;
 
+  constructor(
+    private webSocketService: WebsocketService,
+    private apiService: ApiService,
+    private route: ActivatedRoute,
+  ) {}
+
   ngOnInit(): void {
+
+      // Retrieve the rfId parameter from the route
+    this.route.params.subscribe(params => {
+      this.rfId = params['rfId']; // Access the rfId parameter
+    });
+    this.getUserDetails(this.rfId);
+   
+
+    //subscribe to the IR sensor topic
+    this.webSocketService
+    .subscribeToTopic<string>('/topic/ir-sensor')
+    .subscribe((message: string) => {
+      console.log('Received message IR:', message);
+      console.log('Type of message:', typeof message);
+      if(message === 'true'){
+        this.irData = true;
+      }else{
+        this.irData = false;
+      }
+    });
+
+
+
+  }
+
+  getUserDetails(rfId: string) {
+    this.apiService.getUserById(rfId).subscribe({
+      next: (data: User) => {
+        this.selectedUser = data;
+      },
+      error: (error: any) => {
+        console.log('Something Went Wrong');
+      },
+    });
+
     this.swapInterval = setInterval(() => {
       this.toggleSwapState();  
     }, 3000);
   }
+
+
+
+
 
   toggleSwapState() {
     this.isSwapping = !this.isSwapping; 

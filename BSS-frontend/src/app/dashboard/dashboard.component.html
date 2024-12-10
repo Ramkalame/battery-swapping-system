@@ -76,7 +76,6 @@
                     </div>
                 </div>
             </div>
-            
         </div>
         <div class="client-details">
             <div class="client-details-heading">
@@ -88,11 +87,12 @@
                     <img src="./assets/user.png" alt="user" class="user-profile">
                 </div>
             </div>
-            <div class="about-client">
-                <p>ग्राहक आईडी:</p>
-                <p>नाम:</p>
-                <p>पता:</p>
-                <p>मोबाइल नंबर:</p>
+            <div class="about-client" *ngIf="selectedUser">
+                <p>ग्राहक आईडी: <span>{{selectedUser.userId}}</span></p>
+                <p>नाम: <span>{{selectedUser.userName}}</span> </p>
+                <p>इंजन संख्या: <span>{{selectedUser.engineNumber}}</span> </p>
+                <p>मोबाइल नंबर: <span>{{selectedUser.mobileNumber}}</span> </p>
+
             </div>
         </div>
     </div>

@@ -1,40 +1,68 @@
 import { Injectable } from '@angular/core';
 import { Stomp } from '@stomp/stompjs';
+import { Subject, Observable, BehaviorSubject } from 'rxjs';
 import SockJS from 'sockjs-client';
-import { Subject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class WebsocketService {
-
   private stompClient: any;
-  private messageSubject: Subject<string> = new Subject<string>();
+  private messageSubjects: { [topic: string]: Subject<any> } = {}; // Map of topics to subjects
+  private connectionStatus: BehaviorSubject<boolean> = new BehaviorSubject(false); // Connection status
 
   constructor() {
-    this.connect(); // Connect to the WebSocket server when the service is initialized
+    this.connect(); // Connect to the WebSocket server
   }
 
+  /**
+   * Establishes the WebSocket connection.
+   */
   private connect(): void {
-    // WebSocket URL for the SockJS endpoint
-    const socket = new SockJS('http://localhost:8080/ws');
+    const socket = new SockJS('http://localhost:8080/ws'); // WebSocket endpoint
     this.stompClient = Stomp.over(socket);
 
-    // Connect to the WebSocket server
-    this.stompClient.connect({}, () => {
-      console.log('Connected to WebSocket server.');
-
-      // Subscribe to the /topic/updates channel
-      this.stompClient.subscribe('/topic/updates', (message: any) => {
-        if (message.body) {
-          this.messageSubject.next(message.body); // Pass the message to the subject
-        }
-      });
-    });
+    this.stompClient.connect(
+      {},
+      () => {
+        console.log('Connected to WebSocket server.');
+        this.connectionStatus.next(true); // Mark connection as established
+      },
+      (error: any) => {
+        console.error('WebSocket connection error:', error);
+        this.connectionStatus.next(false); // Mark connection as not established
+      }
+    );
   }
 
-  // Observable to expose WebSocket messages to other parts of the app
-  getMessages(): Observable<string> {
-    return this.messageSubject.asObservable();
+  /**
+   * Subscribes to a specific topic on the WebSocket server.
+   * @param topic - The topic to subscribe to.
+   * @param parser - A function to parse the incoming message (optional).
+   * @returns An Observable that emits parsed messages of the expected type.
+   */
+  subscribeToTopic<T>(topic: string, parser?: (message: string) => T): Observable<T> {
+    if (!this.messageSubjects[topic]) {
+      this.messageSubjects[topic] = new Subject<T>();
+
+      this.connectionStatus.subscribe((connected) => {
+        if (connected && this.stompClient) {
+          console.log(`Subscribing to topic: ${topic}`);
+          this.stompClient.subscribe(topic, (message: any) => {
+            if (message.body) {
+              try {
+                const parsedMessage = parser ? parser(message.body) : (message.body as unknown as T);
+                this.messageSubjects[topic].next(parsedMessage); // Pass the parsed message to the subject
+              } catch (error) {
+                console.error(`Error parsing message for topic "${topic}":`, error);
+              }
+            }
+          });
+        }
+      });
+    }
+
+    // Return the Observable for the topic
+    return this.messageSubjects[topic].asObservable();
   }
 }
