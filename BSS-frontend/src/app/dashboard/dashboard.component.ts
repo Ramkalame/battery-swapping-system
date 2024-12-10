@@ -5,6 +5,7 @@ import { User } from '../models/User';
 import { ApiService } from '../services/api.service';
 import { WebsocketService } from '../services/websocket.service';
 import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -12,7 +13,7 @@ import { Component, OnInit } from '@angular/core';
   selector: 'app-dashboard',
   standalone: true,
 
-  imports: [RouterModule,CommonModule],
+  imports: [RouterModule,CommonModule,FormsModule],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
   animations: [
@@ -35,22 +36,20 @@ export class DashboardComponent implements OnInit{
   isBatteryCharged: boolean = false;
   selectedUser!: User;
 
-
   rfId!: string;
   irData!: boolean;
+  solenoidData:boolean = true;
 
-  
-  isSwapping = false;  
-  swapInterval: any;
+
 
   constructor(
     private webSocketService: WebsocketService,
     private apiService: ApiService,
     private route: ActivatedRoute,
+    private router:Router
   ) {}
 
   ngOnInit(): void {
-
       // Retrieve the rfId parameter from the route
     this.route.params.subscribe(params => {
       this.rfId = params['rfId']; // Access the rfId parameter
@@ -71,8 +70,13 @@ export class DashboardComponent implements OnInit{
       }
     });
 
+    //listen to solenoid response
+    this.listenForSolenoidResponse();
 
-
+      // Redirect to home after 20 seconds
+  setTimeout(() => {
+    this.router.navigate(['/greet']);
+  }, 25000);  // 20 seconds delay (20000 milliseconds)
   }
 
   getUserDetails(rfId: string) {
@@ -84,18 +88,28 @@ export class DashboardComponent implements OnInit{
         console.log('Something Went Wrong');
       },
     });
-
-    this.swapInterval = setInterval(() => {
-      this.toggleSwapState();  
-    }, 3000);
   }
 
 
-
+   // Listen to /topic/solenoid-response
+   listenForSolenoidResponse() {
+    this.webSocketService
+      .subscribeToTopic<string>('/topic/solenoid-response')
+      .subscribe((response) => {
+        console.log('Received solenoid response:', response);
+        if(response === '0'){
+          this.solenoidData = false;
+        }else{
+          this.solenoidData = true;
+        }
+      });
+  }
 
 
   toggleSwapState() {
-    this.isSwapping = !this.isSwapping; 
+    this.solenoidData = !this.solenoidData; 
   }
+
+
 
 }

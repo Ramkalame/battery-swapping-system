@@ -23,5 +23,12 @@ public class SocketService {
         simpMessagingTemplate.convertAndSend("/topic/ir-sensor",msg);
     }
 
+    public void sendSolenoidMessage(String msg){
+        log.info("-----Solenoid msg sent -----{}",msg);
+        simpMessagingTemplate.convertAndSend("/topic/solenoid-response",msg);
+    }
+
+
+
 
 }
