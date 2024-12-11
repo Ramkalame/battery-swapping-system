@@ -2,6 +2,8 @@ import { Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HomeComponent } from './home/home.component';
 import { GreetPageComponent } from './greet-page/greet-page.component';
+import { CardSwipeMessageComponent } from './card-swipe-message/card-swipe-message.component';
+import { BufferingComponent } from './buffering/buffering.component';
 
 export const routes: Routes = [
     {
@@ -16,6 +18,8 @@ export const routes: Routes = [
     {
         path:"greet",
         component:GreetPageComponent
-    }
+    },
+    {path:"card-swaipe-message", component:CardSwipeMessageComponent},
+    {path:"wait", component:BufferingComponent},
 
 ];

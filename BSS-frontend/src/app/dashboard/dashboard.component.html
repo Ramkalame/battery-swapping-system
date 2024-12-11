@@ -16,7 +16,9 @@
                     <div class="battery-box-p">
                         <div class="battery-box-heading"><p>बैटरी-1</p></div>
                         <div class="battery-box">
-                            <img src="./assets/charges-battery.png" alt="charges-battery.png">
+                            <img [@batterySwapAnimation]="!solenoidData ? 'open' : 'closed'" 
+                            src="./assets/{{!solenoidData ? 'drawer.png' : 'charges-battery.png'}}" 
+                            alt="battery-image">
                         </div>
 
                     </div>
@@ -41,10 +43,8 @@
                     <div class="battery-box-p">
                         <div class="battery-box-heading"><p>बैटरी-5</p></div>
                         <div class="battery-box">
-                            <img [@batterySwapAnimation]="isSwapping ? 'open' : 'closed'" 
-                            src="./assets/{{isSwapping ? 'drawer.png' : 'charges-battery.png'}}" 
-                            alt="battery-image">
-                                            </div>
+                            <img src="./assets/dead-battery.png" alt="charges-battery.png">
+                        </div>
                     </div>
                     <div class="battery-box-p">
                         <div class="battery-box-heading"><p>बैटरी-6</p></div>
@@ -91,7 +91,7 @@
             <div class="about-client" *ngIf="selectedUser">
                 <p>ग्राहक आईडी: <span>{{selectedUser.userId}}</span></p>
                 <p>नाम: <span>{{selectedUser.userName}}</span> </p>
-                <p>इंजन संख्या: <span>{{selectedUser.engineNumber}}</span> </p>
+                <p>वाहन संख्या: <span>{{selectedUser.engineNumber}}</span> </p>
                 <p>मोबाइल नंबर: <span>{{selectedUser.mobileNumber}}</span> </p>
 
             </div>

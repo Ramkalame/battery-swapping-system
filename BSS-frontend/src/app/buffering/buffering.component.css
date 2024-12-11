@@ -1,0 +1,40 @@
+.container{
+    width: 100vw;
+    height: 100vh;
+    background-color: #3F62F0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+.message-text{
+    color: wheat;
+    font-weight: bold;
+    font-size: 30px;
+}
+.buffering-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+/* The spinner */
+.spinner {
+    width: 150px;
+    height: 150px;
+    border: 5px solid #ddd; /* Light gray */
+    border-top: 5px solid #007bff; /* Blue */
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
