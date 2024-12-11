@@ -76,7 +76,7 @@ export class DashboardComponent implements OnInit{
       // Redirect to home after 20 seconds
   setTimeout(() => {
     this.router.navigate(['/greet']);
-  }, 25000);  // 20 seconds delay (20000 milliseconds)
+  }, 45000);  // 20 seconds delay (20000 milliseconds)
   }
 
   getUserDetails(rfId: string) {
@@ -98,9 +98,9 @@ export class DashboardComponent implements OnInit{
       .subscribe((response) => {
         console.log('Received solenoid response:', response);
         if(response === '0'){
-          this.solenoidData = false;
-        }else{
           this.solenoidData = true;
+        }else{
+          this.solenoidData = false;
         }
       });
   }

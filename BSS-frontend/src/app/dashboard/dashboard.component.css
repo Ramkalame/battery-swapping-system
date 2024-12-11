@@ -51,9 +51,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    
 }
 .available-batteries-heading h6{
-    font-size: 20px;
+    font-size: 30px;
+    margin-right: 200px;
 }
 .battery-box-p{
     height: 180px;
@@ -115,7 +117,7 @@
 }
 .client-details{
     background-color: #8AA1FD;
-    height: 550px;
+    height: 700px;
     width: 460px;
     display: flex;
     flex-direction: column;
@@ -145,12 +147,14 @@
 }
 .about-client{
     width: 100%;
-    padding-left: 30px;
+    padding-left: 250px;
     color: white;
     font-weight: bold;
+    
 }
 .about-client p{
     margin-bottom: 10px;
+    font-size: 20px;
 }
 /* ================================== indicator ========================= */
 .status-indicators{

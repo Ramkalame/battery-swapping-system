@@ -18,13 +18,13 @@ public class UsbListenerRFService {
     @PostConstruct
     public void init() {
 
-        serialPort = SerialPort.getCommPort("COM7");
+        serialPort = SerialPort.getCommPort("COM3");
         serialPort.setComPortParameters(9600, 8, 1, 0);
         serialPort.setComPortTimeouts(SerialPort.TIMEOUT_READ_BLOCKING, 1000, 0); // Reduced timeout to 1 second
 
         logAvailablePorts();
         if (serialPort.openPort()) {
-            log.info("COM7 Serial port opened successfully!");
+            log.info("COM3 Serial port opened successfully!");
 
             new Thread(() -> {
                 log.info("Reading thread started.");
