@@ -10,41 +10,31 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class UsbListenerRFService {
+public class UsbPortListenerService {
 
     private final SocketService socketService;
     private SerialPort serialPort;
 
     @PostConstruct
     public void init() {
-
-        serialPort = SerialPort.getCommPort("COM3");
+        serialPort = SerialPort.getCommPort("COM5");
         serialPort.setComPortParameters(9600, 8, 1, 0);
-        serialPort.setComPortTimeouts(SerialPort.TIMEOUT_READ_BLOCKING, 1000, 0); // Reduced timeout to 1 second
+        serialPort.setComPortTimeouts(SerialPort.TIMEOUT_READ_BLOCKING, 1000, 0);
 
         logAvailablePorts();
         if (serialPort.openPort()) {
-            log.info("COM3 Serial port opened successfully!");
+            log.info("COM5 Serial port opened successfully!");
 
             new Thread(() -> {
                 log.info("Reading thread started.");
                 try {
                     while (serialPort.isOpen()) {
-                        log.info("Waiting for data...");
                         byte[] buffer = new byte[2048];
                         int numRead = serialPort.readBytes(buffer, buffer.length);
-                        log.info("Bytes read: {}", numRead);
-
-                        if (numRead <= 0) {
-                            log.warn("No data or empty data read, retrying...");
-                            continue; // Retry if no data or empty data
-                        }
-                        String mainMsg = formatToPlaneString(asciiToHex(logRawData(buffer,numRead)));
-                        if (mainMsg.startsWith("RF")){
-                            socketService.sendRfidMessage(mainMsg.substring(2));
-                        }
-                        if (mainMsg.startsWith("SD")){
-                            socketService.sendSolenoidMessage(mainMsg.substring(2));
+                        if (numRead > 0) {
+                            handleIncomingData(buffer, numRead);
+                        } else {
+                            log.warn("No data read from serial port.");
                         }
                     }
                 } catch (Exception e) {
@@ -54,7 +44,7 @@ public class UsbListenerRFService {
                 }
             }).start();
         } else {
-            log.error("Failed to open the COM4 serial port.");
+            log.error("Failed to open the COM3 serial port.");
         }
     }
 
@@ -78,44 +68,57 @@ public class UsbListenerRFService {
         }
     }
 
-    // Log raw data
+    private void handleIncomingData(byte[] buffer, int numRead) {
+        String rawData = logRawData(buffer, numRead);
+        String message = formatToPlainString(asciiToHex(rawData));
+
+        if (message.startsWith("B")) {
+            String boxNumber = message.substring(1, 3);
+            String sensorType = message.substring(3, 5);
+            String data = message.substring(5);
+
+            log.info("Box {} - Sensor {}: Data -> {}", boxNumber, sensorType, data);
+
+            // Forward data to SocketService
+            socketService.sendSensorMessage(boxNumber, sensorType, data);
+        } else if (message.startsWith("RF")) {
+            String rfId = message.substring(2);
+            socketService.sendRfSensorMessage(rfId);
+        } else {
+            socketService.sendErrorMessage("Invalid message format: " + message);
+        }
+    }
+
     private String logRawData(byte[] buffer, int length) {
         StringBuilder rawData = new StringBuilder();
         for (int i = 0; i < length; i++) {
-            rawData.append(String.format("%02X", buffer[i])); // Format each byte as two-digit hex
+            rawData.append(String.format("%02X", buffer[i]));
             if (i < length - 1) {
                 rawData.append(", ");
             }
         }
-        log.info("Received raw data: {}", rawData.toString());
+        log.info("Received raw data: {}", rawData);
         return rawData.toString();
     }
 
-
     private String asciiToHex(String asciiCodes) {
-        // Split the input string by commas to get individual ASCII codes
-        String[] codes = asciiCodes.split(",\\s*");
+        String[] codes = asciiCodes.split(",\s*");
         StringBuilder result = new StringBuilder();
-        // Loop through the codes and convert each to its corresponding character
         for (String code : codes) {
             try {
-                int asciiValue = Integer.parseInt(code, 16);  // Convert each code from hex to int
-                result.append((char) asciiValue);              // Convert the ASCII value to character and append to result
+                int asciiValue = Integer.parseInt(code, 16);
+                result.append((char) asciiValue);
             } catch (NumberFormatException e) {
-                // Handle invalid format (if any)
-                System.err.println("Invalid ASCII code: " + code);
+                log.error("Invalid ASCII code: {}", code);
             }
         }
         return result.toString();
     }
 
-    private String formatToPlaneString(String asciiCodes) {
-        // Split the input string by commas to get individual ASCII codes
-        String[] codes = asciiCodes.split("[,\\s]+");
+    private String formatToPlainString(String asciiCodes) {
+        String[] codes = asciiCodes.split("[,\s]+");
         StringBuilder result = new StringBuilder();
-        // Loop through the codes and append each code to the result
         for (String code : codes) {
-            // Just append the code directly (no conversion needed)
             result.append(code.trim());
         }
         return result.toString();

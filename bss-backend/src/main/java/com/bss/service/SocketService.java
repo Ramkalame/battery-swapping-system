@@ -10,25 +10,59 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class SocketService {
 
+
     private final SimpMessagingTemplate simpMessagingTemplate;
 
+    /**
+     * Sends a message dynamically based on box number and sensor type.
+     *
+     * @param boxNumber  The box number (e.g., "01", "02").
+     * @param sensorType The sensor type (e.g., "RFID", "TEMP", "IR").
+     * @param message    The message to send.
+     */
+    public void sendSensorMessage(String boxNumber, String sensorType, String message) {
+        try {
+            // Format topic dynamically based on box and sensor
+            String topic = String.format("/topic/box/%s/%s", boxNumber, sensorType.toLowerCase());
+            log.info("Sending message to topic {}: {}", topic, message);
 
-    public void sendRfidMessage(String msg){
-        log.info("-----RF msg sent -----{}",msg);
-        simpMessagingTemplate.convertAndSend("/topic/rf-id",msg);
+            // Send the message to the topic
+            simpMessagingTemplate.convertAndSend(topic, message);
+        } catch (Exception e) {
+            log.error("Error sending message for Box {} and Sensor {}: {}", boxNumber, sensorType, e.getMessage(), e);
+        }
     }
 
-    public void sendIrMessage(boolean msg){
-        log.info("-----IR msg sent -----{}",msg);
-        simpMessagingTemplate.convertAndSend("/topic/ir-sensor",msg);
+    /**
+     * Sends a message dynamically based on box number and sensor type.
+     *
+     * @param message    The message to send.
+     */
+    public void sendRfSensorMessage(String message) {
+        try {
+            // Format topic dynamically based on box and sensor
+            String topic ="/topic/rf";
+            log.info("Sending message to rf topic {}: {}", topic, message);
+
+            // Send the message to the topic
+            simpMessagingTemplate.convertAndSend(topic, message);
+        } catch (Exception e) {
+            log.error("Error sending message for rf {}", e.getMessage());
+        }
     }
 
-    public void sendSolenoidMessage(String msg){
-        log.info("-----Solenoid msg sent -----{}",msg);
-        simpMessagingTemplate.convertAndSend("/topic/solenoid-response",msg);
+
+    /**
+     * Sends an error message if the data cannot be processed correctly.
+     *
+     * @param errorMessage Error description to send.
+     */
+    public void sendErrorMessage(String errorMessage) {
+        log.error("Sending error message: {}", errorMessage);
+        simpMessagingTemplate.convertAndSend("/topic/error", errorMessage);
     }
-
-
 
 
 }
+
+
