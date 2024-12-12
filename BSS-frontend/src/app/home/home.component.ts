@@ -19,9 +19,9 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Subscribe to the RF-id Topic
+    // Subscribe to the /rf Topic
     this.webSocketService
-      .subscribeToTopic<string>('/topic/rf-id')
+      .subscribeToTopic<string>('/topic/rf')
       .subscribe((message: string) => {
         console.log('Received message RF:', message);
         this.rfId = message;

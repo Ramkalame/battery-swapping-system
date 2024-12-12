@@ -11,8 +11,7 @@ export class WebsocketService {
   private messageSubjects: { [topic: string]: Subject<any> } = {}; // Map of topics to subjects
   private connectionStatus: BehaviorSubject<boolean> = new BehaviorSubject(
     false
-  ); // Connection status
-  private messageQueue: { destination: string; payload: any }[] = []; // Queue for unsent messages
+  );
 
 
   constructor() {
@@ -31,7 +30,6 @@ export class WebsocketService {
       () => {
         console.log('Connected to WebSocket server.');
         this.connectionStatus.next(true); // Mark connection as established
-        this.flushMessageQueue();
       },
       (error: any) => {
         console.error('WebSocket connection error:', error);
@@ -79,20 +77,25 @@ export class WebsocketService {
     return this.messageSubjects[topic].asObservable();
   }
 
-  sendMessage(destination: string, payload: any): void {
-    if (this.stompClient && this.stompClient.connected) {
-      this.stompClient.send(destination, {}, JSON.stringify(payload));
-      console.log(`Message sent to ${destination}:`, payload);
-    } else {
-      console.warn('WebSocket not connected. Queueing message.');
-      this.messageQueue.push({ destination, payload }); // Queue the message
-    }
+  subscribeToIrTopic(boxNumber:string):Observable<any> {
+    const topic = `/topic/box/${boxNumber}/ir`;
+    return this.subscribeToTopic<string>(topic);
   }
 
-  private flushMessageQueue(): void {
-    while (this.messageQueue.length > 0) {
-      const { destination, payload } = this.messageQueue.shift()!;
-      this.sendMessage(destination, payload);
-    }
+  subscribeToTemperatureTopic(boxNumber:string):Observable<any> {
+    const topic = `/topic/box/${boxNumber}/tm`;
+    return this.subscribeToTopic<string>(topic);
   }
+
+  subscribeToBatteryStatusTopic(boxNumber:string):Observable<any> {
+    const topic = `/topic/box/${boxNumber}/bs`;
+    return this.subscribeToTopic<string>(topic);
+  }
+
+  subscribeToSolenoidTopic(boxNumber:string):Observable<any> {
+    const topic = `/topic/box/${boxNumber}/sd`;
+    return this.subscribeToTopic<string>(topic);
+  }
+
+
 }
