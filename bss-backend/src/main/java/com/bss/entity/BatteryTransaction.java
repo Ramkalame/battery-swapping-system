@@ -7,18 +7,20 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
+import java.time.LocalDateTime;
+
 @Data
 @Builder
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class BatteryTransaction {
 
     @Id
-    private String userId;
+    private Long serialNumber;
     private String userName;
-    private String mobileNumber;
     private String vehicleNumber;
-    private String vehicleImageUrl;
+    private LocalDateTime timeStamp;
+    private Long noOfTransaction;
 
 }
