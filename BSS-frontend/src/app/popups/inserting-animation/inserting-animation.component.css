@@ -1,0 +1,206 @@
+.container{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #1e2850;
+
+}
+/* ====================box animation============================================================================================== */
+
+.box-container{
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+.box {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    transform-style: preserve-3d;
+    transform: rotateZ(75deg) rotateX(-45deg) rotateY(25deg);
+    
+  }
+  .box-1{
+    position: absolute;
+    margin-top: -100px;
+    margin-left: -100px;
+
+  }
+  .box-2{
+    position: absolute;
+    margin-top: 12px;
+    margin-left: -200px;
+
+  }
+  .box-3{
+    position: absolute;
+    margin-top: 124px;
+    margin-left: -300px;
+
+  }
+  .box-4{
+    position: absolute;
+    margin-left: -300px;
+
+  }
+  .box-5{
+    position: absolute;
+    margin-top: 400px;
+    margin-left: -300px;
+
+  }
+  .box-6{
+    position: absolute;
+    margin-top: 400px;
+    margin-left: -300px;
+
+  }
+  .cover {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    /* background: rgba(0, 128, 255, 0.7); */
+    border: 1px solid gray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  .front {
+    transform: translateZ(50px);
+    height: 200px;
+    background-color: rgb(61, 60, 60);
+  }
+
+  .back {
+    transform: translateZ(-50px) rotateY(180deg);
+    height: 200px;
+    background-color: rgb(61, 60, 60);
+  }
+
+  .top {
+    transform: rotateX(90deg) translateZ(50px); /* Top face */
+  }
+
+  .down {
+    transform: rotateX(-90deg) translateZ(150px); /* Bottom face */
+  }
+
+  .left {
+    transform: rotateY(-90deg) translateZ(50px); /* Left face */
+    height: 200px;
+    background-color: rgb(100, 99, 99);
+  }
+
+  .right {
+    transform: rotateY(90deg) translateZ(50px); /* Right face */
+    height: 200px;
+    background-color: rgb(26, 26, 26);
+    animation: name duration timing-function delay iteration-count direction fill-mode;
+  }
+  .box-top-cap{
+    transform: translateZ(50px); 
+    background-color: rgb(121, 120, 120);
+    animation: closeBoxTop 2s infinite ease-in;
+  }
+  .box-top-cap3{
+    animation: closeBoxTop 3s infinite ease-in;
+
+  }
+  .box-top-cap2{
+    animation: closeBoxTop 4s infinite ease-in;
+
+  }
+
+  @keyframes closeBoxTop {
+    0% {
+      transform: rotateX(90deg) translateZ(50px);
+    }
+    100% {
+      transform:  rotateX(90deg) translateZ(200px); /* Closing the box */
+    }
+    
+  }
+  /* ================Enimation End========================================================= */
+
+  .box-container{
+    height: 500px;
+    width: 1200px;
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    overflow: hidden;
+    
+  }
+  .battery-container{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    background-color: #3F62F0;
+    padding: 20px;
+  }
+  .heading{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .heading h3{
+    font-size: 25px;
+    line-height: 10px;
+    color: white;
+  }
+  .animation-container{
+    background-color: yellow;
+  }
+  .battery-box-container{
+    height: 300px;
+    width: 400px;
+    background-color: #ffffff4d;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 50px;
+    border: 3px #e9e7e7 solid;
+    padding-right: 10px;
+    border-radius: 10px;
+
+  }
+  .battery-box{
+    height: 100px;
+    width: 100px;
+    background-color: white;
+    margin-left: 10px;
+    border-radius: 10px;
+
+  }
+
+  
+.blinking-box {
+  animation: blink 1s infinite;
+}
+
+
+  @keyframes blink {
+    0% {
+      background-color: #18308f;
+    }
+    50% {
+      background-color: #ffffff;
+    }
+    100% {
+      background-color: #18308f;
+    }
+  }
