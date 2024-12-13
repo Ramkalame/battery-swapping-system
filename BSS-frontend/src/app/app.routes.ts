@@ -5,23 +5,26 @@ import { GreetPageComponent } from './greet-page/greet-page.component';
 import { CardSwipeMessageComponent } from './card-swipe-message/card-swipe-message.component';
 import { BufferingComponent } from './buffering/buffering.component';
 import { InsertingAnimationComponent } from './popups/inserting-animation/inserting-animation.component';
+import { BatteryDashboardComponent } from './battery-dashboard/battery-dashboard.component';
 
 export const routes: Routes = [
-    {
-        path:"",
-        component:HomeComponent
-    },
-    {
-       
-        path:"dashboard/:rfId",
-        component:DashboardComponent
-    },
-    {
-        path:"greet",
-        component:GreetPageComponent
-    },
-    {path:"card-swaipe-message", component:CardSwipeMessageComponent},
-    {path:"wait", component:BufferingComponent},
-    {path:"insert", component:InsertingAnimationComponent},
-
+  {
+    path: '',
+    component: HomeComponent,
+  },
+  {
+    path: 'battery-dashboard',
+    component:BatteryDashboardComponent
+  },
+  {
+    path: 'dashboard/:rfId',
+    component: DashboardComponent,
+  },
+  {
+    path: 'greet',
+    component: GreetPageComponent,
+  },
+  { path: 'card-swaipe-message', component: CardSwipeMessageComponent },
+  { path: 'wait', component: BufferingComponent },
+  { path: 'insert', component: InsertingAnimationComponent },
 ];
