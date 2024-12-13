@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
+import { WebsocketService } from '../services/websocket.service';
 
 @Component({
   selector: 'app-card-swipe-message',
@@ -9,6 +10,26 @@ import { RouterModule } from '@angular/router';
   templateUrl: './card-swipe-message.component.html',
   styleUrl: './card-swipe-message.component.css'
 })
-export class CardSwipeMessageComponent {
+export class CardSwipeMessageComponent implements OnInit {
+  rfId!: string;
+
+
+  constructor(private router:Router, private webSocketService: WebsocketService){}
+  ngOnInit(): void {
+    // Subscribe to the /rf Topic
+    this.webSocketService
+      .subscribeToTopic<string>('/topic/rf')
+      .subscribe((message: string) => {
+        console.log('Received message RF:', message);
+        this.rfId = message;
+        // After receiving the RFID, redirect to the Dashboard
+        this.router.navigate(['/wait', this.rfId]);
+      });
+
+    setTimeout(() => {
+      this.router.navigate(['/']);
+    }, 4500);
+
+}
 
 }

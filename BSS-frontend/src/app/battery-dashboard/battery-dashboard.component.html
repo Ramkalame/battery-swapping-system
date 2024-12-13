@@ -1,12 +1,4 @@
 <div class="container">
-    <div class="header">
-        <div class="image-banner"><img src="./assets/banner1.png" alt="banner" class="banner1"></div>
-<!--         
-        <div class="instruction">
-            <p *ngIf="!isBatteryInserted">निर्देश: खाली जगह पर अपनी बैटरी डालें।</p>
-            <p *ngIf="isBatteryInserted && !isBatteryCharged">निर्देश: चार्ज की गई बैटरी लें।</p>
-        </div> -->
-    </div>
     <div class="hero-sec">
         <div class="available-batteries">
             <div class="available-batteries-heading">
@@ -19,48 +11,53 @@
                             <p>बैटरी-1</p>
                         </div>
                         <div class="battery-box">
-                            <img [@batterySwapAnimation]="!sdData1 ? 'open' : 'closed'"
-                                src="./assets/{{!sdData1 ? 'drawer.png' : 'charges-battery.png'}}" alt="battery-image">
-                        </div>
-                    </div>
-                    <div class="battery-box-p">
-                        <div class="battery-box-heading">
-                            <p>बैटरी-2</p>
-                        </div>
-                        <div class="battery-box">
                             <img src="./assets/charges-battery.png" alt="charges-battery.png">
                         </div>
+
                     </div>
                     <div class="battery-box-p">
                         <div class="battery-box-heading">
-                            <p>बैटरी-3</p>
+                            <p>बैटरी<span class="das">-</span><span class="num">2</span></p>
                         </div>
                         <div class="battery-box">
-                            <img src="./assets/charges-battery.png" alt="charges-battery.png">
-                        </div>
-                    </div>
-                    <div class="battery-box-p">
-                        <div class="battery-box-heading">
-                            <p>बैटरी-4</p>
-                        </div>
-                        <div class="battery-box">
-                            <img src="./assets/dead-battery.png" alt="charges-battery.png">
+                            <app-test-animation *ngIf="bsData2"></app-test-animation>
+                            <img src="./assets/charges-battery.png" alt="charges-battery.png" *ngIf="!bsData2">
                         </div>
                     </div>
                     <div class="battery-box-p">
                         <div class="battery-box-heading">
-                            <p>बैटरी-5</p>
+                            <p>बैटरी<span class="das">-</span><span class="num">3</span></p>
                         </div>
                         <div class="battery-box">
-                            <img src="./assets/dead-battery.png" alt="charges-battery.png">
+                            <app-test-animation *ngIf="bsData3"></app-test-animation>
+                            <img src="./assets/charges-battery.png" alt="charges-battery.png" *ngIf="!bsData3">
                         </div>
                     </div>
                     <div class="battery-box-p">
                         <div class="battery-box-heading">
-                            <p>बैटरी-6</p>
+                            <p>बैटरी<span class="das">-</span><span class="num">4</span></p>
                         </div>
                         <div class="battery-box">
-                            <img src="./assets/dead-battery.png" alt="charges-battery.png">
+                            <app-test-animation *ngIf="bsData4"></app-test-animation>
+                            <img src="./assets/charges-battery.png" alt="charges-battery.png" *ngIf="!bsData4">
+                        </div>
+                    </div>
+                    <div class="battery-box-p">
+                        <div class="battery-box-heading">
+                            <p>बैटरी<span class="das">-</span><span class="num">5</span></p>
+                        </div>
+                        <div class="battery-box">
+                            <app-test-animation *ngIf="bsData5"></app-test-animation>
+                            <img src="./assets/charges-battery.png" alt="charges-battery.png" *ngIf="!bsData5">
+                        </div>
+                    </div>
+                    <div class="battery-box-p">
+                        <div class="battery-box-heading">
+                            <p>बैटरी<span class="das">-</span><span class="num">6</span></p>
+                        </div>
+                        <div class="battery-box">
+                            <app-test-animation *ngIf="bsData6"></app-test-animation>
+                            <img src="./assets/charges-battery.png" alt="charges-battery.png" *ngIf="!bsData6">
                         </div>
                     </div>
                 </div>
@@ -77,33 +74,15 @@
                         </div>
                         <div class="indicator-box">
                             <div class="indicator-icon">
-                                <img src="./assets/dead-battery.png" alt="charges-battery.png" class="ibattery">
+                                <img src="./assets/charging-battery.png" alt="charges-battery.png" class="ibattery">
 
                             </div>
                             <div class="indicator-text">
-                                <p>बिना चार्ज</p>
+                                <p>चार्ज हो रहा</p>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="client-details">
-            <div class="client-details-heading">
-                <h6>ग्राहक विवरण</h6>
-            </div>
-            <div class="client-profile-img">
-                <div class="client-profile-img-box">
-
-                    <img src="./assets/user.png" alt="user" class="user-profile">
-                </div>
-            </div>
-            <div class="about-client" *ngIf="selectedUser">
-                <p>ग्राहक आईडी: <span>{{selectedUser.userId}}</span></p>
-                <p>नाम: <span>{{selectedUser.userName}}</span> </p>
-                <p>वाहन संख्या: <span>{{selectedUser.vehicleNumber}}</span> </p>
-                <p>मोबाइल नंबर: <span>{{selectedUser.mobileNumber}}</span> </p>
-
             </div>
         </div>
     </div>

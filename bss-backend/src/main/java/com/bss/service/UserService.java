@@ -37,8 +37,8 @@ public class UserService {
             existingUser.setUserId(user.getUserId());
             existingUser.setUserName(user.getUserName());
             existingUser.setMobileNumber(user.getMobileNumber());
-            existingUser.setEngineNumber(user.getEngineNumber());
-            existingUser.setImgUrl(user.getImgUrl());
+            existingUser.setVehicleImageUrl(user.getVehicleNumber());
+            existingUser.setVehicleImageUrl(user.getVehicleImageUrl());
             return userRepository.save(existingUser);
         }else {
             return null;

@@ -1,100 +1,97 @@
-import {
-  trigger,
-  state,
-  style,
-  transition,
-  animate,
-} from '@angular/animations';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { User } from '../models/User';
 import { ApiService } from '../services/api.service';
 import { WebsocketService } from '../services/websocket.service';
-import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { TestAnimationComponent } from "../test-animation/test-animation.component";
 
 @Component({
-  selector: 'app-dashboard',
+  selector: 'app-battery-dashboard',
   standalone: true,
-
-  imports: [RouterModule, CommonModule, FormsModule],
-  templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.css',
-  animations: [
-    trigger('batterySwapAnimation', [
-      state(
-        'closed',
-        style({
-          transform: 'scale(1)',
-          opacity: 1,
-        })
-      ),
-      state(
-        'open',
-        style({
-          transform: 'scale(0.8)',
-        })
-      ),
-      transition('closed <=> open', [animate('1s ease-in-out')]),
-    ]),
-  ],
+  imports: [RouterModule, CommonModule, TestAnimationComponent],
+  templateUrl: './battery-dashboard.component.html',
+  styleUrl: './battery-dashboard.component.css',
+   animations: [
+      trigger('batterySwapAnimation', [
+        state(
+          'closed',
+          style({
+            transform: 'scale(1)',
+            opacity: 1,
+          })
+        ),
+        state(
+          'open',
+          style({
+            transform: 'scale(0.8)',
+          })
+        ),
+        transition('closed <=> open', [animate('1s ease-in-out')]),
+      ]),
+    ],
 })
-export class DashboardComponent implements OnInit {
-  isBatteryInserted: boolean = false;
+export class BatteryDashboardComponent implements OnInit {
+
+ isBatteryInserted: boolean = false;
   isBatteryCharged: boolean = false;
-  selectedUser!: User;
 
   rfId!: string;
 
   // For box 1
   // irData1!: boolean;
   tmData1!: string;
-  bsData1!: boolean;
+  bsData1: boolean = true;
   sdData1: boolean = true;
 
   // For box 2
   // irData2!: boolean;
   tmData2!: string;
-  bsData2!: boolean;
+  bsData2: boolean = true;
   sdData2: boolean = true;
 
   // For box 3
   // irData3!: boolean;
   tmData3!: string;
-  bsData3!: boolean;
+  bsData3: boolean = true;
   sdData3: boolean = true;
 
   // For box 4
   // irData4!: boolean;
   tmData4!: string;
-  bsData4!: boolean;
+  bsData4: boolean = true;
   sdData4: boolean = true;
 
   // For box 5
   // irData5!: boolean;
   tmData5!: string;
-  bsData5!: boolean;
+  bsData5: boolean = true;
   sdData5: boolean = true;
 
   // For box 6
   // irData6!: boolean;
   tmData6!: string;
-  bsData6!: boolean;
+  bsData6: boolean = true;
   sdData6: boolean = true;
 
   constructor(
     private webSocketService: WebsocketService,
-    private apiService: ApiService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
 
   ngOnInit(): void {
-    // Retrieve the rfId parameter from the route
-    this.route.params.subscribe((params) => {
-      this.rfId = params['rfId']; // Access the rfId parameter
-    });
-    this.getUserDetails(this.rfId); //call the api to fetch the user details
+   
+    // Subscribe to the /rf Topic
+    this.webSocketService
+      .subscribeToTopic<string>('/topic/rf')
+      .subscribe((message: string) => {
+        console.log('Received message RF:', message);
+        this.rfId = message;
+        // After receiving the RFID, redirect to the Dashboard
+        this.router.navigate(['/wait', this.rfId]);
+      });
 
     //subscribing for ir Data
     // this.subscribeToBox1Ir();
@@ -128,21 +125,9 @@ export class DashboardComponent implements OnInit {
     this.subscribeToBox5Sd();
     this.subscribeToBox6Sd();
 
-    // Redirect to greet after 20 seconds
     setTimeout(() => {
-      this.router.navigate(['/greet']);
-    }, 45000);
-  }
-
-  getUserDetails(rfId: string) {
-    this.apiService.getUserById(rfId).subscribe({
-      next: (data: User) => {
-        this.selectedUser = data;
-      },
-      error: (error: any) => {
-        console.log('Something Went Wrong');
-      },
-    });
+      this.router.navigate(['/card-swaipe-message']);
+    }, 4500);
   }
 
   //method for toggel
@@ -176,10 +161,14 @@ export class DashboardComponent implements OnInit {
     this.webSocketService
       .subscribeToBatteryStatusTopic('01')
       .subscribe((response) => {
+        if (response === '0') {
+          this.bsData1 = true;
+        } else {
+          this.bsData1 = false;
+        }
         console.log('Received Box 1 Battery Status response:', response);
       });
   }
-  
 
   // Subscribe to Box 1 Solenoid sensor
   subscribeToBox1Sd() {
@@ -190,7 +179,7 @@ export class DashboardComponent implements OnInit {
       });
   }
 
-  // // Subscribe to Box 2 IR Sensor
+  // Subscribe to Box 2 IR Sensor
   // subscribeToBox2Ir() {
   //   this.webSocketService.subscribeToIrTopic('02').subscribe((response) => {
   //     console.log('Received Box 2 IR response:', response);
@@ -211,6 +200,11 @@ export class DashboardComponent implements OnInit {
     this.webSocketService
       .subscribeToBatteryStatusTopic('02')
       .subscribe((response) => {
+        if (response === '0') {
+          this.bsData2 = true;
+        } else {
+          this.bsData2 = false;
+        }
         console.log('Received Box 2 Battery Status response:', response);
       });
   }
@@ -245,6 +239,11 @@ export class DashboardComponent implements OnInit {
     this.webSocketService
       .subscribeToBatteryStatusTopic('03')
       .subscribe((response) => {
+        if (response === '0') {
+          this.bsData3 = true;
+        } else {
+          this.bsData3 = false;
+        }
         console.log('Received Box 3 Battery Status response:', response);
       });
   }
@@ -279,6 +278,11 @@ export class DashboardComponent implements OnInit {
     this.webSocketService
       .subscribeToBatteryStatusTopic('04')
       .subscribe((response) => {
+        if (response === '0') {
+          this.bsData4 = true;
+        } else {
+          this.bsData4 = false;
+        }
         console.log('Received Box 4 Battery Status response:', response);
       });
   }
@@ -313,6 +317,11 @@ export class DashboardComponent implements OnInit {
     this.webSocketService
       .subscribeToBatteryStatusTopic('05')
       .subscribe((response) => {
+        if (response === '0') {
+          this.bsData5 = true;
+        } else {
+          this.bsData5 = false;
+        }
         console.log('Received Box 5 Battery Status response:', response);
       });
   }
@@ -347,6 +356,11 @@ export class DashboardComponent implements OnInit {
     this.webSocketService
       .subscribeToBatteryStatusTopic('06')
       .subscribe((response) => {
+        if (response === '0') {
+          this.bsData6 = true;
+        } else {
+          this.bsData6 = false;
+        }
         console.log('Received Box 6 Battery Status response:', response);
       });
   }
@@ -359,4 +373,6 @@ export class DashboardComponent implements OnInit {
         console.log('Received Box 6 Solenoid response:', response);
       });
   }
+
+
 }

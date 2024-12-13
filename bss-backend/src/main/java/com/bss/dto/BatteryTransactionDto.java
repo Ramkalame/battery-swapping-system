@@ -1,24 +1,21 @@
-package com.bss.entity;
+package com.bss.dto;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
+import java.time.LocalDateTime;
+
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class BatteryTransactionDto {
 
-    @Id
-    private String userId;
     private String userName;
-    private String mobileNumber;
     private String vehicleNumber;
-    private String vehicleImageUrl;
+    private LocalDateTime timeStamp;
+    private Long noOfTransaction;
 
 }
