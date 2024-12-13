@@ -5,6 +5,7 @@ import { GreetPageComponent } from './greet-page/greet-page.component';
 import { CardSwipeMessageComponent } from './card-swipe-message/card-swipe-message.component';
 import { BufferingComponent } from './buffering/buffering.component';
 import { InsertingAnimationComponent } from './popups/inserting-animation/inserting-animation.component';
+import { TestAnimationComponent } from './test-animation/test-animation.component';
 import { BatteryDashboardComponent } from './battery-dashboard/battery-dashboard.component';
 
 export const routes: Routes = [
@@ -27,4 +28,5 @@ export const routes: Routes = [
   { path: 'card-swaipe-message', component: CardSwipeMessageComponent },
   { path: 'wait', component: BufferingComponent },
   { path: 'insert', component: InsertingAnimationComponent },
+    {path:"test", component:TestAnimationComponent},
 ];
