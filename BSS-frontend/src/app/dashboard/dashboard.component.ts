@@ -109,6 +109,7 @@ export class DashboardComponent implements OnInit{
   toggleSwapState() {
     this.solenoidData = !this.solenoidData; 
   }
+  
 
 
 

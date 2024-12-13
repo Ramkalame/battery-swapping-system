@@ -79,7 +79,11 @@
     height: 250px;
     width: 250px;
     pointer-events: none;
+    user-select: none;
   }
+  video::-webkit-media-controls {
+    display: none !important; /* Hides controls for Webkit browsers */
+}
 /* ================================================ container deiv======================== */
   .battery-box-container{
     height: 300px;
