@@ -179,6 +179,7 @@ export class DashboardComponent implements OnInit {
         console.log('Received Box 1 Battery Status response:', response);
       });
   }
+  
 
   // Subscribe to Box 1 Solenoid sensor
   subscribeToBox1Sd() {

@@ -11,16 +11,60 @@
             <div class="battery-box" [ngClass]="{'blinking-box': openDoor == 6}" ></div>
         </div>
     </div>
-    <div class="animation-container"></div>
+    <div class="animation-container">
+        <div class="col" *ngIf="isTakingBatteryAnimationShow">
+            <div class="step-1 process">
+                <video width="200" height="200" controls autoplay loop muted>
+                    <source src="assets/Video/taking/taking-battery-box-door-open.mp4" type="video/mp4">
+                </video>
+                <div class="hide-video-player">
+                    <h5>Step-1: Open Door</h5>
+                </div>
+            </div>
+            <div class="step-2 process">
+                <video width="200" height="200" controls autoplay loop muted>
+                    <source src="assets/Video/taking/taking-battery-out-from-box.mp4" type="video/mp4">
+                </video>
+                <div class="hide-video-player">
+                    <h5>Step-2: Take Battery</h5>
+                </div>
+            </div>
+            <div class="step-3 process">
+                <video width="200" height="200" controls autoplay loop muted>
+                    <source src="assets/Video/taking/taking-battery-close-door-of-box.mp4" type="video/mp4">
+                </video>
+                <div class="hide-video-player">
+                    <h5>Step-2: Close Door</h5>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col" *ngIf="isInsertingBatteryAnimationShow">
+            <div class="step-1 process">
+                <video width="200" height="200" controls autoplay loop muted>
+                    <source src="assets/Video/inserting/insert-box-open.mp4" type="video/mp4">
+                </video>
+                <div class="hide-video-player">
+                    <h5>Step-1: Open Door</h5>
+                </div>
+            </div>
+            <div class="step-2 process">
+                <video width="200" height="200" controls autoplay loop muted>
+                    <source src="assets/Video/inserting/battery-insert-inbox.mp4" type="video/mp4">
+                </video>
+                <div class="hide-video-player">
+                    <h5>Step-2: Insert Battery</h5>
+                </div>
+            </div>
+            <div class="step-3 process">
+                <video width="200" height="200" controls autoplay loop muted>
+                    <source src="assets/Video/inserting/insert-battery-box-door-close.mp4" type="video/mp4">
+                </video>
+                <div class="hide-video-player">
+                    <h5>Step-2: Close Door</h5>
+                </div>
+            </div>
+        </div>
+    </div>
    </div>
 </div>
-
-<!-- <div class="box">
-    <div class="cover down">down</div>
-    <div class="cover right">right</div>
-    <div class="cover top box-top-cap">Top Cover</div>
-    <div class="cover left">left</div>
-    <div class="cover front">front</div>
-    <div class="cover back">back</div>
-    <div class="cover top">top</div>
-</div> -->
