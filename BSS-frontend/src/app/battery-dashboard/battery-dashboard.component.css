@@ -68,7 +68,7 @@
 }
 .battery-box-heading p{
     font-size: 20px;
-    font-weight: 500;
+    font-weight: 600;
     margin: 0;
     font-family: "Roboto", serif;
 }
@@ -130,4 +130,7 @@
 }
 .ibattery {
   object-fit: contain;
+}
+.das{
+  font-size: 27px;
 }
