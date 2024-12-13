@@ -17,13 +17,13 @@ public class UsbPortListenerService {
 
     @PostConstruct
     public void init() {
-        serialPort = SerialPort.getCommPort("COM5");
+        serialPort = SerialPort.getCommPort("COM3");
         serialPort.setComPortParameters(9600, 8, 1, 0);
         serialPort.setComPortTimeouts(SerialPort.TIMEOUT_READ_BLOCKING, 1000, 0);
 
         logAvailablePorts();
         if (serialPort.openPort()) {
-            log.info("COM5 Serial port opened successfully!");
+            log.info("COM3 Serial port opened successfully!");
 
             new Thread(() -> {
                 log.info("Reading thread started.");

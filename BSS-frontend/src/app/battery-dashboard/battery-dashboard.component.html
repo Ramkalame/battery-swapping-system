@@ -11,7 +11,8 @@
                             <p>बैटरी-1</p>
                         </div>
                         <div class="battery-box">
-                            <img src="./assets/charges-battery.png" alt="charges-battery.png">
+                            <app-test-animation *ngIf="bsData1"></app-test-animation>
+                            <img src="./assets/charges-battery.png" alt="charges-battery.png" *ngIf="!bsData1">
                         </div>
 
                     </div>

@@ -129,9 +129,9 @@ export class DashboardComponent implements OnInit {
     this.subscribeToBox6Sd();
 
     // Redirect to greet after 20 seconds
-    setTimeout(() => {
-      this.router.navigate(['/greet']);
-    }, 45000);
+    // setTimeout(() => {
+    //   this.router.navigate(['/greet']);
+    // }, 1000);
   }
 
   getUserDetails(rfId: string) {
