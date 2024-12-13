@@ -1,0 +1,133 @@
+.container {
+  background-color: #3f62f0;
+  width: 100vw;
+  height: 100vh;
+}
+/* ================================= hero section========================= */
+.hero-sec {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* border: 2px solid red; */
+}
+.available-batteries {
+  width: 910px;
+  height: 550px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+.available-batteries-heading {
+  height: 50px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin: 30px;
+}
+.available-batteries-heading h6 {
+  font-size: 50px;
+}
+.battery-box-p {
+  height: 270px;
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 10px;
+}
+
+.battery-indicator-div {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  padding: 10px;
+}
+.batteries-box {
+  width: 900px;
+  height: 630px;
+  border-radius: 15px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 columns, equal width */
+  grid-template-rows: repeat(2, auto); /* 2 rows, height adjusts to content */
+  place-items: center;
+  background-color: #8aa1fd;
+  padding: 10px;
+  margin-top: 20px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+.battery-box-heading {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  color: #373737;
+}
+.battery-box-heading p{
+    font-size: 20px;
+    font-weight: 500;
+    margin: 0;
+    font-family: "Roboto", serif;
+}
+
+.battery-box {
+  height: 170px;
+  width: 150px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;  
+}
+.batteries-box img {
+ height: 100%;
+ width: 100%;
+ object-fit: contain;
+}
+
+/* ================================== indicator ========================= */
+.status-indicators {
+  width: 200px;
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 5%;
+  margin-left: 40px;
+}
+.barttery-status-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 5px;
+}
+
+.indicator-box {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 200px;
+}
+.indicator-icon {
+  height: 60px;
+  width: 60px;
+  background-color: white;
+  border-radius: 50%;
+  margin-right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+.indicator-icon img {
+  width: 40px;
+  height: 40px;
+}
+.indicator-text {
+  color: white;
+  font-size: 22px;
+}
+.ibattery {
+  object-fit: contain;
+}

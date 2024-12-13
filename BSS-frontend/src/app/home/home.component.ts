@@ -28,5 +28,9 @@ export class HomeComponent implements OnInit {
         // After receiving the RFID, redirect to the Dashboard
         this.router.navigate(['/dashboard', this.rfId]);
       });
+
+      setTimeout(() => {
+      this.router.navigate(['/battery-dashboard']);
+    }, 3000);
   }
 }

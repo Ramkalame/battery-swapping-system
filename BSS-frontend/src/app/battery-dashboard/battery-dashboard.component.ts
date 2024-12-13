@@ -1,46 +1,39 @@
-import {
-  trigger,
-  state,
-  style,
-  transition,
-  animate,
-} from '@angular/animations';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { User } from '../models/User';
 import { ApiService } from '../services/api.service';
 import { WebsocketService } from '../services/websocket.service';
-import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-dashboard',
+  selector: 'app-battery-dashboard',
   standalone: true,
-
-  imports: [RouterModule, CommonModule, FormsModule],
-  templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.css',
-  animations: [
-    trigger('batterySwapAnimation', [
-      state(
-        'closed',
-        style({
-          transform: 'scale(1)',
-          opacity: 1,
-        })
-      ),
-      state(
-        'open',
-        style({
-          transform: 'scale(0.8)',
-        })
-      ),
-      transition('closed <=> open', [animate('1s ease-in-out')]),
-    ]),
-  ],
+  imports: [RouterModule,CommonModule],
+  templateUrl: './battery-dashboard.component.html',
+  styleUrl: './battery-dashboard.component.css',
+   animations: [
+      trigger('batterySwapAnimation', [
+        state(
+          'closed',
+          style({
+            transform: 'scale(1)',
+            opacity: 1,
+          })
+        ),
+        state(
+          'open',
+          style({
+            transform: 'scale(0.8)',
+          })
+        ),
+        transition('closed <=> open', [animate('1s ease-in-out')]),
+      ]),
+    ],
 })
-export class DashboardComponent implements OnInit {
-  isBatteryInserted: boolean = false;
+export class BatteryDashboardComponent implements OnInit {
+
+ isBatteryInserted: boolean = false;
   isBatteryCharged: boolean = false;
   selectedUser!: User;
 
@@ -86,17 +79,21 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private webSocketService: WebsocketService,
-    private apiService: ApiService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
 
   ngOnInit(): void {
-    // Retrieve the rfId parameter from the route
-    this.route.params.subscribe((params) => {
-      this.rfId = params['rfId']; // Access the rfId parameter
-    });
-    this.getUserDetails(this.rfId); //call the api to fetch the user details
+   
+    // Subscribe to the /rf Topic
+    this.webSocketService
+      .subscribeToTopic<string>('/topic/rf')
+      .subscribe((message: string) => {
+        console.log('Received message RF:', message);
+        this.rfId = message;
+        // After receiving the RFID, redirect to the Dashboard
+        this.router.navigate(['/dashboard', this.rfId]);
+      });
 
     //subscribing for ir Data
     this.subscribeToBox1Ir();
@@ -130,21 +127,9 @@ export class DashboardComponent implements OnInit {
     this.subscribeToBox5Sd();
     this.subscribeToBox6Sd();
 
-    // Redirect to greet after 20 seconds
     setTimeout(() => {
-      this.router.navigate(['/greet']);
-    }, 45000);
-  }
-
-  getUserDetails(rfId: string) {
-    this.apiService.getUserById(rfId).subscribe({
-      next: (data: User) => {
-        this.selectedUser = data;
-      },
-      error: (error: any) => {
-        console.log('Something Went Wrong');
-      },
-    });
+      this.router.navigate(['/card-swaipe-message']);
+    }, 3000);
   }
 
   //method for toggel
@@ -360,4 +345,6 @@ export class DashboardComponent implements OnInit {
         console.log('Received Box 6 Solenoid response:', response);
       });
   }
+
+
 }
