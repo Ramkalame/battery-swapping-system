@@ -13,7 +13,8 @@ import { OpenBoxSignalService } from '../../services/open-box-signal.service';
 export class InsertingAnimationComponent implements OnInit {
 
   openDoor: number = 0; // This will store which box is open
-
+  isTakingBatteryAnimationShow:boolean=true;
+  isInsertingBatteryAnimationShow:boolean=false;
   constructor(private openBoxSignalService:OpenBoxSignalService){}
 
   ngOnInit(): void {

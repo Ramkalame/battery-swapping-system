@@ -12,30 +12,59 @@
         </div>
     </div>
     <div class="animation-container">
-        <div class="col">
-            <div class="inserting-battery">
-                <video width="640" height="360" controls autoplay loop muted>
-                    <source src="./assets/Video/battery-swapping.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                  </video>
+        <div class="col" *ngIf="isTakingBatteryAnimationShow">
+            <div class="step-1 process">
+                <video width="200" height="200" controls autoplay loop muted>
+                    <source src="assets/Video/taking/taking-battery-box-door-open.mp4" type="video/mp4">
+                </video>
+                <div class="hide-video-player">
+                    <h5>Step-1: Open Door</h5>
+                </div>
             </div>
-            <div class="hide-video-player">
-                
+            <div class="step-2 process">
+                <video width="200" height="200" controls autoplay loop muted>
+                    <source src="assets/Video/taking/taking-battery-out-from-box.mp4" type="video/mp4">
+                </video>
+                <div class="hide-video-player">
+                    <h5>Step-2: Take Battery</h5>
+                </div>
+            </div>
+            <div class="step-3 process">
+                <video width="200" height="200" controls autoplay loop muted>
+                    <source src="assets/Video/taking/taking-battery-close-door-of-box.mp4" type="video/mp4">
+                </video>
+                <div class="hide-video-player">
+                    <h5>Step-2: Close Door</h5>
+                </div>
             </div>
         </div>
-        <div class="col">
-            <div class="inserting-battery">
-                <video width="640" height="360" controls autoplay loop muted>
-                    <source src="./assets/Video/battery-swapping-inserting.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                  </video>
+        
+        <div class="col" *ngIf="isInsertingBatteryAnimationShow">
+            <div class="step-1 process">
+                <video width="200" height="200" controls autoplay loop muted>
+                    <source src="assets/Video/inserting/insert-box-open.mp4" type="video/mp4">
+                </video>
+                <div class="hide-video-player">
+                    <h5>Step-1: Open Door</h5>
+                </div>
             </div>
-            <div class="hide-video-player">
-                
+            <div class="step-2 process">
+                <video width="200" height="200" controls autoplay loop muted>
+                    <source src="assets/Video/inserting/battery-insert-inbox.mp4" type="video/mp4">
+                </video>
+                <div class="hide-video-player">
+                    <h5>Step-2: Insert Battery</h5>
+                </div>
             </div>
-
+            <div class="step-3 process">
+                <video width="200" height="200" controls autoplay loop muted>
+                    <source src="assets/Video/inserting/insert-battery-box-door-close.mp4" type="video/mp4">
+                </video>
+                <div class="hide-video-player">
+                    <h5>Step-2: Close Door</h5>
+                </div>
+            </div>
         </div>
-
     </div>
    </div>
 </div>
