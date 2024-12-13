@@ -11,7 +11,32 @@
             <div class="battery-box" [ngClass]="{'blinking-box': openDoor == 6}" ></div>
         </div>
     </div>
-    <div class="animation-container"></div>
+    <div class="animation-container">
+        <div class="col">
+            <div class="inserting-battery">
+                <video width="640" height="360" controls autoplay loop muted>
+                    <source src="./assets/Video/battery-swapping.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                  </video>
+            </div>
+            <div class="hide-video-player">
+                
+            </div>
+        </div>
+        <div class="col">
+            <div class="inserting-battery">
+                <video width="640" height="360" controls autoplay loop muted>
+                    <source src="./assets/Video/battery-swapping-inserting.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                  </video>
+            </div>
+            <div class="hide-video-player">
+                
+            </div>
+
+        </div>
+
+    </div>
    </div>
 </div>
 

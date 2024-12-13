@@ -135,7 +135,7 @@
   .box-container{
     height: 500px;
     width: 1200px;
-    background-color: white;
+    background-color: rgb(226, 224, 224);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -144,6 +144,7 @@
   }
   .battery-container{
     height: 100%;
+    width: 450px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -162,7 +163,34 @@
     color: white;
   }
   .animation-container{
-    background-color: yellow;
+    width: 700px;
+    height: 100%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .col{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .inserting-battery{
+    height: 400px;
+    width: 400px;
+  }
+  .hide-video-player{
+    position: absolute;
+    height: 200px;
+    width: 400px;
+    background-color: rgb(226, 224, 224);
+    margin-top: 350px;
+
+  }
+  .inserting-battery video{
+    height: 100%;
+    width: 100%;
   }
   .battery-box-container{
     height: 300px;
