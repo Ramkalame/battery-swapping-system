@@ -77,10 +77,10 @@ export class WebsocketService {
     return this.messageSubjects[topic].asObservable();
   }
 
-  subscribeToIrTopic(boxNumber:string):Observable<any> {
-    const topic = `/topic/box/${boxNumber}/ir`;
-    return this.subscribeToTopic<string>(topic);
-  }
+  // subscribeToIrTopic(boxNumber:string):Observable<any> {
+  //   const topic = `/topic/box/${boxNumber}/ir`;
+  //   return this.subscribeToTopic<string>(topic);
+  // }
 
   subscribeToTemperatureTopic(boxNumber:string):Observable<any> {
     const topic = `/topic/box/${boxNumber}/tm`;

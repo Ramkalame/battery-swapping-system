@@ -23,12 +23,12 @@ export class CardSwipeMessageComponent implements OnInit {
         console.log('Received message RF:', message);
         this.rfId = message;
         // After receiving the RFID, redirect to the Dashboard
-        this.router.navigate(['/dashboard', this.rfId]);
+        this.router.navigate(['/wait', this.rfId]);
       });
 
     setTimeout(() => {
       this.router.navigate(['/']);
-    }, 3000);
+    }, 4500);
 
 }
 

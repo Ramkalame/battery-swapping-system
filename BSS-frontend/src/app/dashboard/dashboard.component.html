@@ -14,40 +14,50 @@
             <div class="battery-indicator-div">
                 <div class="batteries-box">
                     <div class="battery-box-p">
-                        <div class="battery-box-heading"><p>बैटरी-1</p></div>
-                        <div class="battery-box">
-                            <img [@batterySwapAnimation]="!irData1 ? 'open' : 'closed'" 
-                            src="./assets/{{!irData1 ? 'drawer.png' : 'charges-battery.png'}}" 
-                            alt="battery-image">
+                        <div class="battery-box-heading">
+                            <p>बैटरी-1</p>
                         </div>
-
-                    </div>
-                    <div class="battery-box-p">
-                        <div class="battery-box-heading"><p>बैटरी-2</p></div>
                         <div class="battery-box">
-                            <img src="./assets/charges-battery.png" alt="charges-battery.png">
+                            <img [@batterySwapAnimation]="!sdData1 ? 'open' : 'closed'"
+                                src="./assets/{{!sdData1 ? 'drawer.png' : 'charges-battery.png'}}" alt="battery-image">
                         </div>
                     </div>
                     <div class="battery-box-p">
-                        <div class="battery-box-heading"><p>बैटरी-3</p></div>
+                        <div class="battery-box-heading">
+                            <p>बैटरी-2</p>
+                        </div>
                         <div class="battery-box">
                             <img src="./assets/charges-battery.png" alt="charges-battery.png">
                         </div>
                     </div>
                     <div class="battery-box-p">
-                        <div class="battery-box-heading"><p>बैटरी-4</p></div>
+                        <div class="battery-box-heading">
+                            <p>बैटरी-3</p>
+                        </div>
+                        <div class="battery-box">
+                            <img src="./assets/charges-battery.png" alt="charges-battery.png">
+                        </div>
+                    </div>
+                    <div class="battery-box-p">
+                        <div class="battery-box-heading">
+                            <p>बैटरी-4</p>
+                        </div>
                         <div class="battery-box">
                             <img src="./assets/dead-battery.png" alt="charges-battery.png">
                         </div>
                     </div>
                     <div class="battery-box-p">
-                        <div class="battery-box-heading"><p>बैटरी-5</p></div>
+                        <div class="battery-box-heading">
+                            <p>बैटरी-5</p>
+                        </div>
                         <div class="battery-box">
                             <img src="./assets/dead-battery.png" alt="charges-battery.png">
                         </div>
                     </div>
                     <div class="battery-box-p">
-                        <div class="battery-box-heading"><p>बैटरी-6</p></div>
+                        <div class="battery-box-heading">
+                            <p>बैटरी-6</p>
+                        </div>
                         <div class="battery-box">
                             <img src="./assets/dead-battery.png" alt="charges-battery.png">
                         </div>
@@ -58,7 +68,7 @@
                         <div class="indicator-box">
                             <div class="indicator-icon">
                                 <img src="./assets/charges-battery.png" alt="charges-battery.png" class="ibattery">
-    
+
                             </div>
                             <div class="indicator-text">
                                 <p>पूरी तरह चार्ज</p>
@@ -67,7 +77,7 @@
                         <div class="indicator-box">
                             <div class="indicator-icon">
                                 <img src="./assets/dead-battery.png" alt="charges-battery.png" class="ibattery">
-    
+
                             </div>
                             <div class="indicator-text">
                                 <p>बिना चार्ज</p>
@@ -90,7 +100,7 @@
             <div class="about-client" *ngIf="selectedUser">
                 <p>ग्राहक आईडी: <span>{{selectedUser.userId}}</span></p>
                 <p>नाम: <span>{{selectedUser.userName}}</span> </p>
-                <p>वाहन संख्या: <span>{{selectedUser.engineNumber}}</span> </p>
+                <p>वाहन संख्या: <span>{{selectedUser.vehicleNumber}}</span> </p>
                 <p>मोबाइल नंबर: <span>{{selectedUser.mobileNumber}}</span> </p>
 
             </div>
