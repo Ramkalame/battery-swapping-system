@@ -2,14 +2,14 @@ export class User{
     userId:string;
     userName:string;
     mobileNumber:string;
-    engineNumber:string;
-    imgUrl:string;
+    vehicleNumber:string;
+    vehicleImageUrl:string;
 
     constructor(){
         this.userId = ' ';
         this.userName = ' ';
         this.mobileNumber = ' ';
-        this.engineNumber = ' ';
-        this.imgUrl = ' ';
+        this.vehicleNumber = ' ';
+        this.vehicleImageUrl = ' ';
     }
 }

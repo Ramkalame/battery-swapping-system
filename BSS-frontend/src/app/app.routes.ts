@@ -26,7 +26,6 @@ export const routes: Routes = [
     component: GreetPageComponent,
   },
   { path: 'card-swaipe-message', component: CardSwipeMessageComponent },
-  { path: 'wait', component: BufferingComponent },
+  { path: 'wait/:rfId', component: BufferingComponent },
   { path: 'insert', component: InsertingAnimationComponent },
-    {path:"test", component:TestAnimationComponent},
 ];

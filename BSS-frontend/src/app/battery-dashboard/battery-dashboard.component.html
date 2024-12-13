@@ -17,42 +17,47 @@
                     </div>
                     <div class="battery-box-p">
                         <div class="battery-box-heading">
-                            <p>बैटरी-2</p>
+                            <p>बैटरी<span class="das">-</span><span class="num">2</span></p>
                         </div>
                         <div class="battery-box">
-                            <img src="./assets/charges-battery.png" alt="charges-battery.png">
+                            <app-test-animation *ngIf="bsData2"></app-test-animation>
+                            <img src="./assets/charges-battery.png" alt="charges-battery.png" *ngIf="!bsData2">
                         </div>
                     </div>
                     <div class="battery-box-p">
                         <div class="battery-box-heading">
-                            <p>बैटरी-3</p>
+                            <p>बैटरी<span class="das">-</span><span class="num">3</span></p>
                         </div>
                         <div class="battery-box">
-                            <img src="./assets/charges-battery.png" alt="charges-battery.png">
+                            <app-test-animation *ngIf="bsData3"></app-test-animation>
+                            <img src="./assets/charges-battery.png" alt="charges-battery.png" *ngIf="!bsData3">
                         </div>
                     </div>
                     <div class="battery-box-p">
                         <div class="battery-box-heading">
-                            <p>बैटरी-4</p>
+                            <p>बैटरी<span class="das">-</span><span class="num">4</span></p>
                         </div>
                         <div class="battery-box">
-                            <img src="./assets/dead-battery.png" alt="charges-battery.png">
+                            <app-test-animation *ngIf="bsData4"></app-test-animation>
+                            <img src="./assets/charges-battery.png" alt="charges-battery.png" *ngIf="!bsData4">
                         </div>
                     </div>
                     <div class="battery-box-p">
                         <div class="battery-box-heading">
-                            <p>बैटरी-5</p>
+                            <p>बैटरी<span class="das">-</span><span class="num">5</span></p>
                         </div>
                         <div class="battery-box">
-                            <img src="./assets/dead-battery.png" alt="charges-battery.png">
+                            <app-test-animation *ngIf="bsData5"></app-test-animation>
+                            <img src="./assets/charges-battery.png" alt="charges-battery.png" *ngIf="!bsData5">
                         </div>
                     </div>
                     <div class="battery-box-p">
                         <div class="battery-box-heading">
-                            <p>बैटरी-6</p>
+                            <p>बैटरी<span class="das">-</span><span class="num">6</span></p>
                         </div>
                         <div class="battery-box">
-                            <img src="./assets/dead-battery.png" alt="charges-battery.png">
+                            <app-test-animation *ngIf="bsData6"></app-test-animation>
+                            <img src="./assets/charges-battery.png" alt="charges-battery.png" *ngIf="!bsData6">
                         </div>
                     </div>
                 </div>
@@ -74,15 +79,6 @@
                             </div>
                             <div class="indicator-text">
                                 <p>चार्ज हो रहा</p>
-                            </div>
-                        </div>
-                        <div class="indicator-box">
-                            <div class="indicator-icon">
-                                <img src="./assets/dead-battery.png" alt="charges-battery.png" class="ibattery">
-
-                            </div>
-                            <div class="indicator-text">
-                                <p>बिना चार्ज</p>
                             </div>
                         </div>
                     </div>
