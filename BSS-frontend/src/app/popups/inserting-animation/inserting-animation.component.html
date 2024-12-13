@@ -1,0 +1,26 @@
+<div class="container">
+   <div class="box-container">
+    <div class="battery-container">
+        <div class="heading"><h3>बॅटरी अंदर रखें</h3></div>
+        <div class="battery-box-container">
+            <div class="battery-box" [ngClass]="{'blinking-box': openDoor == 1}" ></div>
+            <div class="battery-box" [ngClass]="{'blinking-box': openDoor == 2}" ></div>
+            <div class="battery-box" [ngClass]="{'blinking-box': openDoor == 3}" ></div>
+            <div class="battery-box" [ngClass]="{'blinking-box': openDoor == 4}" ></div>
+            <div class="battery-box" [ngClass]="{'blinking-box': openDoor == 5}" ></div>
+            <div class="battery-box" [ngClass]="{'blinking-box': openDoor == 6}" ></div>
+        </div>
+    </div>
+    <div class="animation-container"></div>
+   </div>
+</div>
+
+<!-- <div class="box">
+    <div class="cover down">down</div>
+    <div class="cover right">right</div>
+    <div class="cover top box-top-cap">Top Cover</div>
+    <div class="cover left">left</div>
+    <div class="cover front">front</div>
+    <div class="cover back">back</div>
+    <div class="cover top">top</div>
+</div> -->
