@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { OpenBoxSignalService } from '../../services/open-box-signal.service';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
 
 @Component({
   selector: 'app-inserting-animation',
@@ -31,5 +33,6 @@ export class InsertingAnimationComponent implements OnInit {
   closePopup(): void {
     this.close.emit(); // Emit an event to close the popup
   }
+
 
 }
