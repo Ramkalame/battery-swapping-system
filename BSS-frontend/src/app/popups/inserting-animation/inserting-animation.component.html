@@ -14,57 +14,69 @@
          </div>
          <div class="animation-container">
              <div class="col" *ngIf="isTakingBatteryAnimationShow">
-                 <div id="step-1" class="step-1 process"  [class.animate]="activeStep === 1">
-                     <video width="200" height="200" controls autoplay loop muted>
-                         <source src="assets/Video/taking/taking-battery-box-door-open.mp4" type="video/mp4">
-                     </video>
-                     <div class="hide-video-player">
-                         <h5>Step-1: Open Door</h5>
-                     </div>
-                 </div>
-                 <div id="step-2" class="step-2 process"  [class.animate]="activeStep === 2">
-                     <video width="200" height="200" controls autoplay loop muted>
-                         <source src="assets/Video/taking/taking-battery-out-from-box.mp4" type="video/mp4">
-                     </video>
-                     <div class="hide-video-player">
-                         <h5>Step-2: Take Battery</h5>
-                     </div>
-                 </div>
-                 <div id="step-3" class="step-3 process"  [class.animate]="activeStep === 3">
-                     <video width="200" height="200" controls autoplay loop muted>
-                         <source src="assets/Video/taking/taking-battery-close-door-of-box.mp4" type="video/mp4">
-                     </video>
-                     <div class="hide-video-player">
-                         <h5>Step-2: Close Door</h5>
-                     </div>
+                <div class="step">
+                    <div id="step-1" class="step-1 process"  [class.animate]="activeStep === 1">
+                        <video width="200" height="200" controls autoplay loop muted>
+                            <source src="assets/Video/taking/taking-battery-box-door-open.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="hide-video-player">
+                        <h5>Step-1: Open Door</h5>
+                    </div>
+                </div>
+                <div class="step">
+                    <div id="step-2" class="step-2 process"  [class.animate]="activeStep === 2">
+                        <video width="200" height="200" controls autoplay loop muted>
+                            <source src="assets/Video/taking/taking-battery-out-from-box.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="hide-video-player">
+                        <h5>Step-2: Take Battery</h5>
+                    </div>
+                </div>
+                 <div class="step">
+                    <div id="step-3" class="step-3 process"  [class.animate]="activeStep === 3">
+                        <video width="200" height="200" controls autoplay loop muted>
+                            <source src="assets/Video/taking/taking-battery-close-door-of-box.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="hide-video-player">
+                        <h5>Step-2: Close Door</h5>
+                    </div>
                  </div>
              </div>
              
              <div class="col" *ngIf="isInsertingBatteryAnimationShow">
-                 <div id="step-1" class="step-1 process"  [class.animate]="activeStep === 1">
-                     <video width="200" height="200" controls autoplay loop muted>
-                         <source src="assets/Video/inserting/insert-box-open.mp4" type="video/mp4">
-                     </video>
-                     <div class="hide-video-player">
-                         <h5>Step-1: Open Door</h5>
-                     </div>
-                 </div>
-                 <div id="step-2" class="step-2 process"  [class.animate]="activeStep === 2">
-                     <video width="200" height="200" controls autoplay loop muted>
-                         <source src="assets/Video/inserting/battery-insert-inbox.mp4" type="video/mp4">
-                     </video>
-                     <div class="hide-video-player">
-                         <h5>Step-2: Insert Battery</h5>
-                     </div>
-                 </div>
-                 <div id="step-3" class="step-3 process"  [class.animate]="activeStep === 3">
-                     <video width="200" height="200" controls autoplay loop muted>
-                         <source src="assets/Video/inserting/insert-battery-box-door-close.mp4" type="video/mp4">
-                     </video>
-                     <div class="hide-video-player">
-                         <h5>Step-2: Close Door</h5>
-                     </div>
-                 </div>
+                <div class="step">
+                    <div id="step-1" class="step-1 process"  [class.animate]="activeStep === 1">
+                        <video width="200" height="200" controls autoplay loop muted>
+                            <source src="assets/Video/inserting/insert-box-open.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="hide-video-player">
+                        <h5>Step-1: Open Door</h5>
+                    </div>
+                </div>
+                <div class="step">
+                    <div id="step-2" class="step-2 process"  [class.animate]="activeStep === 2">
+                        <video width="200" height="200" controls autoplay loop muted>
+                            <source src="assets/Video/inserting/battery-insert-inbox.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="hide-video-player">
+                        <h5>Step-2: Insert Battery</h5>
+                    </div>
+                </div>
+                <div class="step">
+                    <div id="step-3" class="step-3 process"  [class.animate]="activeStep === 3">
+                        <video width="200" height="200" controls autoplay loop muted>
+                            <source src="assets/Video/inserting/insert-battery-box-door-close.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="hide-video-player">
+                        <h5>Step-2: Close Door</h5>
+                    </div>
+                </div>
              </div>
          </div>
         </div>

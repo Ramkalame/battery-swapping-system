@@ -7,6 +7,7 @@ import { BufferingComponent } from './buffering/buffering.component';
 import { InsertingAnimationComponent } from './popups/inserting-animation/inserting-animation.component';
 import { TestAnimationComponent } from './test-animation/test-animation.component';
 import { BatteryDashboardComponent } from './battery-dashboard/battery-dashboard.component';
+import { WarningMessageComponent } from './warning-message/warning-message.component';
 
 export const routes: Routes = [
   {
@@ -28,4 +29,5 @@ export const routes: Routes = [
   { path: 'card-swaipe-message', component: CardSwipeMessageComponent },
   { path: 'wait/:rfId', component: BufferingComponent },
   { path: 'insert', component: InsertingAnimationComponent },
+  { path: 'invalid-credential', component: WarningMessageComponent },
 ];
