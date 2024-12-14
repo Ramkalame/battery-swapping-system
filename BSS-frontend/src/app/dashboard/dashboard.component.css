@@ -2,6 +2,7 @@
     background-color: #3F62F0;
     width: 100vw;
     height: 100vh;
+    position: relative;
 
 }
 /* ======================== header======================= */
@@ -201,5 +202,25 @@
     object-fit: contain;
 }
 
-
+/* ========================= popup=================== */
+/* Blur Effect on Background */
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+    backdrop-filter: blur(5px); /* Blur effect */
+    z-index: 1000;
+  }
+  
+  /* Centered Popup */
+  .popup-window {
+    position: fixed;
+    top: 50%;
+    left: 45%;
+    transform: translate(-50%, -50%);
+    z-index: 1050; /* Above the overlay */
+  }
 

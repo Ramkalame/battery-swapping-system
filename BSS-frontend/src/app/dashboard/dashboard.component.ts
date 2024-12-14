@@ -12,12 +12,13 @@ import { ApiService } from '../services/api.service';
 import { WebsocketService } from '../services/websocket.service';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { InsertingAnimationComponent } from '../popups/inserting-animation/inserting-animation.component';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
 
-  imports: [RouterModule, CommonModule, FormsModule],
+  imports: [RouterModule, CommonModule, FormsModule, InsertingAnimationComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
   animations: [
@@ -45,6 +46,9 @@ export class DashboardComponent implements OnInit {
   selectedUser!: User;
 
   rfId!: string;
+
+
+  showPopup = false;
 
   // For box 1
   // irData1!: boolean;
@@ -358,5 +362,18 @@ export class DashboardComponent implements OnInit {
       .subscribe((response) => {
         console.log('Received Box 6 Solenoid response:', response);
       });
+  }
+
+
+
+
+
+  openPopup(): void {
+    this.showPopup = true;
+    console.log("popup button trigger"); // Show the popup
+  }
+
+  closePopup(): void {
+    this.showPopup = false; // Hide the popup
   }
 }
