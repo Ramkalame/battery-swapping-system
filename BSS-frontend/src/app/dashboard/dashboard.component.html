@@ -2,7 +2,8 @@
 <div class="container">
     <div class="header">
         <div class="image-banner"><img src="./assets/banner1.png" alt="banner" class="banner1"></div>
-        <!--         
+
+        <button (click)="openPopup()">Open Popup</button>
         <div class="instruction">
             <p *ngIf="!isBatteryInserted">निर्देश: खाली जगह पर अपनी बैटरी डालें।</p>
             <p *ngIf="isBatteryInserted && !isBatteryCharged">निर्देश: चार्ज की गई बैटरी लें।</p>
@@ -108,6 +109,13 @@
             </div>
         </div>
     </div>
-
+    <!-- Popup Background Blur -->
+    <div class="popup-overlay" *ngIf="showPopup"></div>
+  
+    <!-- Popup Component -->
+    <div class="popup-window" *ngIf="showPopup">
+      <app-inserting-animation (close)="closePopup()"></app-inserting-animation>
+    </div>
 </div>
 
+  

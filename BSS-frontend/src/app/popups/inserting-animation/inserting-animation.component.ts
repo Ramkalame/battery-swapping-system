@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { OpenBoxSignalService } from '../../services/open-box-signal.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -13,12 +13,12 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrl: './inserting-animation.component.css'
 })
 export class InsertingAnimationComponent implements OnInit {
+  @Output() close = new EventEmitter<void>();
 
   openDoor: number = 0; // This will store which box is open
-  isTakingBatteryAnimationShow:boolean=true;
-  isInsertingBatteryAnimationShow:boolean=false;
-
-  constructor(private openBoxSignalService:OpenBoxSignalService,){}
+  isTakingBatteryAnimationShow:boolean=false;
+  isInsertingBatteryAnimationShow:boolean=true;
+  constructor(private openBoxSignalService:OpenBoxSignalService){}
 
   ngOnInit(): void {
     this.fetchBoxStatus();
@@ -29,6 +29,9 @@ export class InsertingAnimationComponent implements OnInit {
     //   console.log(data);
     // })
     this.openDoor=3;
+  }
+  closePopup(): void {
+    this.close.emit(); // Emit an event to close the popup
   }
 
 
