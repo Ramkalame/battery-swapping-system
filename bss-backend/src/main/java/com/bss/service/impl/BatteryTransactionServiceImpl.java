@@ -2,7 +2,9 @@ package com.bss.service.impl;
 
 import com.bss.dto.BatteryTransactionDto;
 import com.bss.entity.BatteryTransaction;
+import com.bss.entity.EmptyBox;
 import com.bss.repository.BatteryTransactionRepository;
+import com.bss.repository.EmptyBoxRepository;
 import com.bss.service.BatteryTransactionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,7 @@ import java.time.LocalDateTime;
 public class BatteryTransactionServiceImpl implements BatteryTransactionService {
 
     private final BatteryTransactionRepository batteryTransactionRepository;
+    private final EmptyBoxRepository emptyBoxRepository;
 
     @Override
     public BatteryTransaction createTransaction(BatteryTransactionDto batteryTransactionDto) {
@@ -54,5 +57,28 @@ public class BatteryTransactionServiceImpl implements BatteryTransactionService 
     @Override
     public String deleteTransaction(String serialNumber) {
         return "";
+    }
+
+
+
+    //implementation of empty box methods
+    @Override
+    public EmptyBox updateCurrentEmptyBox(String boxNumber) {
+
+        EmptyBox existingData = emptyBoxRepository.findById("id1").orElse(null);
+        if (existingData == null){
+            EmptyBox newEmptyBox = EmptyBox.builder()
+                    .id("id1")
+                    .boxNumber(boxNumber)
+                    .build();
+            return emptyBoxRepository.save(newEmptyBox);
+        }
+        existingData.setBoxNumber(boxNumber.trim());
+        return emptyBoxRepository.save(existingData);
+    }
+
+    @Override
+    public EmptyBox getCurrentEmptyBox() {
+        return emptyBoxRepository.findById("id1").orElse(null);
     }
 }
