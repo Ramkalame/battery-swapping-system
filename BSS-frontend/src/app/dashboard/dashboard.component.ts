@@ -13,12 +13,14 @@ import { WebsocketService } from '../services/websocket.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { InsertingAnimationComponent } from '../popups/inserting-animation/inserting-animation.component';
+import { EmptyBox } from '../models/BatteryTransaction';
+import { TestAnimationComponent } from "../test-animation/test-animation.component";
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
 
-  imports: [RouterModule, CommonModule, FormsModule, InsertingAnimationComponent],
+  imports: [RouterModule, CommonModule, FormsModule, InsertingAnimationComponent, TestAnimationComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
   animations: [
@@ -53,37 +55,37 @@ export class DashboardComponent implements OnInit {
   // For box 1
   // irData1!: boolean;
   tmData1!: string;
-  bsData1!: boolean;
+  bsData1: boolean = true;
   sdData1: boolean = true;
 
   // For box 2
   // irData2!: boolean;
   tmData2!: string;
-  bsData2!: boolean;
+  bsData2: boolean = true;
   sdData2: boolean = true;
 
   // For box 3
   // irData3!: boolean;
   tmData3!: string;
-  bsData3!: boolean;
+  bsData3: boolean = true;
   sdData3: boolean = true;
 
   // For box 4
   // irData4!: boolean;
   tmData4!: string;
-  bsData4!: boolean;
+  bsData4: boolean = true;
   sdData4: boolean = true;
 
   // For box 5
   // irData5!: boolean;
   tmData5!: string;
-  bsData5!: boolean;
+  bsData5: boolean = true;
   sdData5: boolean = true;
 
   // For box 6
   // irData6!: boolean;
   tmData6!: string;
-  bsData6!: boolean;
+  bsData6: boolean = true;
   sdData6: boolean = true;
 
   constructor(
