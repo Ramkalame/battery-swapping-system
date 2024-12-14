@@ -47,6 +47,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-left: 10px;
+    padding-left: 20px;
+
   }
   .col{
     display: flex;
@@ -57,19 +60,28 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
+    border: 2px solid rgb(27, 129, 27);
+    padding: 30px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 30px;
+    transition: all 0.5s ease-in-out;
+
+  }
+  .animate {
+    animation: blink2 1s infinite;
   }
   .hide-video-player{
     position: absolute;
-    height: 100px;
-    width: 250px;
+    height: 50px;
+    width: 150px;
     background-color:white;
-    margin-top: 250px;
+    margin-top: 120px;
     display: flex;
     justify-content: center;
     align-items: center;
-
   }
   h5{
     font-family:sans-serif;
@@ -77,8 +89,8 @@
     color: rgb(50, 192, 58);
   }
   video{
-    height: 250px;
-    width: 250px;
+    height: 150px;
+    width: 150px;
     pointer-events: none;
     user-select: none;
   }
@@ -135,5 +147,20 @@
     }
     100% {
       background-color: #18308f;
+    }
+  }
+
+  @keyframes blink2 {
+    0% {
+      border: 2px solid rgb(27, 129, 27);
+      opacity: 1;
+    }
+    50% {
+      border: 2px solid white;
+      opacity: 0.5;
+    }
+    100% {
+      border: 2px solid rgb(27, 129, 27);
+      opacity: 1;
     }
   }
