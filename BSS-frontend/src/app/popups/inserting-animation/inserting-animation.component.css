@@ -4,7 +4,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #1e2850;
 
 }
 
@@ -112,6 +111,17 @@
 .blinking-box {
   animation: blink 1s infinite;
 }
+/* ============================================================== */
+
+.popup-content {
+  border-radius: 8px;
+  /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); */
+  max-width: 1200px;
+  z-index: 1050;
+}
+
+
+/* ============================================================== */
 
 
   @keyframes blink {
