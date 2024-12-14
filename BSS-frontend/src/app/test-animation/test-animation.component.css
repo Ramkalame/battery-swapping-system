@@ -29,6 +29,7 @@
     background-color: #EAAD07;
     animation: show-charging-level 3s ease-in-out infinite;
 }
+
 .zigzck{
     position: absolute;
     margin-top: 25px;
@@ -49,7 +50,7 @@
         border-bottom-right-radius: 10px;
         border-bottom-left-radius: 10px;
     }
-    57%{
+    75%{
         height: 160px;
         border-bottom-right-radius: 10px;
         border-bottom-left-radius: 10px;
