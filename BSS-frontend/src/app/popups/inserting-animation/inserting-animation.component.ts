@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { OpenBoxSignalService } from '../../services/open-box-signal.service';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
 
 @Component({
   selector: 'app-inserting-animation',
@@ -42,5 +44,6 @@ export class InsertingAnimationComponent implements OnInit {
       this.activeStep = this.activeStep < 3 ? this.activeStep + 1 : 1; // Loop through steps
     }, 15000); // Change step every 15 seconds
   }
+
 
 }

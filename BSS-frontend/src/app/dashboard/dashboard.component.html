@@ -1,10 +1,15 @@
 <div class="container">
     <div class="header">
         <div class="image-banner"><img src="./assets/banner1.png" alt="banner" class="banner1"></div>
-        <button (click)="openPopup()">Open Popup</button>
-<!--         
-        <div class="instruction">
+<<<<<<< HEAD
+        <!-- <div class="instruction">
             <p *ngIf="!isBatteryInserted">निर्देश: खाली जगह पर अपनी बैटरी डालें।</p>
+=======
+
+        <!-- <button (click)="openPopup()">Open Popup</button> -->
+        <div class="instruction">
+            <p *ngIf="!isBatteryInserted">निर्देश: खाली जगह पर अपनी बैटरी रखें।</p>
+>>>>>>> af70d9ed28cd85731a585c2d7cce43d5431ba6a6
             <p *ngIf="isBatteryInserted && !isBatteryCharged">निर्देश: चार्ज की गई बैटरी लें।</p>
         </div> -->
     </div>
@@ -17,11 +22,11 @@
                 <div class="batteries-box">
                     <div class="battery-box-p">
                         <div class="battery-box-heading">
-                            <p>बैटरी-1</p>
+                            <p>बैटरी<span class="das">-</span><span class="num">1</span></p>
                         </div>
                         <div class="battery-box">
-                            <img [@batterySwapAnimation]="!sdData1 ? 'open' : 'closed'"
-                                src="./assets/{{!sdData1 ? 'drawer.png' : 'charges-battery.png'}}" alt="battery-image">
+                            <app-test-animation class="charging-on" *ngIf="!bsData1"></app-test-animation>
+                            <img src="./assets/charges-battery.png" alt="charges-battery.png" *ngIf="bsData1">
                         </div>
                     </div>
                     <div class="battery-box-p">
@@ -29,7 +34,8 @@
                             <p>बैटरी-2</p>
                         </div>
                         <div class="battery-box">
-                            <img src="./assets/charges-battery.png" alt="charges-battery.png">
+                            <app-test-animation class="charging-on" *ngIf="bsData1"></app-test-animation>
+                            <img src="./assets/charges-battery.png" alt="charges-battery.png" *ngIf="!bsData1">
                         </div>
                     </div>
                     <div class="battery-box-p">
@@ -37,7 +43,8 @@
                             <p>बैटरी-3</p>
                         </div>
                         <div class="battery-box">
-                            <img src="./assets/charges-battery.png" alt="charges-battery.png">
+                            <app-test-animation class="charging-on" *ngIf="bsData1"></app-test-animation>
+                            <img src="./assets/charges-battery.png" alt="charges-battery.png" *ngIf="!bsData1">
                         </div>
                     </div>
                     <div class="battery-box-p">
@@ -45,7 +52,8 @@
                             <p>बैटरी-4</p>
                         </div>
                         <div class="battery-box">
-                            <img src="./assets/dead-battery.png" alt="charges-battery.png">
+                            <app-test-animation class="charging-on" *ngIf="bsData1"></app-test-animation>
+                            <img src="./assets/charges-battery.png" alt="charges-battery.png" *ngIf="!bsData1">
                         </div>
                     </div>
                     <div class="battery-box-p">
@@ -53,7 +61,8 @@
                             <p>बैटरी-5</p>
                         </div>
                         <div class="battery-box">
-                            <img src="./assets/dead-battery.png" alt="charges-battery.png">
+                            <app-test-animation class="charging-on" *ngIf="bsData1"></app-test-animation>
+                            <img src="./assets/charges-battery.png" alt="charges-battery.png" *ngIf="!bsData1">
                         </div>
                     </div>
                     <div class="battery-box-p">
@@ -61,7 +70,8 @@
                             <p>बैटरी-6</p>
                         </div>
                         <div class="battery-box">
-                            <img src="./assets/dead-battery.png" alt="charges-battery.png">
+                            <app-test-animation class="charging-on" *ngIf="bsData1"></app-test-animation>
+                            <img src="./assets/charges-battery.png" alt="charges-battery.png" *ngIf="!bsData1">
                         </div>
                     </div>
                 </div>
@@ -73,16 +83,16 @@
 
                             </div>
                             <div class="indicator-text">
-                                <p>पूरी तरह चार्ज</p>
+                                <p>पूरी तरह चार्ज है</p>
                             </div>
                         </div>
                         <div class="indicator-box">
                             <div class="indicator-icon">
-                                <img src="./assets/dead-battery.png" alt="charges-battery.png" class="ibattery">
+                                <img src="./assets/charging-battery.png" alt="charges-battery.png" class="ibattery">
 
                             </div>
                             <div class="indicator-text">
-                                <p>बिना चार्ज</p>
+                                <p>चार्ज हो रहा है</p>
                             </div>
                         </div>
                     </div>
@@ -90,31 +100,31 @@
             </div>
         </div>
         <div class="client-details">
-            <div class="client-details-heading">
-                <h6>ग्राहक विवरण</h6>
-            </div>
-            <div class="client-profile-img">
-                <div class="client-profile-img-box">
-
-                    <img src="./assets/user.png" alt="user" class="user-profile">
+            <div class="img-text-div">
+                <div class="vehicle-image-div">
+                    <img src="./assets/client-image.png" alt="client-image.png" class="client-image">
+                </div>
+                <div class="text-details">
+                    <div class="details-heading">
+                        <h6>ग्राहक आईडी: </h6>
+                        <h6>नाम:</h6>
+                        <h6>मोबाइल नंबर:</h6>
+                        <h6>वाहन नंबर:</h6>
+                    </div>
+                    <div class="details-value">
+                        <h6>13CF38DA</h6>
+                        <h6>USER NAME1</h6>
+                        <h6>123456789</h6>
+                        <h6>CG04AS2341</h6>
+                    </div>
                 </div>
             </div>
-            <div class="about-client" *ngIf="selectedUser">
-                <p>ग्राहक आईडी: <span>{{selectedUser.userId}}</span></p>
-                <p>नाम: <span>{{selectedUser.userName}}</span> </p>
-                <p>वाहन संख्या: <span>{{selectedUser.vehicleNumber}}</span> </p>
-                <p>मोबाइल नंबर: <span>{{selectedUser.mobileNumber}}</span> </p>
+        </div>
+        <!-- Popup Background Blur -->
+        <div class="popup-overlay" *ngIf="showPopup"></div>
 
-            </div>
+        <!-- Popup Component -->
+        <div class="popup-window" *ngIf="showPopup">
+            <app-inserting-animation (close)="closePopup()"></app-inserting-animation>
         </div>
     </div>
-    <!-- Popup Background Blur -->
-    <div class="popup-overlay" *ngIf="showPopup"></div>
-  
-    <!-- Popup Component -->
-    <div class="popup-window" *ngIf="showPopup">
-      <app-inserting-animation (close)="closePopup()"></app-inserting-animation>
-    </div>
-</div>
-
-  

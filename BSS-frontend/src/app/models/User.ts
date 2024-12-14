@@ -13,3 +13,26 @@ export class User{
         this.vehicleImageUrl = ' ';
     }
 }
+
+
+export class ApiResponse<T> {
+    data: T;
+    message: string;
+    timestamp: Date;
+    statusCode: number;
+    success: boolean;
+
+    constructor(
+        data: T,
+        message: string,
+        timestamp: Date,
+        statusCode: number,
+        success: boolean
+    ) {
+        this.data = data;
+        this.message = message;
+        this.timestamp = timestamp;
+        this.statusCode = statusCode;
+        this.success = success;
+    }
+}

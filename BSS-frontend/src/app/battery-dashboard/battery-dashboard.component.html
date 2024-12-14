@@ -8,10 +8,11 @@
                 <div class="batteries-box">
                     <div class="battery-box-p">
                         <div class="battery-box-heading">
-                            <p>बैटरी-1</p>
+                            <p>बैटरी<span class="das">-</span><span class="num">1</span></p>
                         </div>
                         <div class="battery-box">
-                            <img src="./assets/charges-battery.png" alt="charges-battery.png">
+                            <app-test-animation *ngIf="bsData1"></app-test-animation>
+                            <img src="./assets/charges-battery.png" alt="charges-battery.png" *ngIf="!bsData1">
                         </div>
 
                     </div>
@@ -69,7 +70,7 @@
 
                             </div>
                             <div class="indicator-text">
-                                <p>पूरी तरह चार्ज</p>
+                                <p>पूरी तरह चार्ज है</p>
                             </div>
                         </div>
                         <div class="indicator-box">
@@ -78,7 +79,7 @@
 
                             </div>
                             <div class="indicator-text">
-                                <p>चार्ज हो रहा</p>
+                                <p>चार्ज हो रहा है</p>
                             </div>
                         </div>
                     </div>
