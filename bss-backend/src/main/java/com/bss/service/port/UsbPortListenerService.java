@@ -1,10 +1,12 @@
-package com.bss.service;
+package com.bss.service.port;
 
+import com.bss.service.SocketService;
 import com.fazecast.jSerialComm.SerialPort;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -12,18 +14,21 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class UsbPortListenerService {
 
+    @Value("${usb.port.name}")
+    private String portName;
+
     private final SocketService socketService;
     private SerialPort serialPort;
 
     @PostConstruct
     public void init() {
-        serialPort = SerialPort.getCommPort("COM5");
+        serialPort = SerialPort.getCommPort(portName);
         serialPort.setComPortParameters(9600, 8, 1, 0);
         serialPort.setComPortTimeouts(SerialPort.TIMEOUT_READ_BLOCKING, 1000, 0);
 
         logAvailablePorts();
         if (serialPort.openPort()) {
-            log.info("COM5 Serial port opened successfully!");
+            log.info("{} Serial port opened successfully!", portName);
 
             new Thread(() -> {
                 log.info("Reading thread started.");
@@ -44,7 +49,7 @@ public class UsbPortListenerService {
                 }
             }).start();
         } else {
-            log.error("Failed to open the COM3 serial port.");
+            log.error("{} Failed to open the serial port.",portName);
         }
     }
 
