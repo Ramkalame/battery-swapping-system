@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { OpenBoxSignalService } from '../../services/open-box-signal.service';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
 
 @Component({
   selector: 'app-inserting-animation',
@@ -15,7 +17,8 @@ export class InsertingAnimationComponent implements OnInit {
   openDoor: number = 0; // This will store which box is open
   isTakingBatteryAnimationShow:boolean=true;
   isInsertingBatteryAnimationShow:boolean=false;
-  constructor(private openBoxSignalService:OpenBoxSignalService){}
+
+  constructor(private openBoxSignalService:OpenBoxSignalService,){}
 
   ngOnInit(): void {
     this.fetchBoxStatus();
@@ -27,5 +30,6 @@ export class InsertingAnimationComponent implements OnInit {
     // })
     this.openDoor=3;
   }
+
 
 }

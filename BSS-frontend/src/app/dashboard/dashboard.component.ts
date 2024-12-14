@@ -7,11 +7,14 @@ import {
 } from '@angular/animations';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { User } from '../models/User';
+import { ApiResponse, User } from '../models/User';
 import { ApiService } from '../services/api.service';
 import { WebsocketService } from '../services/websocket.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { EmptyBox } from '../models/BatteryTransaction';
+import { MatDialog } from '@angular/material/dialog';
+import { InsertingAnimationComponent } from '../popups/inserting-animation/inserting-animation.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -86,7 +89,7 @@ export class DashboardComponent implements OnInit {
     private webSocketService: WebsocketService,
     private apiService: ApiService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -134,6 +137,7 @@ export class DashboardComponent implements OnInit {
     // }, 1000);
   }
 
+  
   getUserDetails(rfId: string) {
     this.apiService.getUserById(rfId).subscribe({
       next: (data: User) => {
@@ -144,6 +148,31 @@ export class DashboardComponent implements OnInit {
       },
     });
   }
+
+  getCurrentEmptyBox(){
+    this.apiService.getCurrentEmptyBox().subscribe({
+      next:(response:ApiResponse<EmptyBox>) => {
+        console.log(response.message+" :-"+response.data.boxNumber);
+      },
+      error:(error:any) =>{
+        console.log('Something Went Wrong');
+      },
+    });
+  }
+
+
+
+  updateCurrentEmptyBox(boxNumber:string){
+    this.apiService.updateCurrentEmptyBox(boxNumber).subscribe({
+      next:(response:ApiResponse<EmptyBox>) => {
+        console.log(response.message);
+      },
+      error:(error:any) =>{
+        console.log('Something Went Wrong');
+      },
+    });
+  }
+
 
   //method for toggel
   toggleSwapState() {
