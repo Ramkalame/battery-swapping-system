@@ -2,7 +2,7 @@ package com.bss.controller;
 
 import com.bss.entity.User;
 import com.bss.service.UserService;
-import com.bss.service.port.UsbPortSenderService;
+//import com.bss.service.port.UsbPortSenderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +15,7 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
-    private final UsbPortSenderService usbPortSenderService;
+//    private final UsbPortSenderService usbPortSenderService;
 
     @GetMapping
     public List<User> getAllUser(){
@@ -44,10 +44,10 @@ public class UserController {
     }
 
     //testing api to send msg to arduino
-    @PostMapping("/send")
-    public String sendToArduino(@RequestBody String command) {
-        usbPortSenderService.sendDataToArduino(command + "\n");
-        return "Command sent to Arduino: " + command;
-    }
+//    @PostMapping("/send")
+//    public String sendToArduino(@RequestBody String command) {
+//        usbPortSenderService.sendDataToArduino(command + "\n");
+//        return "Command sent to Arduino: " + command;
+//    }
 
 }

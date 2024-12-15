@@ -16,6 +16,6 @@ public class EmptyBox {
 
     @Id
     private String id;
-    private String boxNumber;
+    private int boxNumber;
 
 }

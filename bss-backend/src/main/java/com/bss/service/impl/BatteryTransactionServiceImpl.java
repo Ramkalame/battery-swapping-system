@@ -63,7 +63,7 @@ public class BatteryTransactionServiceImpl implements BatteryTransactionService 
 
     //implementation of empty box methods
     @Override
-    public EmptyBox updateCurrentEmptyBox(String boxNumber) {
+    public EmptyBox updateCurrentEmptyBox(int boxNumber) {
 
         EmptyBox existingData = emptyBoxRepository.findById("id1").orElse(null);
         if (existingData == null){
@@ -73,7 +73,7 @@ public class BatteryTransactionServiceImpl implements BatteryTransactionService 
                     .build();
             return emptyBoxRepository.save(newEmptyBox);
         }
-        existingData.setBoxNumber(boxNumber.trim());
+        existingData.setBoxNumber(boxNumber);
         return emptyBoxRepository.save(existingData);
     }
 
