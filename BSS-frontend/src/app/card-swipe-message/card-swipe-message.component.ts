@@ -13,7 +13,7 @@ import { WebsocketService } from '../services/websocket.service';
 export class CardSwipeMessageComponent implements OnInit {
   private timeoutId!: any;
   rfId!: string;
-
+  
   constructor(
     private router: Router,
     private webSocketService: WebsocketService

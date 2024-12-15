@@ -10,22 +10,9 @@ import { BatteryDashboardComponent } from './battery-dashboard/battery-dashboard
 import { WarningMessageComponent } from './warning-message/warning-message.component';
 
 export const routes: Routes = [
-  {
-    path: '',
-    component: HomeComponent,
-  },
-  {
-    path: 'battery-dashboard',
-    component:BatteryDashboardComponent
-  },
-  {
-    path: 'dashboard/:rfId',
-    component: DashboardComponent,
-  },
-  {
-    path: 'greet',
-    component: GreetPageComponent,
-  },
+  {path: '',component: HomeComponent,},
+  {path: 'dashboard/:rfId',component: DashboardComponent,},
+  {path: 'greet',component: GreetPageComponent,},
   { path: 'card-swaipe-message', component: CardSwipeMessageComponent },
   { path: 'wait/:rfId', component: BufferingComponent },
   { path: 'insert', component: InsertingAnimationComponent },

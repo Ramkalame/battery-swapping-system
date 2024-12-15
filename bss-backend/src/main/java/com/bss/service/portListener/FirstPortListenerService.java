@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class FirstPortListenerService {
 
-    private final String portName = "COM2";
+    private final String portName = "COM8";
 
     private final SocketService socketService;
     private SerialPort serialPort;
