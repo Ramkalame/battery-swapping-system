@@ -25,7 +25,9 @@
     padding-top: 100px;
 }
 .heading h4{
-    line-height: 10px;
+    line-height: 40px;
+    font-size: 50px;
+    font-weight: bold;
 }
 
 .battery-png{
