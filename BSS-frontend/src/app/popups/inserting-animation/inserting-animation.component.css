@@ -12,8 +12,8 @@
 
   .box-container{
     height: 600px;
-    width: 1300px;
-    background-color: white;
+    width: 1600px;
+    background-color: rgb(255, 255, 255);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -43,7 +43,7 @@
     margin: 5px;
   }
   .animation-container{
-    width: 800px;
+    width: 1100px;
     height: 100%;
     display: flex;
     justify-content: center;
@@ -57,18 +57,19 @@
   .step{
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
-    margin-right: 30px;
-    height: 400px;
+    height: 430px;
+    width: 370px;
   }
   .process{
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 2px solid rgb(27, 129, 27);
-    padding: 30px;
+    border: 3px solid rgb(27, 129, 27);
     border-radius: 50%;
+    height: 350px;
+    width: 350px;
     overflow: hidden; 
     transition: all 0.5s ease-in-out;
   }
@@ -85,13 +86,13 @@
   }
   h5{
     font-family:sans-serif;
-    font-size: 17px;
+    font-size: 25px;
     color: rgb(25, 126, 30);
     font-weight: bold;
   }
   video{
-    height: 160px;
-    width: 160px;
+    height: 400px;
+    width: 400px;
     pointer-events: none;
     user-select: none;
   }
@@ -141,27 +142,27 @@
 
   @keyframes blink {
     0% {
-      background-color: #18308f;
+      background-color: #b89e0a;
     }
     50% {
       background-color: #ffffff;
     }
     100% {
-      background-color: #18308f;
+      background-color: #b89e0a;
     }
   }
 
   @keyframes blink2 {
     0% {
-      border: 2px solid rgb(27, 129, 27);
+      border: 3px solid rgb(27, 129, 27);
       opacity: 1;
     }
     50% {
-      border: 2px solid white;
+      border: 3px solid white;
       opacity: 0.5;
     }
     100% {
-      border: 2px solid rgb(27, 129, 27);
+      border: 3px solid rgb(27, 129, 27);
       opacity: 1;
     }
   }

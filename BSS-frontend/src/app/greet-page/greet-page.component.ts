@@ -16,9 +16,9 @@ export class GreetPageComponent implements OnInit {
 
   ngOnInit(){
         // Redirect to home after 20 seconds
-  setTimeout(() => {
-    this.router.navigate(['/']);
-  }, 2000); 
+  // setTimeout(() => {
+  //   this.router.navigate(['/']);
+  // }, 2000); 
   }
 
 }

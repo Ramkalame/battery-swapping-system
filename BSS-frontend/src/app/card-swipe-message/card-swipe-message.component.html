@@ -1,13 +1,15 @@
 <div class="container">
     <div class="center">
-        <div class="message-text">
-            <h1>कृपया अपना कार्ड स्कैन करें |</h1>
-        </div>
         <div class="animation-card-swipe">
             <div class="ani-circle">
-                <img src="./assets/animation/scanner.png" alt="animation.png">
-                <img src="./assets/animation/card.png" alt="animation.png" class="card">
+                <!-- Use a <video> tag for .mp4 files -->
+                <video autoplay loop muted style="width: 500px; height: 500px;">
+                    <source src="assets/animation/tapping-card-gif.mp4" type="video/mp4">
+                </video>
             </div>
+        </div>
+        <div class="message-text">
+            <h1>कृपया अपना कार्ड स्कैन करें |</h1>
         </div>
     </div>
 </div>
