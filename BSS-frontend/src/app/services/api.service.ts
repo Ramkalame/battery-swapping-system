@@ -20,11 +20,11 @@ export class ApiService {
     return this.http.get<User>(url);
   }
 
-  updateCurrentEmptyBox(boxNumber:string):Observable<ApiResponse<EmptyBox>>{
-    const url = `${this.BASE_URL_TRANSACTIONS}/empty-box-number`;
-    const body = { boxNumber };
-    return this.http.put<ApiResponse<EmptyBox>>(url, body);
-  }
+  updateCurrentEmptyBox(boxNumber:number):Observable<ApiResponse<EmptyBox>>{
+    const endpoint = `/empty-box-number/${boxNumber}`;
+    const url = `${this.BASE_URL_TRANSACTIONS}${endpoint}`;
+    return this.http.put<ApiResponse<EmptyBox>>(url,null);
+  } 
 
   getCurrentEmptyBox():Observable<ApiResponse<EmptyBox>>{
     const endpoint= '/empty-box-number';

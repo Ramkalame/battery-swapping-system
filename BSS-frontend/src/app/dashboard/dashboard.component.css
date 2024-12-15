@@ -53,8 +53,10 @@
   align-items: center;
 }
 .available-batteries-heading h6 {
-  font-size: 30px;
+  font-size: 36px;
   margin-right: 200px;
+  margin-top: 30px;
+  margin-bottom: 20px;
 }
 .battery-box-p {
   display: flex;
@@ -68,6 +70,7 @@
   justify-content: space-around;
   align-items: flex-start;
   width: 100%;
+  margin-top: 20px;
 }
 .batteries-box {
   width: 650px;
@@ -93,6 +96,7 @@
 .battery-box-heading p {
   font-size: 18px;
   margin: 0;
+  font-weight: 550;
 }
 .battery-box {
   height: 200px;
@@ -124,7 +128,11 @@
     height: 250px;
     width: 100%;
     object-fit: cover;
-    border: 2px solid black;
+}
+.vehicle-image-div img{
+  height:100%;
+  width:100%;
+  object-fit:contain;
 }
 .text-details{
     display: flex;
@@ -142,13 +150,13 @@
     font-size: 25px;
     font-weight: 600;
     color: #373737;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 .details-value h6{
     font-size: 25px;
     font-weight: 400;
     color: #373737;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 /* ================================== indicator ========================= */
 .status-indicators {

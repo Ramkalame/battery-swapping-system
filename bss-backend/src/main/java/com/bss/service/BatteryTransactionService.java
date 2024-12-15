@@ -17,6 +17,6 @@ public interface BatteryTransactionService {
 
 
     //Methods for empty box
-    public EmptyBox updateCurrentEmptyBox(String boxNumber);
+    public EmptyBox updateCurrentEmptyBox(int boxNumber);
     public EmptyBox getCurrentEmptyBox();
 }

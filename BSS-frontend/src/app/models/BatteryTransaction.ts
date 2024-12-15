@@ -31,9 +31,9 @@ export class BatteryTransactionDto{
 
 export class EmptyBox {
     id: string;
-    boxNumber: string;
+    boxNumber: number;
 
-    constructor(id: string, boxNumber: string) {
+    constructor(id: string, boxNumber: number) {
         this.id = id;
         this.boxNumber = boxNumber;
     }
