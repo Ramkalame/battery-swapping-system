@@ -30,31 +30,3 @@
     overflow: hidden;
 }
 
-.ani-circle img {
-    position: absolute;
-}
-
-.ani-circle img:first-child {
-    width: 200px;
-    height: auto;
-}
-
-.ani-circle img:last-child {
-    width: 200px;
-    height: auto;
-    animation: cardMove 2s ease-in-out infinite;
-}
-
-@keyframes cardMove {
-    0% {
-        transform: translate(150%, 150%) scale(0.5);
-        opacity: 0;
-    }
-    50% {
-        opacity: 1;
-    }
-    100% {
-        transform: translate(20%, 30%) scale(1);
-        opacity: 1;
-    }
-}
