@@ -1,11 +1,18 @@
-import { trigger, state, style, transition, animate } from '@angular/animations';
+import {
+  trigger,
+  state,
+  style,
+  transition,
+  animate,
+} from '@angular/animations';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { User } from '../models/User';
+import { ApiResponse, User } from '../models/User';
 import { ApiService } from '../services/api.service';
 import { WebsocketService } from '../services/websocket.service';
-import { TestAnimationComponent } from "../test-animation/test-animation.component";
+import { TestAnimationComponent } from '../test-animation/test-animation.component';
+import { EmptyBox } from '../models/BatteryTransaction';
 
 @Component({
   selector: 'app-battery-dashboard',
@@ -13,28 +20,30 @@ import { TestAnimationComponent } from "../test-animation/test-animation.compone
   imports: [RouterModule, CommonModule, TestAnimationComponent],
   templateUrl: './battery-dashboard.component.html',
   styleUrl: './battery-dashboard.component.css',
-   animations: [
-      trigger('batterySwapAnimation', [
-        state(
-          'closed',
-          style({
-            transform: 'scale(1)',
-            opacity: 1,
-          })
-        ),
-        state(
-          'open',
-          style({
-            transform: 'scale(0.8)',
-          })
-        ),
-        transition('closed <=> open', [animate('1s ease-in-out')]),
-      ]),
-    ],
+  animations: [
+    trigger('batterySwapAnimation', [
+      state(
+        'closed',
+        style({
+          transform: 'scale(1)',
+          opacity: 1,
+        })
+      ),
+      state(
+        'open',
+        style({
+          transform: 'scale(0.8)',
+        })
+      ),
+      transition('closed <=> open', [animate('1s ease-in-out')]),
+    ]),
+  ],
 })
 export class BatteryDashboardComponent implements OnInit {
-
- isBatteryInserted: boolean = false;
+  
+  emptyBoxNumber!:number;
+  private timeoutId!: any;
+  isBatteryInserted: boolean = false;
   isBatteryCharged: boolean = false;
 
   rfId!: string;
@@ -78,11 +87,11 @@ export class BatteryDashboardComponent implements OnInit {
   constructor(
     private webSocketService: WebsocketService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private apiService: ApiService,
   ) {}
 
   ngOnInit(): void {
-   
     // Subscribe to the /rf Topic
     this.webSocketService
       .subscribeToTopic<string>('/topic/rf')
@@ -125,11 +134,28 @@ export class BatteryDashboardComponent implements OnInit {
     this.subscribeToBox5Sd();
     this.subscribeToBox6Sd();
 
-    setTimeout(() => {
+    this.timeoutId = setTimeout(() => {
       this.router.navigate(['/card-swaipe-message']);
-    }, 4500);
+    }, 10000);
   }
 
+  ngOnDestroy(): void {
+    if (this.timeoutId) {
+      clearTimeout(this.timeoutId);
+    }
+  }
+
+    getCurrentEmptyBox() {
+      this.apiService.getCurrentEmptyBox().subscribe({
+        next: (response: ApiResponse<EmptyBox>) => {
+          console.log(response.message + ' :-' + response.data.boxNumber);
+        },
+        error: (error: any) => {
+          console.log('Something Went Wrong');
+        },
+      });
+    }
+    
   //method for toggel
   toggleSwapState() {
     // this.irData1 = !this.irData1;
@@ -373,6 +399,4 @@ export class BatteryDashboardComponent implements OnInit {
         console.log('Received Box 6 Solenoid response:', response);
       });
   }
-
-
 }

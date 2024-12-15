@@ -86,6 +86,17 @@ public class UsbPortListenerService {
 
             // Forward data to SocketService
             socketService.sendSensorMessage(boxNumber, sensorType, data);
+        } else if (message.startsWith("P")) {
+            String process = message.substring(1,2);
+            String boxNumber = message.substring(3, 5);
+            String sensorType = message.substring(5, 7);
+            String data = message.substring(7);
+            String actualMessage = process.concat(data);
+
+            log.info("Box {} - Process {} - Sensor {}: Data -> {}", boxNumber,process, sensorType, data);
+
+            // Forward data to SocketService
+            socketService.sendSolenoidSensorMessage(boxNumber,sensorType, actualMessage);
         } else if (message.startsWith("RF")) {
             String rfId = message.substring(2);
             socketService.sendRfSensorMessage(rfId);

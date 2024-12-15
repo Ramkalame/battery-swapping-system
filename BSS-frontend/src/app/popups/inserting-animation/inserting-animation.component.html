@@ -2,7 +2,8 @@
     <div class="container">
         <div class="box-container">
          <div class="battery-container">
-             <div class="heading"><h3>बॅटरी अंदर रखें</h3></div>
+             <div class="heading" *ngIf="process1"><h3>बैटरी अंदर रखें</h3></div>
+             <div class="heading" *ngIf="process2"><h3>कृपया बैटरी निकाल लें</h3></div>
              <div class="battery-box-container">
                  <div class="battery-box" [ngClass]="{'blinking-box': openDoor == 1}" ></div>
                  <div class="battery-box" [ngClass]="{'blinking-box': openDoor == 2}" ></div>

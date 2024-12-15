@@ -14,13 +14,18 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { InsertingAnimationComponent } from '../popups/inserting-animation/inserting-animation.component';
 import { EmptyBox } from '../models/BatteryTransaction';
-import { TestAnimationComponent } from "../test-animation/test-animation.component";
+import { TestAnimationComponent } from '../test-animation/test-animation.component';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-
-  imports: [RouterModule, CommonModule, FormsModule, InsertingAnimationComponent, TestAnimationComponent],
+  imports: [
+    RouterModule,
+    CommonModule,
+    FormsModule,
+    InsertingAnimationComponent,
+    TestAnimationComponent,
+  ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
   animations: [
@@ -48,7 +53,6 @@ export class DashboardComponent implements OnInit {
   selectedUser!: User;
 
   rfId!: string;
-
 
   showPopup = false;
 
@@ -92,7 +96,7 @@ export class DashboardComponent implements OnInit {
     private webSocketService: WebsocketService,
     private apiService: ApiService,
     private route: ActivatedRoute,
-    private router: Router,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -101,6 +105,7 @@ export class DashboardComponent implements OnInit {
       this.rfId = params['rfId']; // Access the rfId parameter
     });
     this.getUserDetails(this.rfId); //call the api to fetch the user details
+    //this.getCurrentEmptyBox();
 
     //subscribing for ir Data
     // this.subscribeToBox1Ir();
@@ -127,24 +132,22 @@ export class DashboardComponent implements OnInit {
     this.subscribeToBox6Tm();
 
     //subscribing for tm Data
-    this.subscribeToBox1Sd();
-    this.subscribeToBox2Sd();
-    this.subscribeToBox3Sd();
-    this.subscribeToBox4Sd();
-    this.subscribeToBox5Sd();
-    this.subscribeToBox6Sd();
+    // this.subscribeToBox1Sd();
+    // this.subscribeToBox2Sd();
+    // this.subscribeToBox3Sd();
+    // this.subscribeToBox4Sd();
+    // this.subscribeToBox5Sd();
+    // this.subscribeToBox6Sd();
 
-    // Redirect to greet after 20 seconds
-    // setTimeout(() => {
-    //   this.router.navigate(['/greet']);
-    // }, 1000);
   }
 
-  
   getUserDetails(rfId: string) {
     this.apiService.getUserById(rfId).subscribe({
       next: (data: User) => {
         this.selectedUser = data;
+        setTimeout(() => {
+          this.openPopup();
+        }, 3000);
       },
       error: (error: any) => {
         console.log('Something Went Wrong');
@@ -152,30 +155,27 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  getCurrentEmptyBox(){
+  getCurrentEmptyBox() {
     this.apiService.getCurrentEmptyBox().subscribe({
-      next:(response:ApiResponse<EmptyBox>) => {
-        console.log(response.message+" :-"+response.data.boxNumber);
+      next: (response: ApiResponse<EmptyBox>) => {
+        console.log(response.message + ' :-' + response.data.boxNumber);
       },
-      error:(error:any) =>{
+      error: (error: any) => {
         console.log('Something Went Wrong');
       },
     });
   }
 
-
-
-  updateCurrentEmptyBox(boxNumber:string){
+  updateCurrentEmptyBox(boxNumber: number) {
     this.apiService.updateCurrentEmptyBox(boxNumber).subscribe({
-      next:(response:ApiResponse<EmptyBox>) => {
+      next: (response: ApiResponse<EmptyBox>) => {
         console.log(response.message);
       },
-      error:(error:any) =>{
+      error: (error: any) => {
         console.log('Something Went Wrong');
       },
     });
   }
-
 
   //method for toggel
   toggleSwapState() {
@@ -211,16 +211,15 @@ export class DashboardComponent implements OnInit {
         console.log('Received Box 1 Battery Status response:', response);
       });
   }
-  
 
-  // Subscribe to Box 1 Solenoid sensor
-  subscribeToBox1Sd() {
-    this.webSocketService
-      .subscribeToSolenoidTopic('01')
-      .subscribe((response) => {
-        console.log('Received Box 1 Solenoid response:', response);
-      });
-  }
+  // // Subscribe to Box 1 Solenoid sensor
+  // subscribeToBox1Sd() {
+  //   this.webSocketService
+  //     .subscribeToSolenoidTopic('01')
+  //     .subscribe((response) => {
+  //       console.log('Received Box 1 Solenoid response:', response);
+  //     });
+  // }
 
   // // Subscribe to Box 2 IR Sensor
   // subscribeToBox2Ir() {
@@ -248,13 +247,13 @@ export class DashboardComponent implements OnInit {
   }
 
   // Subscribe to Box 2 Solenoid sensor
-  subscribeToBox2Sd() {
-    this.webSocketService
-      .subscribeToSolenoidTopic('02')
-      .subscribe((response) => {
-        console.log('Received Box 2 Solenoid response:', response);
-      });
-  }
+  // subscribeToBox2Sd() {
+  //   this.webSocketService
+  //     .subscribeToSolenoidTopic('02')
+  //     .subscribe((response) => {
+  //       console.log('Received Box 2 Solenoid response:', response);
+  //     });
+  // }
 
   //Subscribe to Box3 IR Sensor
   // subscribeToBox3Ir() {
@@ -282,13 +281,13 @@ export class DashboardComponent implements OnInit {
   }
 
   //Subscribe to Box3 Solenoid Sensor
-  subscribeToBox3Sd() {
-    this.webSocketService
-      .subscribeToSolenoidTopic('03')
-      .subscribe((response) => {
-        console.log('Received Box 3 Solenoid response:', response);
-      });
-  }
+  // subscribeToBox3Sd() {
+  //   this.webSocketService
+  //     .subscribeToSolenoidTopic('03')
+  //     .subscribe((response) => {
+  //       console.log('Received Box 3 Solenoid response:', response);
+  //     });
+  // }
 
   // Subscribe to Box 4 IR sensor
   // subscribeToBox4Ir() {
@@ -316,13 +315,13 @@ export class DashboardComponent implements OnInit {
   }
 
   // Subscribe to Box 4 Solenoid sensor
-  subscribeToBox4Sd() {
-    this.webSocketService
-      .subscribeToSolenoidTopic('04')
-      .subscribe((response) => {
-        console.log('Received Box 4 Solenoid response:', response);
-      });
-  }
+  // subscribeToBox4Sd() {
+  //   this.webSocketService
+  //     .subscribeToSolenoidTopic('04')
+  //     .subscribe((response) => {
+  //       console.log('Received Box 4 Solenoid response:', response);
+  //     });
+  // }
 
   // Subscribe to Box 5 IR sensor
   // subscribeToBox5Ir() {
@@ -349,14 +348,14 @@ export class DashboardComponent implements OnInit {
       });
   }
 
-  // Subscribe to Box 5 Solenoid sensor
-  subscribeToBox5Sd() {
-    this.webSocketService
-      .subscribeToSolenoidTopic('05')
-      .subscribe((response) => {
-        console.log('Received Box 5 Solenoid response:', response);
-      });
-  }
+  // // Subscribe to Box 5 Solenoid sensor
+  // subscribeToBox5Sd() {
+  //   this.webSocketService
+  //     .subscribeToSolenoidTopic('05')
+  //     .subscribe((response) => {
+  //       console.log('Received Box 5 Solenoid response:', response);
+  //     });
+  // }
 
   // Subscribe to Box 6 IR sensor
   // subscribeToBox6Ir() {
@@ -384,21 +383,17 @@ export class DashboardComponent implements OnInit {
   }
 
   // Subscribe to Box 6 Solenoid sensor
-  subscribeToBox6Sd() {
-    this.webSocketService
-      .subscribeToSolenoidTopic('06')
-      .subscribe((response) => {
-        console.log('Received Box 6 Solenoid response:', response);
-      });
-  }
-
-
-
-
+  // subscribeToBox6Sd() {
+  //   this.webSocketService
+  //     .subscribeToSolenoidTopic('06')
+  //     .subscribe((response) => {
+  //       console.log('Received Box 6 Solenoid response:', response);
+  //     });
+  // }
 
   openPopup(): void {
     this.showPopup = true;
-    console.log("popup button trigger"); // Show the popup
+    console.log('popup button trigger'); // Show the popup
   }
 
   closePopup(): void {
