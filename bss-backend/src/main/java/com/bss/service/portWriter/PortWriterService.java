@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class PortWriterService {
 
-    private final String portName = "COM8";
+    private final String portName = "COM1";
     private SerialPort serialPort;
 
     @PostConstruct
@@ -23,6 +23,8 @@ public class PortWriterService {
         logAvailablePorts();
         if (serialPort.openPort()){
             log.info("Port COM8 Opened Successfully");
+        }else {
+            log.error("{} Failed to open the serial port.",portName);
         }
     }
 
