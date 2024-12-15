@@ -144,13 +144,13 @@
 
   @keyframes blink {
     0% {
-      background-color: #18308f;
+      background-color: #b89e0a;
     }
     50% {
       background-color: #ffffff;
     }
     100% {
-      background-color: #18308f;
+      background-color: #b89e0a;
     }
   }
 
