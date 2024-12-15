@@ -2,11 +2,8 @@
     <div class="container">
         <div class="box-container">
             <div class="battery-container">
-                <div class="heading" *ngIf="process1">
-                    <h3>कृपया बैटरी अंदर रखें</h3>
-                </div>
-                <div class="heading" *ngIf="process2">
-                    <h3>कृपया बैटरी निकाल लें</h3>
+                <div class="heading">
+                    <h3>बैटरी अंदर रखें</h3>
                 </div>
                 <div class="battery-box-container">
                     <div class="battery-box" [ngClass]="{'blinking-box': openDoor == 1}"></div>
@@ -19,85 +16,71 @@
             </div>
             <div class="animation-container">
                 <div class="col" *ngIf="isTakingBatteryAnimationShow">
-                    <div id="step-1" class="step-1 process" [class.animate]="activeStep === 1">
-                        <video width="200" height="200" controls autoplay loop muted>
-                            <source src="assets/video/taking/taking-battery-box-door-open.mp4" type="video/mp4">
-                        </video>
-                        <div class="hide-video-player">
-                            <h5>1:दरवाजा खाेलें</h5>
+                    <div class="step">
+                        <div id="step-1" class="step-1 process" [class.animate]="activeStep === 1">
+                            <video width="200" height="200" controls autoplay loop muted>
+                                <source src="assets/Video/taking/taking-battery-box-door-open.mp4" type="video/mp4">
+                            </video>
                         </div>
-                    </div>
-                    <div class="hide-video-player">
-                        <h5>1: दरवाजा खाेलें</h5>
-                    </div>
-                </div>
-                <div class="step">
-                    <div id="step-2" class="step-2 process"  [class.animate]="activeStep === 2">
-                        <video width="200" height="200" controls autoplay loop muted>
-                            <source src="assets/video/taking/taking-battery-out-from-box.mp4" type="video/mp4">
-                        </video>
-                        <div class="hide-video-player">
-                            <h5>2:बैटरी बाहर निकालें</h5>
-                        </div>
-                    </div>
-                    <div class="hide-video-player">
-                        <h5>2: बैटरी निकले</h5>
-                    </div>
-                </div>
-                 <div class="step">
-                    <div id="step-3" class="step-3 process"  [class.animate]="activeStep === 3">
-                        <video width="200" height="200" controls autoplay loop muted>
-                            <source src="assets/video/taking/taking-battery-close-door-of-box.mp4" type="video/mp4">
-                        </video>
-                        <div class="hide-video-player">
-                            <h5>3:दरवाज़ा बंद करें</h5>
-                        </div>
-                    </div>
-                    <div class="hide-video-player">
-                        <h5>2: दरवाजा बंद करें।</h5>
-                    </div>
-                 </div>
-             </div>
-             
-             <div class="col" *ngIf="isInsertingBatteryAnimationShow">
-                <div class="step">
-                    <div id="step-1" class="step-1 process"  [class.animate]="activeStep === 1">
-                        <video width="200" height="200" controls autoplay loop muted>
-                            <source src="assets/video/inserting/insert-box-open.mp4" type="video/mp4">
-                        </video>
                         <div class="hide-video-player">
                             <h5>1: दरवाजा खाेलें</h5>
                         </div>
                     </div>
-                    <div class="hide-video-player">
-                        <h5>1: दरवाजा खाेलें ।</h5>
-                    </div>
-                </div>
-                <div class="step">
-                    <div id="step-2" class="step-2 process"  [class.animate]="activeStep === 2">
-                        <video width="200" height="200" controls autoplay loop muted>
-                            <source src="assets/video/inserting/battery-insert-inbox.mp4" type="video/mp4">
-                        </video>
+                    <div class="step">
+                        <div id="step-2" class="step-2 process" [class.animate]="activeStep === 2">
+                            <video width="200" height="200" controls autoplay loop muted>
+                                <source src="assets/Video/taking/taking-battery-out-from-box.mp4" type="video/mp4">
+                            </video>
+                        </div>
                         <div class="hide-video-player">
-                            <h5>2: बैटरी अंदर रखें</h5>
+                            <h5>2: बैटरी निकालें</h5>
                         </div>
                     </div>
-                    <div class="hide-video-player">
-                        <h5>2: बैटरी अंदर रखें ।</h5>
+                    <div class="step">
+                        <div id="step-3" class="step-3 process" [class.animate]="activeStep === 3">
+                            <video width="200" height="200" controls autoplay loop muted>
+                                <source src="assets/Video/taking/taking-battery-close-door-of-box.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="hide-video-player">
+                            <h5>2: दरवाजा बंद करें।</h5>
+                        </div>
                     </div>
                 </div>
-                <div class="step">
-                    <div id="step-3" class="step-3 process"  [class.animate]="activeStep === 3">
-                        <video width="200" height="200" controls autoplay loop muted>
-                            <source src="assets/video/inserting/insert-battery-box-door-close.mp4" type="video/mp4">
-                        </video>
+
+                <div class="col" *ngIf="isInsertingBatteryAnimationShow">
+                    <div class="step">
+                        <div id="step-1" class="step-1 process" [class.animate]="activeStep === 1">
+                            <video width="200" height="200" controls autoplay loop muted>
+                                <source src="assets/Video/inserting/insert-box-open.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="hide-video-player">
+                            <h5>1: दरवाजा खाेलें ।</h5>
+                        </div>
                     </div>
-                    <div class="hide-video-player">
-                        <h5>2: दरवाजा बंद करें।</h5>
+                    <div class="step">
+                        <div id="step-2" class="step-2 process" [class.animate]="activeStep === 2">
+                            <video width="200" height="200" controls autoplay loop muted>
+                                <source src="assets/Video/inserting/battery-insert-inbox.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="hide-video-player">
+                            <h5>2: बैटरी अंदर रखें ।</h5>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div id="step-3" class="step-3 process" [class.animate]="activeStep === 3">
+                            <video width="200" height="200" controls autoplay loop muted>
+                                <source src="assets/Video/inserting/insert-battery-box-door-close.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="hide-video-player">
+                            <h5>2: दरवाजा बंद करें।</h5>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <button (click)="closePopup()">Close</button>
 </div>

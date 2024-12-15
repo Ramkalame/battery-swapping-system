@@ -151,7 +151,7 @@ export class DashboardComponent implements OnInit {
         this.selectedUser = response.data;
         // this.timeoutId =  setTimeout(() => {
         //   this.openPopup();
-        // }, 8000);
+        // }, 2000);
       },
       error: (error: any) => {
         console.log('Something Went Wrong');
