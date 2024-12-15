@@ -1,4 +1,4 @@
-package com.bss.service.port;
+package com.bss.service.portListener;
 
 import com.bss.service.SocketService;
 import com.fazecast.jSerialComm.SerialPort;
@@ -6,16 +6,14 @@ import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class UsbPortListenerService {
+public class FirstPortListenerService {
 
-    @Value("${usb.port.name}")
-    private String portName;
+    private final String portName = "COM2";
 
     private final SocketService socketService;
     private SerialPort serialPort;
@@ -31,7 +29,7 @@ public class UsbPortListenerService {
             log.info("{} Serial port opened successfully!", portName);
 
             new Thread(() -> {
-                log.info("Reading thread started.");
+                log.info("Reading thread started for port: {}",portName);
                 try {
                     while (serialPort.isOpen()) {
                         byte[] buffer = new byte[2048];
@@ -39,11 +37,11 @@ public class UsbPortListenerService {
                         if (numRead > 0) {
                             handleIncomingData(buffer, numRead);
                         } else {
-                            log.warn("No data read from serial port.");
+                            log.warn("No data read from serial port: {}",portName);
                         }
                     }
                 } catch (Exception e) {
-                    log.error("Error reading from serial port", e);
+                    log.error("Error reading from serial port: {}", portName);
                 } finally {
                     closeSerialPort();
                 }
@@ -54,15 +52,10 @@ public class UsbPortListenerService {
     }
 
     @PreDestroy
-    public void cleanup() {
-        log.info("Spring Boot shutdown detected. Closing serial port.");
-        closeSerialPort();
-    }
-
     private void closeSerialPort() {
         if (serialPort != null && serialPort.isOpen()) {
             serialPort.closePort();
-            log.info("Serial port closed.");
+            log.info("{} Serial port closed.",portName);
         }
     }
 
@@ -82,26 +75,12 @@ public class UsbPortListenerService {
             String sensorType = message.substring(3, 5);
             String data = message.substring(5);
 
-            log.info("Box {} - Sensor {}: Data -> {}", boxNumber, sensorType, data);
+            log.info("Port: {} - Box {} - Sensor {}: Data -> {}",portName, boxNumber, sensorType, data);
 
             // Forward data to SocketService
             socketService.sendSensorMessage(boxNumber, sensorType, data);
-        } else if (message.startsWith("P")) {
-            String process = message.substring(1,2);
-            String boxNumber = message.substring(3, 5);
-            String sensorType = message.substring(5, 7);
-            String data = message.substring(7);
-            String actualMessage = process.concat(data);
-
-            log.info("Box {} - Process {} - Sensor {}: Data -> {}", boxNumber,process, sensorType, data);
-
-            // Forward data to SocketService
-            socketService.sendSolenoidSensorMessage(boxNumber,sensorType, actualMessage);
-        } else if (message.startsWith("RF")) {
-            String rfId = message.substring(2);
-            socketService.sendRfSensorMessage(rfId);
-        } else {
-            socketService.sendErrorMessage("Invalid message format: " + message);
+        }else {
+            socketService.sendErrorMessage(portName+": Invalid message format: " + message);
         }
     }
 
@@ -113,7 +92,7 @@ public class UsbPortListenerService {
                 rawData.append(", ");
             }
         }
-        log.info("Received raw data: {}", rawData);
+        log.info("Port: {} Received raw data: {}",portName , rawData);
         return rawData.toString();
     }
 
@@ -125,7 +104,7 @@ public class UsbPortListenerService {
                 int asciiValue = Integer.parseInt(code, 16);
                 result.append((char) asciiValue);
             } catch (NumberFormatException e) {
-                log.error("Invalid ASCII code: {}", code);
+                log.error("Port: {} Invalid ASCII code: {}",portName, code);
             }
         }
         return result.toString();
