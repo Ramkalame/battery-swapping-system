@@ -21,9 +21,9 @@ export class BufferingComponent implements OnInit {
       this.rfId = params['rfId']; // Access the rfId parameter
     });
 
-    // this.timeoutId = setTimeout(() => {
-    //   this.router.navigate(['/dashboard', this.rfId]);
-    // }, 1500);
+    this.timeoutId = setTimeout(() => {
+      this.router.navigate(['/dashboard', this.rfId]);
+    }, 1500);
   }
   ngOnDestroy(): void {
     if (this.timeoutId) {

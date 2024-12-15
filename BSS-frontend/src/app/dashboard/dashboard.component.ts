@@ -147,11 +147,11 @@ export class DashboardComponent implements OnInit {
 
   getUserDetails(rfId: string) {
     this.apiService.getUserById(rfId).subscribe({
-      next: (data: User) => {
-        this.selectedUser = data;
-        this.timeoutId =  setTimeout(() => {
-          this.openPopup();
-        }, 8000);
+      next: (response: ApiResponse<User>) => {
+        this.selectedUser = response.data;
+        // this.timeoutId =  setTimeout(() => {
+        //   this.openPopup();
+        // }, 2000);
       },
       error: (error: any) => {
         console.log('Something Went Wrong');
