@@ -21,10 +21,10 @@ export class ApiService {
   }
 
   updateCurrentEmptyBox(boxNumber:number):Observable<ApiResponse<EmptyBox>>{
-    const endpoint = `/${boxNumber}`;
+    const endpoint = `/empty-box-number/${boxNumber}`;
     const url = `${this.BASE_URL_TRANSACTIONS}${endpoint}`;
     return this.http.put<ApiResponse<EmptyBox>>(url,null);
-  }
+  } 
 
   getCurrentEmptyBox():Observable<ApiResponse<EmptyBox>>{
     const endpoint= '/empty-box-number';

@@ -9,8 +9,11 @@
 }
 .message-text{
     color: wheat;
+}
+.message-text h1{
+    font-size:40px;
+    margin-bottom:50px;
     font-weight: bold;
-    font-size: 40px;
 }
 .buffering-container {
     display: flex;

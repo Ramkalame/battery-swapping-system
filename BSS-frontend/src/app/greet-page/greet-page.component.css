@@ -9,8 +9,9 @@
     width: 100vw;
 }
 .greet-text h1{
-    font-size: 100px;
+    font-size: 130px;
     color: white;
+    margin-top:130px;
 }
 
 .banner-img img{
@@ -19,7 +20,7 @@
 }
 
 .banner-img{
-    height: 300px;
+    height: 350px;
     display: flex;
     justify-content: center;
     align-items: center;

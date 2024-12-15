@@ -43,14 +43,11 @@
     margin: 5px;
   }
   .animation-container{
-    width: 750px;
+    width: 800px;
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-left: 10px;
-    padding-left: 20px;
-
   }
   .col{
     display: flex;
@@ -93,8 +90,8 @@
     font-weight: bold;
   }
   video{
-    height: 154px;
-    width: 154px;
+    height: 160px;
+    width: 160px;
     pointer-events: none;
     user-select: none;
   }
