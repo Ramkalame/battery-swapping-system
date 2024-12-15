@@ -42,14 +42,11 @@
     margin: 5px;
   }
   .animation-container{
-    width: 750px;
+    width: 800px;
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-left: 10px;
-    padding-left: 20px;
-
   }
   .col{
     display: flex;
@@ -89,8 +86,8 @@
     color: rgb(50, 192, 58);
   }
   video{
-    height: 150px;
-    width: 150px;
+    height: 160px;
+    width: 160px;
     pointer-events: none;
     user-select: none;
   }

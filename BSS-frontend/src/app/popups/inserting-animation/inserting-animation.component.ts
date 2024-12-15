@@ -7,6 +7,8 @@ import { ApiService } from '../../services/api.service';
 import { ApiResponse } from '../../models/User';
 import { EmptyBox } from '../../models/BatteryTransaction';
 import { WebsocketService } from '../../services/websocket.service';
+import { UpdateEBoxService } from '../../services/update-e-box.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-inserting-animation',
@@ -23,8 +25,8 @@ export class InsertingAnimationComponent implements OnInit {
   process2: boolean = false;
 
   openDoor: number = 0; // This will store which box is open
-  isTakingBatteryAnimationShow: boolean = false;
-  isInsertingBatteryAnimationShow: boolean = true;
+  isTakingBatteryAnimationShow: boolean = true;
+  isInsertingBatteryAnimationShow: boolean = false;
   activeStep = 1; // Start with step-1
   private intervalId: any;
 
@@ -32,6 +34,8 @@ export class InsertingAnimationComponent implements OnInit {
     private openBoxSignalService: OpenBoxSignalService,
     private apiService: ApiService,
     private webSocketService: WebsocketService,
+    private updateEBoxService:UpdateEBoxService,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -71,7 +75,7 @@ export class InsertingAnimationComponent implements OnInit {
   startAnimationSequence(): void {
     this.intervalId = setInterval(() => {
       this.activeStep = this.activeStep < 3 ? this.activeStep + 1 : 1; // Loop through steps
-    }, 15000); // Change step every 15 seconds
+    }, 10000); // Change step every 15 seconds
   }
 
   getCurrentEmptyBox() {
@@ -103,7 +107,7 @@ export class InsertingAnimationComponent implements OnInit {
       .subscribe((response) => {
         console.log('Received Box 1 Solenoid response:', response);
         this.openDoor=1;
-        if(response === '1'){
+        if(response[0] === '1'){
           this.isTakingBatteryAnimationShow = false;
           this.isInsertingBatteryAnimationShow = true;
           this.process1 = true;
@@ -113,6 +117,10 @@ export class InsertingAnimationComponent implements OnInit {
           this.isInsertingBatteryAnimationShow = false;
           this.process2 = true;
           this.process1 = false;
+          if(response[1]== '1'){
+            this.handleUpdateEmptyBoxNumber(1,1)
+            console.log('--- box 1 is now empty')
+          }
         }
       });
   }
@@ -134,7 +142,7 @@ export class InsertingAnimationComponent implements OnInit {
       .subscribe((response) => {
         console.log('Received Box 2 Solenoid response:', response);
         this.openDoor=2;
-        if(response === '1'){
+        if(response[0] === '1'){
           this.isTakingBatteryAnimationShow = false;
           this.isInsertingBatteryAnimationShow = true;
           this.process1 = true;
@@ -144,6 +152,10 @@ export class InsertingAnimationComponent implements OnInit {
           this.isInsertingBatteryAnimationShow = false;
           this.process2 = true;
           this.process1 = false;
+          if(response[1]=='1'){
+            this.handleUpdateEmptyBoxNumber(2,1)
+            console.log('--- box 2 is now empty')
+          }
         }
       });
   }
@@ -165,7 +177,7 @@ export class InsertingAnimationComponent implements OnInit {
       .subscribe((response) => {
         console.log('Received Box 3 Solenoid response:', response);
         this.openDoor=3;
-        if(response === '1'){
+        if(response[0] === '1'){
           this.isTakingBatteryAnimationShow = false;
           this.isInsertingBatteryAnimationShow = true;
           this.process1 = true;
@@ -175,6 +187,10 @@ export class InsertingAnimationComponent implements OnInit {
           this.isInsertingBatteryAnimationShow = false;
           this.process2 = true;
           this.process1 = false;
+          if(response[1]=='1'){
+            this.handleUpdateEmptyBoxNumber(3,1)
+            console.log('--- box 3 is now empty')
+          }
         }
       });
   }
@@ -196,7 +212,7 @@ export class InsertingAnimationComponent implements OnInit {
       .subscribe((response) => {
         console.log('Received Box 4 Solenoid response:', response);
         this.openDoor=4;
-        if(response === '1'){
+        if(response[0] === '1'){
           this.isTakingBatteryAnimationShow = false;
           this.isInsertingBatteryAnimationShow = true;
           this.process1 = true;
@@ -206,6 +222,10 @@ export class InsertingAnimationComponent implements OnInit {
           this.isInsertingBatteryAnimationShow = false;
           this.process2 = true;
           this.process1 = false;
+          if(response[1]=='1'){
+            this.handleUpdateEmptyBoxNumber(4,1)
+            console.log('--- box 4 is now empty')
+          }
         }
       });
   }
@@ -227,7 +247,7 @@ export class InsertingAnimationComponent implements OnInit {
       .subscribe((response) => {
         console.log('Received Box 5 Solenoid response:', response);
         this.openDoor=5;
-        if(response === '1'){
+        if(response[0] === '1'){
           this.isTakingBatteryAnimationShow = false;
           this.isInsertingBatteryAnimationShow = true;
           this.process1 = true;
@@ -237,6 +257,10 @@ export class InsertingAnimationComponent implements OnInit {
           this.isInsertingBatteryAnimationShow = false;
           this.process2 = true;
           this.process1 = false;
+          if(response[1]=='1'){
+            this.handleUpdateEmptyBoxNumber(5,1)
+            console.log('--- box 5 is now empty')
+          }
         }
       });
   }
@@ -258,7 +282,7 @@ export class InsertingAnimationComponent implements OnInit {
       .subscribe((response) => {
         console.log('Received Box 6 Solenoid response:', response);
         this.openDoor=6;
-        if(response === '1'){
+        if(response[0] === '1'){
           this.isTakingBatteryAnimationShow = false;
           this.isInsertingBatteryAnimationShow = true;
           this.process1 = true;
@@ -268,10 +292,34 @@ export class InsertingAnimationComponent implements OnInit {
           this.isInsertingBatteryAnimationShow = false;
           this.process2 = true;
           this.process1 = false;
+          if(response[1] === '1'){
+            this.handleUpdateEmptyBoxNumber(6,1)
+            console.log('--- box 6 is now empty')
+          }
         }
       });
   }
 
+
+
+  //handle the update of new empty box number
+  handleUpdateEmptyBoxNumber(boxNumber:number,solenoid:number){
+    if(this.process2 && solenoid === 1){
+      this.openDoor = boxNumber;
+      this.updateEBoxService.updateEmptyBoxNumberToComponents(boxNumber);
+      this.apiService.updateCurrentEmptyBox(boxNumber).subscribe({
+        next: (response: ApiResponse<EmptyBox>) => {
+          console.log(response.message + ' :-' + response.data.boxNumber);
+            setTimeout(() => {
+            this.router.navigate(['/greet']);
+          }, 4000);
+        },
+        error: (error: any) => {  
+          console.log('Something Went Wrong');
+        },
+      })
+    }
+  }
 
 
 

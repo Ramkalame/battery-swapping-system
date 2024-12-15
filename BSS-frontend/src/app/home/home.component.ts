@@ -30,9 +30,9 @@ export class HomeComponent implements OnInit {
         this.router.navigate(['/wait', this.rfId]);
       });
 
-    this.timeoutId = setTimeout(() => {
-      this.router.navigate(['/battery-dashboard']);
-    }, 4500);
+    // this.timeoutId = setTimeout(() => {
+    //   this.router.navigate(['/battery-dashboard']);
+    // }, 4500);
   }
 
   ngOnDestroy(): void {

@@ -102,6 +102,8 @@ export class BatteryDashboardComponent implements OnInit {
         this.router.navigate(['/wait', this.rfId]);
       });
 
+      this.getCurrentEmptyBox();
+
     //subscribing for ir Data
     // this.subscribeToBox1Ir();
     // this.subscribeToBox2Ir();
@@ -127,16 +129,16 @@ export class BatteryDashboardComponent implements OnInit {
     this.subscribeToBox6Tm();
 
     //subscribing for tm Data
-    this.subscribeToBox1Sd();
-    this.subscribeToBox2Sd();
-    this.subscribeToBox3Sd();
-    this.subscribeToBox4Sd();
-    this.subscribeToBox5Sd();
-    this.subscribeToBox6Sd();
+    // this.subscribeToBox1Sd();
+    // this.subscribeToBox2Sd();
+    // this.subscribeToBox3Sd();
+    // this.subscribeToBox4Sd();
+    // this.subscribeToBox5Sd();
+    // this.subscribeToBox6Sd();
 
-    this.timeoutId = setTimeout(() => {
-      this.router.navigate(['/card-swaipe-message']);
-    }, 10000);
+    // this.timeoutId = setTimeout(() => {
+    //   this.router.navigate(['/card-swaipe-message']);
+    // }, 10000);
   }
 
   ngOnDestroy(): void {
@@ -148,7 +150,8 @@ export class BatteryDashboardComponent implements OnInit {
     getCurrentEmptyBox() {
       this.apiService.getCurrentEmptyBox().subscribe({
         next: (response: ApiResponse<EmptyBox>) => {
-          console.log(response.message + ' :-' + response.data.boxNumber);
+          console.log(response.message + ' :' + response.data.boxNumber);
+          this.emptyBoxNumber = response.data.boxNumber;
         },
         error: (error: any) => {
           console.log('Something Went Wrong');
@@ -197,13 +200,13 @@ export class BatteryDashboardComponent implements OnInit {
   }
 
   // Subscribe to Box 1 Solenoid sensor
-  subscribeToBox1Sd() {
-    this.webSocketService
-      .subscribeToSolenoidTopic('01')
-      .subscribe((response) => {
-        console.log('Received Box 1 Solenoid response:', response);
-      });
-  }
+  // subscribeToBox1Sd() {
+  //   this.webSocketService
+  //     .subscribeToSolenoidTopic('01')
+  //     .subscribe((response) => {
+  //       console.log('Received Box 1 Solenoid response:', response);
+  //     });
+  // }
 
   // Subscribe to Box 2 IR Sensor
   // subscribeToBox2Ir() {
@@ -236,13 +239,13 @@ export class BatteryDashboardComponent implements OnInit {
   }
 
   // Subscribe to Box 2 Solenoid sensor
-  subscribeToBox2Sd() {
-    this.webSocketService
-      .subscribeToSolenoidTopic('02')
-      .subscribe((response) => {
-        console.log('Received Box 2 Solenoid response:', response);
-      });
-  }
+  // subscribeToBox2Sd() {
+  //   this.webSocketService
+  //     .subscribeToSolenoidTopic('02')
+  //     .subscribe((response) => {
+  //       console.log('Received Box 2 Solenoid response:', response);
+  //     });
+  // }
 
   //Subscribe to Box3 IR Sensor
   // subscribeToBox3Ir() {
@@ -275,13 +278,13 @@ export class BatteryDashboardComponent implements OnInit {
   }
 
   //Subscribe to Box3 Solenoid Sensor
-  subscribeToBox3Sd() {
-    this.webSocketService
-      .subscribeToSolenoidTopic('03')
-      .subscribe((response) => {
-        console.log('Received Box 3 Solenoid response:', response);
-      });
-  }
+  // subscribeToBox3Sd() {
+  //   this.webSocketService
+  //     .subscribeToSolenoidTopic('03')
+  //     .subscribe((response) => {
+  //       console.log('Received Box 3 Solenoid response:', response);
+  //     });
+  // }
 
   // Subscribe to Box 4 IR sensor
   // subscribeToBox4Ir() {
@@ -314,13 +317,13 @@ export class BatteryDashboardComponent implements OnInit {
   }
 
   // Subscribe to Box 4 Solenoid sensor
-  subscribeToBox4Sd() {
-    this.webSocketService
-      .subscribeToSolenoidTopic('04')
-      .subscribe((response) => {
-        console.log('Received Box 4 Solenoid response:', response);
-      });
-  }
+  // subscribeToBox4Sd() {
+  //   this.webSocketService
+  //     .subscribeToSolenoidTopic('04')
+  //     .subscribe((response) => {
+  //       console.log('Received Box 4 Solenoid response:', response);
+  //     });
+  // }
 
   // Subscribe to Box 5 IR sensor
   // subscribeToBox5Ir() {
@@ -353,13 +356,13 @@ export class BatteryDashboardComponent implements OnInit {
   }
 
   // Subscribe to Box 5 Solenoid sensor
-  subscribeToBox5Sd() {
-    this.webSocketService
-      .subscribeToSolenoidTopic('05')
-      .subscribe((response) => {
-        console.log('Received Box 5 Solenoid response:', response);
-      });
-  }
+  // subscribeToBox5Sd() {
+  //   this.webSocketService
+  //     .subscribeToSolenoidTopic('05')
+  //     .subscribe((response) => {
+  //       console.log('Received Box 5 Solenoid response:', response);
+  //     });
+  // }
 
   // Subscribe to Box 6 IR sensor
   // subscribeToBox6Ir() {
@@ -392,11 +395,11 @@ export class BatteryDashboardComponent implements OnInit {
   }
 
   // Subscribe to Box 6 Solenoid sensor
-  subscribeToBox6Sd() {
-    this.webSocketService
-      .subscribeToSolenoidTopic('06')
-      .subscribe((response) => {
-        console.log('Received Box 6 Solenoid response:', response);
-      });
-  }
+  // subscribeToBox6Sd() {
+  //   this.webSocketService
+  //     .subscribeToSolenoidTopic('06')
+  //     .subscribe((response) => {
+  //       console.log('Received Box 6 Solenoid response:', response);
+  //     });
+  // }
 }
