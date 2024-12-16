@@ -53,7 +53,7 @@ export class WebsocketService {
 
       this.connectionStatus.subscribe((connected) => {
         if (connected && this.stompClient) {
-          console.log(`Subscribing to topic: ${topic}`);
+          // console.log(`Subscribing to topic: ${topic}`);
           this.stompClient.subscribe(topic, (message: any) => {
             if (message.body) {
               try {
