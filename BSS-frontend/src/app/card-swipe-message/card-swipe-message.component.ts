@@ -31,7 +31,7 @@ export class CardSwipeMessageComponent implements OnInit {
 
     this.timeoutId = setTimeout(() => {
       this.router.navigate(['/']);
-    }, 4500);
+    }, 6500);
   }
 
   ngOnDestroy(): void {
