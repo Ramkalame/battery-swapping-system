@@ -26,7 +26,6 @@ import { Router } from '@angular/router';
 export class InsertingAnimationComponent implements OnInit {
   @Output() close = new EventEmitter<void>();
   newOpenBox!: number;
-
   openDoor!: number; // This will store which box is open
   isTakingBatteryAnimationShow: boolean = false;
   isInsertingBatteryAnimationShow: boolean = true;
