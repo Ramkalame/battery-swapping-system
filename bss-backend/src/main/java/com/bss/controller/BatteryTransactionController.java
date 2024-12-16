@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/transactions")
+@CrossOrigin(origins = {"http://localhost:4200","http://127.0.0.1:4200","file://"})
 public class BatteryTransactionController {
 
     private final BatteryTransactionService batteryTransactionService;
@@ -38,8 +39,8 @@ public class BatteryTransactionController {
 
     //empty box rest api
 
-    @PutMapping("/empty-box-number")
-    public ResponseEntity<ApiResponse<EmptyBox>> updateCurrentEmptyBox(@RequestBody String boxNumber){
+    @PutMapping("/empty-box-number/{boxNumber}")
+    public ResponseEntity<ApiResponse<EmptyBox>> updateCurrentEmptyBox(@PathVariable("boxNumber") int boxNumber){
         EmptyBox responseData = batteryTransactionService.updateCurrentEmptyBox(boxNumber);
 
         ApiResponse<EmptyBox> apiResponse = ApiResponse.<EmptyBox>builder()

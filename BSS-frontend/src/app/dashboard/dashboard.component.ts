@@ -14,13 +14,19 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { InsertingAnimationComponent } from '../popups/inserting-animation/inserting-animation.component';
 import { EmptyBox } from '../models/BatteryTransaction';
-import { TestAnimationComponent } from "../test-animation/test-animation.component";
+import { TestAnimationComponent } from '../test-animation/test-animation.component';
+import { UpdateEBoxService } from '../services/update-e-box.service';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-
-  imports: [RouterModule, CommonModule, FormsModule, InsertingAnimationComponent, TestAnimationComponent],
+  imports: [
+    RouterModule,
+    CommonModule,
+    FormsModule,
+    InsertingAnimationComponent,
+    TestAnimationComponent,
+  ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
   animations: [
@@ -43,13 +49,14 @@ import { TestAnimationComponent } from "../test-animation/test-animation.compone
   ],
 })
 export class DashboardComponent implements OnInit {
+
   isBatteryInserted: boolean = false;
   isBatteryCharged: boolean = false;
   selectedUser!: User;
-
+  emptyBoxNumber!:number;
+  private timeoutId!: any;
+  private timeoutId2!: any;
   rfId!: string;
-
-
   showPopup = false;
 
   // For box 1
@@ -93,6 +100,7 @@ export class DashboardComponent implements OnInit {
     private apiService: ApiService,
     private route: ActivatedRoute,
     private router: Router,
+    private updateEBoxService:UpdateEBoxService
   ) {}
 
   ngOnInit(): void {
@@ -101,6 +109,8 @@ export class DashboardComponent implements OnInit {
       this.rfId = params['rfId']; // Access the rfId parameter
     });
     this.getUserDetails(this.rfId); //call the api to fetch the user details
+    // this.getCurrentEmptyBox(); //call the api to fetch the current empty box number
+    // this.subscribeToGetTheNewUpdatedEmptyBox();
 
     //subscribing for ir Data
     // this.subscribeToBox1Ir();
@@ -118,33 +128,30 @@ export class DashboardComponent implements OnInit {
     this.subscribeToBox5Bs();
     this.subscribeToBox6Bs();
 
-    //subscribing for tm Data
-    this.subscribeToBox1Tm();
-    this.subscribeToBox2Tm();
-    this.subscribeToBox3Tm();
-    this.subscribeToBox4Tm();
-    this.subscribeToBox5Tm();
-    this.subscribeToBox6Tm();
+    // //subscribing for tm Data
+    // this.subscribeToBox1Tm();
+    // this.subscribeToBox2Tm();
+    // this.subscribeToBox3Tm();
+    // this.subscribeToBox4Tm();
+    // this.subscribeToBox5Tm();
+    // this.subscribeToBox6Tm();
 
     //subscribing for tm Data
-    this.subscribeToBox1Sd();
-    this.subscribeToBox2Sd();
-    this.subscribeToBox3Sd();
-    this.subscribeToBox4Sd();
-    this.subscribeToBox5Sd();
-    this.subscribeToBox6Sd();
-
-    // Redirect to greet after 20 seconds
-    // setTimeout(() => {
-    //   this.router.navigate(['/greet']);
-    // }, 1000);
+    // this.subscribeToBox1Sd();
+    // this.subscribeToBox2Sd();
+    // this.subscribeToBox3Sd();
+    // this.subscribeToBox4Sd();
+    // this.subscribeToBox5Sd();
+    // this.subscribeToBox6Sd();
   }
 
-  
   getUserDetails(rfId: string) {
     this.apiService.getUserById(rfId).subscribe({
-      next: (data: User) => {
-        this.selectedUser = data;
+      next: (response: ApiResponse<User>) => {
+        this.selectedUser = response.data;
+        // this.timeoutId =  setTimeout(() => {
+        //   this.openPopup();
+        // }, 2000);
       },
       error: (error: any) => {
         console.log('Something Went Wrong');
@@ -152,30 +159,55 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  getCurrentEmptyBox(){
-    this.apiService.getCurrentEmptyBox().subscribe({
-      next:(response:ApiResponse<EmptyBox>) => {
-        console.log(response.message+" :-"+response.data.boxNumber);
-      },
-      error:(error:any) =>{
-        console.log('Something Went Wrong');
-      },
-    });
+  ngOnDestroy(): void {
+    if (this.timeoutId) {
+      clearTimeout(this.timeoutId);
+    }
+    if (this.timeoutId2) {
+      clearTimeout(this.timeoutId);
+    }
   }
 
+  // getCurrentEmptyBox() {
+  //   this.apiService.getCurrentEmptyBox().subscribe({
+  //     next: (response: ApiResponse<EmptyBox>) => {
+  //       console.log(response.message + ' :-' + response.data.boxNumber);
+  //       this.emptyBoxNumber = response.data.boxNumber;
+  //     },
+  //     error: (error: any) => {
+  //       console.log('Something Went Wrong');
+  //     },
+  //   });
+  // }
+
+  // updateCurrentEmptyBox(boxNumber: number) {
+  //   this.apiService.updateCurrentEmptyBox(boxNumber).subscribe({
+  //     next: (response: ApiResponse<EmptyBox>) => {
+  //       console.log(response.message);
+  //      this.closePopup();
+  //      console.log('------Closing the dialog-------'+boxNumber);
+  //     },
+  //     error: (error: any) => {
+  //       console.log('Something Went Wrong');
+  //     },
+  //   });
+  // }
 
 
-  updateCurrentEmptyBox(boxNumber:string){
-    this.apiService.updateCurrentEmptyBox(boxNumber).subscribe({
-      next:(response:ApiResponse<EmptyBox>) => {
-        console.log(response.message);
-      },
-      error:(error:any) =>{
-        console.log('Something Went Wrong');
-      },
-    });
-  }
-
+  // subscribeToGetTheNewUpdatedEmptyBox(){
+  //   this.updateEBoxService.emptyBoxNumber$.subscribe({
+  //     next: (boxNumber) => {
+  //       console.log('Updated empty box number from service:', boxNumber);
+  //       // You can now perform logic based on the updated box number
+  //       if (boxNumber !== null) {
+  //         this.emptyBoxNumber = boxNumber; // 
+  //       }
+  //     },
+  //     error: (error) => {
+  //       console.log('Error receiving updated empty box number:', error);
+  //     },
+  //   })
+  // }
 
   //method for toggel
   toggleSwapState() {
@@ -209,18 +241,22 @@ export class DashboardComponent implements OnInit {
       .subscribeToBatteryStatusTopic('01')
       .subscribe((response) => {
         console.log('Received Box 1 Battery Status response:', response);
+        if (response === '0') {
+          this.bsData1 = true;
+        } else {
+          this.bsData1 = false;
+        }
       });
   }
-  
 
-  // Subscribe to Box 1 Solenoid sensor
-  subscribeToBox1Sd() {
-    this.webSocketService
-      .subscribeToSolenoidTopic('01')
-      .subscribe((response) => {
-        console.log('Received Box 1 Solenoid response:', response);
-      });
-  }
+  // // Subscribe to Box 1 Solenoid sensor
+  // subscribeToBox1Sd() {
+  //   this.webSocketService
+  //     .subscribeToSolenoidTopic('01')
+  //     .subscribe((response) => {
+  //       console.log('Received Box 1 Solenoid response:', response);
+  //     });
+  // }
 
   // // Subscribe to Box 2 IR Sensor
   // subscribeToBox2Ir() {
@@ -244,17 +280,22 @@ export class DashboardComponent implements OnInit {
       .subscribeToBatteryStatusTopic('02')
       .subscribe((response) => {
         console.log('Received Box 2 Battery Status response:', response);
+        if (response === '0') {
+          this.bsData2 = true;
+        } else {
+          this.bsData2 = false;
+        }
       });
   }
 
   // Subscribe to Box 2 Solenoid sensor
-  subscribeToBox2Sd() {
-    this.webSocketService
-      .subscribeToSolenoidTopic('02')
-      .subscribe((response) => {
-        console.log('Received Box 2 Solenoid response:', response);
-      });
-  }
+  // subscribeToBox2Sd() {
+  //   this.webSocketService
+  //     .subscribeToSolenoidTopic('02')
+  //     .subscribe((response) => {
+  //       console.log('Received Box 2 Solenoid response:', response);
+  //     });
+  // }
 
   //Subscribe to Box3 IR Sensor
   // subscribeToBox3Ir() {
@@ -278,17 +319,22 @@ export class DashboardComponent implements OnInit {
       .subscribeToBatteryStatusTopic('03')
       .subscribe((response) => {
         console.log('Received Box 3 Battery Status response:', response);
+        if (response === '0') {
+          this.bsData3 = true;
+        } else {
+          this.bsData3 = false;
+        }
       });
   }
 
   //Subscribe to Box3 Solenoid Sensor
-  subscribeToBox3Sd() {
-    this.webSocketService
-      .subscribeToSolenoidTopic('03')
-      .subscribe((response) => {
-        console.log('Received Box 3 Solenoid response:', response);
-      });
-  }
+  // subscribeToBox3Sd() {
+  //   this.webSocketService
+  //     .subscribeToSolenoidTopic('03')
+  //     .subscribe((response) => {
+  //       console.log('Received Box 3 Solenoid response:', response);
+  //     });
+  // }
 
   // Subscribe to Box 4 IR sensor
   // subscribeToBox4Ir() {
@@ -312,17 +358,22 @@ export class DashboardComponent implements OnInit {
       .subscribeToBatteryStatusTopic('04')
       .subscribe((response) => {
         console.log('Received Box 4 Battery Status response:', response);
+        if (response === '0') {
+          this.bsData4 = true;
+        } else {
+          this.bsData4 = false;
+        }
       });
   }
 
   // Subscribe to Box 4 Solenoid sensor
-  subscribeToBox4Sd() {
-    this.webSocketService
-      .subscribeToSolenoidTopic('04')
-      .subscribe((response) => {
-        console.log('Received Box 4 Solenoid response:', response);
-      });
-  }
+  // subscribeToBox4Sd() {
+  //   this.webSocketService
+  //     .subscribeToSolenoidTopic('04')
+  //     .subscribe((response) => {
+  //       console.log('Received Box 4 Solenoid response:', response);
+  //     });
+  // }
 
   // Subscribe to Box 5 IR sensor
   // subscribeToBox5Ir() {
@@ -346,17 +397,22 @@ export class DashboardComponent implements OnInit {
       .subscribeToBatteryStatusTopic('05')
       .subscribe((response) => {
         console.log('Received Box 5 Battery Status response:', response);
+        if (response === '0') {
+          this.bsData5 = true;
+        } else {
+          this.bsData5 = false;
+        }
       });
   }
 
-  // Subscribe to Box 5 Solenoid sensor
-  subscribeToBox5Sd() {
-    this.webSocketService
-      .subscribeToSolenoidTopic('05')
-      .subscribe((response) => {
-        console.log('Received Box 5 Solenoid response:', response);
-      });
-  }
+  // // Subscribe to Box 5 Solenoid sensor
+  // subscribeToBox5Sd() {
+  //   this.webSocketService
+  //     .subscribeToSolenoidTopic('05')
+  //     .subscribe((response) => {
+  //       console.log('Received Box 5 Solenoid response:', response);
+  //     });
+  // }
 
   // Subscribe to Box 6 IR sensor
   // subscribeToBox6Ir() {
@@ -380,25 +436,26 @@ export class DashboardComponent implements OnInit {
       .subscribeToBatteryStatusTopic('06')
       .subscribe((response) => {
         console.log('Received Box 6 Battery Status response:', response);
+        if (response === '0') {
+          this.bsData6 = true;
+        } else {
+          this.bsData6 = false;
+        }
       });
   }
 
   // Subscribe to Box 6 Solenoid sensor
-  subscribeToBox6Sd() {
-    this.webSocketService
-      .subscribeToSolenoidTopic('06')
-      .subscribe((response) => {
-        console.log('Received Box 6 Solenoid response:', response);
-      });
-  }
-
-
-
-
+  // subscribeToBox6Sd() {
+  //   this.webSocketService
+  //     .subscribeToSolenoidTopic('06')
+  //     .subscribe((response) => {
+  //       console.log('Received Box 6 Solenoid response:', response);
+  //     });
+  // }
 
   openPopup(): void {
     this.showPopup = true;
-    console.log("popup button trigger"); // Show the popup
+    console.log('popup button trigger'); // Show the popup
   }
 
   closePopup(): void {

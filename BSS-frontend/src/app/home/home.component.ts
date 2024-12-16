@@ -11,6 +11,7 @@ import { WebsocketService } from '../services/websocket.service';
   styleUrl: './home.component.css',
 })
 export class HomeComponent implements OnInit {
+  private timeoutId!: any;
   rfId!: string;
 
   constructor(
@@ -29,8 +30,14 @@ export class HomeComponent implements OnInit {
         this.router.navigate(['/wait', this.rfId]);
       });
 
-      setTimeout(() => {
-      this.router.navigate(['/battery-dashboard']);
+    this.timeoutId = setTimeout(() => {
+      this.router.navigate(['/card-swaipe-message']);
     }, 4500);
+  }
+
+  ngOnDestroy(): void {
+    if (this.timeoutId) {
+      clearTimeout(this.timeoutId);
+    }
   }
 }

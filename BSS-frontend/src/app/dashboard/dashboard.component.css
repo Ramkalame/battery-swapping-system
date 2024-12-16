@@ -37,7 +37,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #fff;
+  background-color: #3f62f0;
 }
 .available-batteries {
   display: flex;
@@ -53,8 +53,10 @@
   align-items: center;
 }
 .available-batteries-heading h6 {
-  font-size: 30px;
+  font-size: 36px;
   margin-right: 200px;
+  margin-top: 30px;
+  margin-bottom: 20px;
 }
 .battery-box-p {
   display: flex;
@@ -68,6 +70,7 @@
   justify-content: space-around;
   align-items: flex-start;
   width: 100%;
+  margin-top: 20px;
 }
 .batteries-box {
   width: 650px;
@@ -93,6 +96,7 @@
 .battery-box-heading p {
   font-size: 18px;
   margin: 0;
+  font-weight: 550;
 }
 .battery-box {
   height: 200px;
@@ -105,50 +109,55 @@
 }
 
 /* ============================================ cleint details -========================================== */
-.client-details{
-    margin-right: 50px;
-    height: 500px;
-    width: 400px;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    border-radius: 15px;
-    padding: 40px 10px;
-    background-color: white;
+.client-details {
+  margin-top: 60px;
+  margin-right: 50px;
+  height: 490px;
+  width: 400px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  border-radius: 15px;
+  padding: 40px 10px;
+  background-color: white;
 }
-.img-text-div{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    height: 100%;
+.img-text-div {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 100%;
 }
-.vehicle-image-div{
-    height: 250px;
-    width: 100%;
-    object-fit: cover;
-    border: 2px solid black;
+.vehicle-image-div {
+  height: 250px;
+  width: 100%;
+  object-fit: cover;
 }
-.text-details{
-    display: flex;
-    margin-top: 40px;
-    width: 98%;
-    padding-left: 20px;
+.vehicle-image-div img {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
 }
-.details-heading{
-    width: 50%;
+.text-details {
+  display: flex;
+  margin-top: 40px;
+  width: 98%;
+  padding-left: 20px;
 }
-.details-value{
-    width: 50%;
+.details-heading {
+  width: 50%;
 }
-.details-heading h6{
-    font-size: 25px;
-    font-weight: 600;
-    color: #373737;
-    margin-bottom: 20px;
+.details-value {
+  width: 50%;
 }
-.details-value h6{
-    font-size: 25px;
-    font-weight: 400;
-    color: #373737;
-    margin-bottom: 20px;
+.details-heading h6 {
+  font-size: 25px;
+  font-weight: 600;
+  color: #373737;
+  margin-bottom: 30px;
+}
+.details-value h6 {
+  font-size: 25px;
+  font-weight: 400;
+  color: #373737;
+  margin-bottom: 30px;
 }
 /* ================================== indicator ========================= */
 .status-indicators {

@@ -8,13 +8,16 @@ import { WebsocketService } from '../services/websocket.service';
   standalone: true,
   imports: [RouterModule, CommonModule],
   templateUrl: './card-swipe-message.component.html',
-  styleUrl: './card-swipe-message.component.css'
+  styleUrl: './card-swipe-message.component.css',
 })
 export class CardSwipeMessageComponent implements OnInit {
+  private timeoutId!: any;
   rfId!: string;
-
-
-  constructor(private router:Router, private webSocketService: WebsocketService){}
+  
+  constructor(
+    private router: Router,
+    private webSocketService: WebsocketService
+  ) {}
   ngOnInit(): void {
     // Subscribe to the /rf Topic
     this.webSocketService
@@ -26,10 +29,14 @@ export class CardSwipeMessageComponent implements OnInit {
         this.router.navigate(['/wait', this.rfId]);
       });
 
-    setTimeout(() => {
+    this.timeoutId = setTimeout(() => {
       this.router.navigate(['/']);
     }, 4500);
+  }
 
-}
-
+  ngOnDestroy(): void {
+    if (this.timeoutId) {
+      clearTimeout(this.timeoutId);
+    }
+  }
 }

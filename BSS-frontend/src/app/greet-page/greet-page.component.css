@@ -17,6 +17,7 @@
 .greet-text h1{
     font-size: 200px;
     color: white;
+    margin-top:80px;
 }
 
 .banner-img img{
@@ -27,7 +28,7 @@
 .banner-img{
     height: 300px;
     margin-bottom: 150px;
-    margin-top: 50px;
+    margin-top: 90px;
     display: flex;
     justify-content: center;
     align-items: center;

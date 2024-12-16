@@ -13,32 +13,37 @@
 }
 .heading{
     color: white;
-    font-size: 50px;
     text-align: center;
     padding-top: 40px;
-    width: 100%;
+    width: 80%;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     align-items: center;
-    padding-left: 150px;
+    padding-left: 130px;
     padding-top: 100px;
+    gap:15px;
 }
 .heading h4{
     line-height: 40px;
-    font-size: 50px;
     font-weight: bold;
+    font-size: 50px;
 }
 
 .battery-png{
-    width: 350px;
+    width: 400px;
     height: 400px;
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: flex-start;
     width: 100%;
+    position: relative;
 }
 .battery-bike{
+    position: absolute;
+    top: 15%; 
+    left: 50%; 
+    transform: translateX(-50%);
     object-fit: contain;
     filter: drop-shadow(0px 10px 10px rgba(0, 0, 0, 0.3));
     margin-left: -90px;

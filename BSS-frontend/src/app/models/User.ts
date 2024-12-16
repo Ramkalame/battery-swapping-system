@@ -3,14 +3,14 @@ export class User{
     userName:string;
     mobileNumber:string;
     vehicleNumber:string;
-    vehicleImageUrl:string;
+    profileImageUrl:string;
 
     constructor(){
         this.userId = ' ';
         this.userName = ' ';
         this.mobileNumber = ' ';
         this.vehicleNumber = ' ';
-        this.vehicleImageUrl = ' ';
+        this.profileImageUrl = ' ';
     }
 }
 
