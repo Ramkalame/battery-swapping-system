@@ -25,8 +25,9 @@ export class InsertingAnimationComponent implements OnInit {
   process2: boolean = false;
 
   openDoor: number = 0; // This will store which box is open
-  isTakingBatteryAnimationShow: boolean = true;
+  isTakingBatteryAnimationShow: boolean = false;
   isInsertingBatteryAnimationShow: boolean = false;
+  isWaitingAnimationShow: boolean = true;
   activeStep = 1; // Start with step-1
   private intervalId: any;
 
