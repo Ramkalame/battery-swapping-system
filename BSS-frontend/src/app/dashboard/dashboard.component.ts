@@ -149,12 +149,12 @@ export class DashboardComponent implements OnInit {
     this.apiService.getUserById(rfId).subscribe({
       next: (response: ApiResponse<User>) => {
         this.selectedUser = response.data;
-        // this.timeoutId =  setTimeout(() => {
-        //   this.openPopup();
-        // }, 2000);
+        this.timeoutId =  setTimeout(() => {
+          this.openPopup();
+        }, 5000);
       },
       error: (error: any) => {
-        console.log('Something Went Wrong');
+        // console.log('Something Went Wrong');
       },
     });
   }
@@ -231,7 +231,7 @@ export class DashboardComponent implements OnInit {
     this.webSocketService
       .subscribeToTemperatureTopic('01')
       .subscribe((response) => {
-        console.log('Received Box 1 Temperature response:', response);
+        // console.log('Received Box 1 Temperature response:', response);
       });
   }
 
@@ -240,7 +240,7 @@ export class DashboardComponent implements OnInit {
     this.webSocketService
       .subscribeToBatteryStatusTopic('01')
       .subscribe((response) => {
-        console.log('Received Box 1 Battery Status response:', response);
+        // console.log('Received Box 1 Battery Status response:', response);
         if (response === '0') {
           this.bsData1 = true;
         } else {
@@ -270,7 +270,7 @@ export class DashboardComponent implements OnInit {
     this.webSocketService
       .subscribeToTemperatureTopic('02')
       .subscribe((response) => {
-        console.log('Received Box 2 Temperature response:', response);
+        // console.log('Received Box 2 Temperature response:', response);
       });
   }
 
@@ -279,7 +279,7 @@ export class DashboardComponent implements OnInit {
     this.webSocketService
       .subscribeToBatteryStatusTopic('02')
       .subscribe((response) => {
-        console.log('Received Box 2 Battery Status response:', response);
+        // console.log('Received Box 2 Battery Status response:', response);
         if (response === '0') {
           this.bsData2 = true;
         } else {
@@ -309,7 +309,7 @@ export class DashboardComponent implements OnInit {
     this.webSocketService
       .subscribeToTemperatureTopic('03')
       .subscribe((response) => {
-        console.log('Received Box 3 Temperature response:', response);
+        // console.log('Received Box 3 Temperature response:', response);
       });
   }
 
@@ -318,7 +318,7 @@ export class DashboardComponent implements OnInit {
     this.webSocketService
       .subscribeToBatteryStatusTopic('03')
       .subscribe((response) => {
-        console.log('Received Box 3 Battery Status response:', response);
+        // console.log('Received Box 3 Battery Status response:', response);
         if (response === '0') {
           this.bsData3 = true;
         } else {
@@ -348,7 +348,7 @@ export class DashboardComponent implements OnInit {
     this.webSocketService
       .subscribeToTemperatureTopic('04')
       .subscribe((response) => {
-        console.log('Received Box 4 Temperature response:', response);
+        // console.log('Received Box 4 Temperature response:', response);
       });
   }
 
@@ -357,7 +357,7 @@ export class DashboardComponent implements OnInit {
     this.webSocketService
       .subscribeToBatteryStatusTopic('04')
       .subscribe((response) => {
-        console.log('Received Box 4 Battery Status response:', response);
+        // console.log('Received Box 4 Battery Status response:', response);
         if (response === '0') {
           this.bsData4 = true;
         } else {
@@ -387,7 +387,7 @@ export class DashboardComponent implements OnInit {
     this.webSocketService
       .subscribeToTemperatureTopic('05')
       .subscribe((response) => {
-        console.log('Received Box 5 Temperature response:', response);
+        // console.log('Received Box 5 Temperature response:', response);
       });
   }
 
@@ -396,7 +396,7 @@ export class DashboardComponent implements OnInit {
     this.webSocketService
       .subscribeToBatteryStatusTopic('05')
       .subscribe((response) => {
-        console.log('Received Box 5 Battery Status response:', response);
+        // console.log('Received Box 5 Battery Status response:', response);
         if (response === '0') {
           this.bsData5 = true;
         } else {
@@ -426,7 +426,7 @@ export class DashboardComponent implements OnInit {
     this.webSocketService
       .subscribeToTemperatureTopic('06')
       .subscribe((response) => {
-        console.log('Received Box 6 Temperature response:', response);
+        // console.log('Received Box 6 Temperature response:', response);
       });
   }
 
@@ -435,7 +435,7 @@ export class DashboardComponent implements OnInit {
     this.webSocketService
       .subscribeToBatteryStatusTopic('06')
       .subscribe((response) => {
-        console.log('Received Box 6 Battery Status response:', response);
+        // console.log('Received Box 6 Battery Status response:', response);
         if (response === '0') {
           this.bsData6 = true;
         } else {
