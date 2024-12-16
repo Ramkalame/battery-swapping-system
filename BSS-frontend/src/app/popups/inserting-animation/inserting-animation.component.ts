@@ -30,6 +30,7 @@ export class InsertingAnimationComponent implements OnInit {
   isTakingBatteryAnimationShow: boolean = false;
   isInsertingBatteryAnimationShow: boolean = true;
   activeStep = 1; // Start with step-1
+  isWaitingAnimationShow:boolean=false;
 
   //Interval Ids
   private intervalId: any;
