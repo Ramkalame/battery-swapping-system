@@ -88,7 +88,7 @@ export class InsertingAnimationComponent implements OnInit {
         //this method will fetch the latest empty box number from the database
         this.openDoor = response.data.boxNumber;
         //this command is used to open the empty box to insert dischared battey
-        this.commandToOpenTheDoor('B0' + this.openDoor + 'SD1');
+        this.commandToOpenTheDoor('OPEN'+ this.openDoor);
         //after the command it will call the method to verify the battery status whether the battery is charging or not
         //this methd will execute after 40 seconds of delay to ensure the batterys status is correct
         this.toVerfiyBatteryStatusOfEmptyBoxP1();
@@ -135,7 +135,7 @@ export class InsertingAnimationComponent implements OnInit {
         console.log('-------L VrifyP1 INSIDE CONDITION------');
         //this will execute if the battery status of the empty box is 0 (charging)
         //this command is to close the door after successful verification
-        this.commandToCloseTheDoor(`B0${this.openDoor}SD0`);
+        // this.commandToCloseTheDoor(`CLOSE${this.openDoor}`);
         //then it will find the first charged battery
         this.checkAndOpenFullyChargedBatteryBox();
         //update the new empty box number in database
@@ -157,7 +157,7 @@ export class InsertingAnimationComponent implements OnInit {
       if (this.bsArray[this.openDoor] === 1) {
         //this will execute if the battery status of the empty box is 0 (charging)
         //this command is to close the door after successful verification
-        this.commandToCloseTheDoor(`B0${this.openDoor}SD0`);
+        // this.commandToCloseTheDoor(`B0${this.openDoor}SD0`);
         //afte completion navigate to the greet page
         this.router.navigate(['/greet']);
       }
