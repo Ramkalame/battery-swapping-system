@@ -28,7 +28,7 @@ export class BufferingComponent implements OnInit {
     this.getUserDetails(this.rfId);
 
     this.timeoutId = setTimeout(() => {
-      this.router.navigate(['/dashboard', this.rfId]);
+      this.router.navigate(['/user-profile', this.rfId]);
     }, 1500);
   }
   ngOnDestroy(): void {
