@@ -115,9 +115,9 @@ export class DashboardComponent implements OnInit {
     this.userDetailsSubscription = this.apiService.getUserById(rfId).subscribe({
       next: (response: ApiResponse<User>) => {
         this.selectedUser = response.data;
-        this.timeoutId = setTimeout(() => {
-          this.openPopup();
-        }, 5000);
+        // this.timeoutId = setTimeout(() => {
+        //   this.openPopup();
+        // }, 5000);
       },
       error: (error: any) => {
         this.router.navigate(['/invalid-credential'])
