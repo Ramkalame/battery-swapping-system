@@ -7,9 +7,11 @@ import { BufferingComponent } from './buffering/buffering.component';
 import { InsertingAnimationComponent } from './popups/inserting-animation/inserting-animation.component';
 import { TestAnimationComponent } from './test-animation/test-animation.component';
 import { WarningMessageComponent } from './warning-message/warning-message.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 export const routes: Routes = [
   {path: '',component: HomeComponent,},
+  {path:'user-profile',component: UserProfileComponent},
   {path: 'dashboard/:rfId',component: DashboardComponent,},
   {path: 'greet',component: GreetPageComponent,},
   { path: 'card-swaipe-message', component: CardSwipeMessageComponent },
