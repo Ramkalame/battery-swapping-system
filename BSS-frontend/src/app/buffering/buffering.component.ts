@@ -26,8 +26,6 @@ export class BufferingComponent implements OnInit {
     }, 1500);
   }
   ngOnDestroy(): void {
-    if (this.timeoutId) {
-      clearTimeout(this.timeoutId);
-    }
+    clearTimeout(this.timeoutId);
   }
 }

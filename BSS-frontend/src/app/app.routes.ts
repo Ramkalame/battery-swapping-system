@@ -6,7 +6,6 @@ import { CardSwipeMessageComponent } from './card-swipe-message/card-swipe-messa
 import { BufferingComponent } from './buffering/buffering.component';
 import { InsertingAnimationComponent } from './popups/inserting-animation/inserting-animation.component';
 import { TestAnimationComponent } from './test-animation/test-animation.component';
-import { BatteryDashboardComponent } from './battery-dashboard/battery-dashboard.component';
 import { WarningMessageComponent } from './warning-message/warning-message.component';
 
 export const routes: Routes = [

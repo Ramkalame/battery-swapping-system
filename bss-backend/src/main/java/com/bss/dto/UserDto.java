@@ -1,4 +1,5 @@
 package com.bss.dto;
+import com.bss.entity.enums.UserType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,5 +17,5 @@ public class UserDto {
     private String mobileNumber;
     private String vehicleNumber;
     private String profileImageUrl;
-
+    private String userType;
 }

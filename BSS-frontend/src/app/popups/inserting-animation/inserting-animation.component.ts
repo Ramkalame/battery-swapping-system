@@ -7,14 +7,13 @@ import {
   Output,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { OpenBoxSignalService } from '../../services/open-box-signal.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ApiService } from '../../services/api.service';
 import { ApiResponse } from '../../models/User';
 import { EmptyBox } from '../../models/BatteryTransaction';
 import { WebsocketService } from '../../services/websocket.service';
-import { UpdateEBoxService } from '../../services/update-e-box.service';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-inserting-animation',
@@ -30,21 +29,28 @@ export class InsertingAnimationComponent implements OnInit {
   isTakingBatteryAnimationShow: boolean = false;
   isInsertingBatteryAnimationShow: boolean = true;
   activeStep = 1; // Start with step-1
-  isWaitingAnimationShow:boolean=false;
+  isWaitingAnimationShow: boolean = false;
 
-  //Interval Ids
+  //needs to unsubscribe or destroy
   private intervalId: any;
   private intervalId2: any;
+  private bsSubscription1!: Subscription;
+  private bsSubscription2!: Subscription;
+  private bsSubscription3!: Subscription;
+  private bsSubscription4!: Subscription;
+  private bsSubscription5!: Subscription;
+  private bsSubscription6!: Subscription;
+  private getEmptyBoxSubscription!: Subscription;
+  private openDoorSubscription!: Subscription;
+  private closeDoorSubscription!: Subscription;
+  private updateEmptyBoxSubscription!: Subscription;
 
   //charged battery status
-  batteryStatus: { [key: string]: number } = {};
-  bsArray: number[] = [0, 0, 0, 0, 0, 0, 0];
+  bsArray: number[] = [0, 0, 0, 0, 0, 0, 0]; //first index ignored
 
   constructor(
-    private openBoxSignalService: OpenBoxSignalService,
     private apiService: ApiService,
     private webSocketService: WebsocketService,
-    private updateEBoxService: UpdateEBoxService,
     private router: Router,
     private cdr: ChangeDetectorRef
   ) {}
@@ -69,8 +75,20 @@ export class InsertingAnimationComponent implements OnInit {
     this.close.emit(); // Emit an event to close the popup
   }
   ngOnDestroy(): void {
-    clearInterval(this.intervalId); // Clear interval to avoid memory leaks
+    // Clear interval to avoid memory leaks
+    clearInterval(this.intervalId); 
     clearInterval(this.intervalId2);
+    //Unsubscribe all the subscriptions
+    this.bsSubscription1?.unsubscribe();
+    this.bsSubscription2?.unsubscribe();
+    this.bsSubscription3?.unsubscribe();
+    this.bsSubscription4?.unsubscribe();
+    this.bsSubscription5?.unsubscribe();
+    this.bsSubscription6?.unsubscribe();
+    this.getEmptyBoxSubscription?.unsubscribe();
+    this.openDoorSubscription?.unsubscribe();
+    this.closeDoorSubscription?.unsubscribe();
+    this.updateEmptyBoxSubscription?.unsubscribe();
   }
 
   startAnimationSequence(): void {
@@ -81,14 +99,14 @@ export class InsertingAnimationComponent implements OnInit {
 
   //To fetch the empty box details from db which is updated on last transaction
   getCurrentEmptyBox() {
-    this.apiService.getCurrentEmptyBox().subscribe({
+    this.getEmptyBoxSubscription = this.apiService.getCurrentEmptyBox().subscribe({
       next: (response: ApiResponse<EmptyBox>) => {
         console.log('-------L Empty Box Called------');
         console.log(response.message + ' :-' + response.data.boxNumber);
         //this method will fetch the latest empty box number from the database
         this.openDoor = response.data.boxNumber;
         //this command is used to open the empty box to insert dischared battey
-        this.commandToOpenTheDoor('OPEN'+ this.openDoor);
+        this.commandToOpenTheDoor('OPEN' + this.openDoor);
         //after the command it will call the method to verify the battery status whether the battery is charging or not
         //this methd will execute after 40 seconds of delay to ensure the batterys status is correct
         this.toVerfiyBatteryStatusOfEmptyBoxP1();
@@ -101,7 +119,7 @@ export class InsertingAnimationComponent implements OnInit {
 
   //this is to give command to the arduino to open the door of empty box
   commandToOpenTheDoor(command: string) {
-    this.apiService.sendCommandToArduino(command).subscribe({
+   this.openDoorSubscription = this.apiService.sendCommandToArduino(command).subscribe({
       next: (response: ApiResponse<string>) => {
         console.log('-------L OPEN Door Called------');
         console.log('Command sent to Arduion OPEN DOOR: ' + response.data);
@@ -114,7 +132,7 @@ export class InsertingAnimationComponent implements OnInit {
 
   //this is to give command to the arduino to close the door
   commandToCloseTheDoor(command: string) {
-    this.apiService.sendCommandToArduino(command).subscribe({
+    this.closeDoorSubscription = this.apiService.sendCommandToArduino(command).subscribe({
       next: (response: ApiResponse<string>) => {
         console.log('-------L Close Door Called------');
         console.log('Command sent to Arduion CLOSE DOOR: ' + response.data);
@@ -183,7 +201,7 @@ export class InsertingAnimationComponent implements OnInit {
 
   updateTheNewEmptyBox(boxNumber: number) {
     console.log('-------L Update Empty Box Called Called------');
-    this.apiService.updateCurrentEmptyBox(boxNumber).subscribe({
+    this.updateEmptyBoxSubscription = this.apiService.updateCurrentEmptyBox(boxNumber).subscribe({
       next: (response: ApiResponse<EmptyBox>) => {
         console.log(response.message + ' :-' + response.data.boxNumber);
         //after updating verify the battery status
@@ -197,7 +215,7 @@ export class InsertingAnimationComponent implements OnInit {
 
   // Subscribe to Box 1 Battery Status sensor
   subscribeToBox1Bs() {
-    this.webSocketService
+    this.bsSubscription1 = this.webSocketService
       .subscribeToBatteryStatusTopic('01')
       .subscribe((response) => {
         // console.log('Received Box 1 Battery Status response:', response);
@@ -208,7 +226,7 @@ export class InsertingAnimationComponent implements OnInit {
 
   //Subscribe to Box2 Battery Status Sensor
   subscribeToBox2Bs() {
-    this.webSocketService
+    this.bsSubscription2 = this.webSocketService
       .subscribeToBatteryStatusTopic('02')
       .subscribe((response) => {
         // console.log('Received Box 2 Battery Status response:', response);
@@ -219,7 +237,7 @@ export class InsertingAnimationComponent implements OnInit {
 
   //Subscribe to Box3 Battery Status Sensor
   subscribeToBox3Bs() {
-    this.webSocketService
+    this.bsSubscription3 = this.webSocketService
       .subscribeToBatteryStatusTopic('03')
       .subscribe((response) => {
         // console.log('Received Box 3 Battery Status response:', response);
@@ -230,7 +248,7 @@ export class InsertingAnimationComponent implements OnInit {
 
   // Subscribe to Box 4 Battery Status sensor
   subscribeToBox4Bs() {
-    this.webSocketService
+    this.bsSubscription4 = this.webSocketService
       .subscribeToBatteryStatusTopic('04')
       .subscribe((response) => {
         // console.log('Received Box 4 Battery Status response:', response);
@@ -241,7 +259,7 @@ export class InsertingAnimationComponent implements OnInit {
 
   // Subscribe to Box 5 Battery Status sensor
   subscribeToBox5Bs() {
-    this.webSocketService
+    this.bsSubscription5 = this.webSocketService
       .subscribeToBatteryStatusTopic('05')
       .subscribe((response) => {
         // console.log('Received Box 5 Battery Status response:', response);
@@ -252,7 +270,7 @@ export class InsertingAnimationComponent implements OnInit {
 
   // Subscribe to Box 6 Battery Status sensor
   subscribeToBox6Bs() {
-    this.webSocketService
+    this.bsSubscription6 = this.webSocketService
       .subscribeToBatteryStatusTopic('06')
       .subscribe((response) => {
         // console.log('Received Box 6 Battery Status response:', response);
