@@ -1,0 +1,147 @@
+<div class="container">
+    <div class="header">
+        <div class="image-banner"><img src="./assets/cm-bnner.png" alt="banner" class="banner1"></div>
+    </div>
+    <div class="hero-sec">
+        <div class="available-batteries">
+            <div class="available-batteries-heading">
+                <h6>उपलब्ध बैटरियां</h6>
+            </div>
+            <div class="battery-indicator-div">
+                <div class="batteries-box">
+                    <div class="battery-box-p">
+                        <div class="battery-box-heading">
+                            <p>बैटरी-1</p>
+                        </div>
+                        <div class="battery-box">
+                            <div *ngIf="emptyBoxNumber !== 1">
+                            <app-test-animation *ngIf="bsData1"></app-test-animation>
+                            <img src="./assets/charges-battery.png" alt="charges-battery.png" *ngIf="!bsData1">
+                            </div>
+                            <img src="./assets/dead-battery.png" alt="charges-battery.png" *ngIf="emptyBoxNumber === 1">
+                        </div>
+                    </div>
+                    <div class="battery-box-p">
+                        <div class="battery-box-heading">
+                            <p>बैटरी-2</p>
+                        </div>
+                        <div class="battery-box">
+                            <div *ngIf="emptyBoxNumber !== 2">
+                            <app-test-animation *ngIf="bsData2"></app-test-animation>
+                            <img src="./assets/charges-battery.png" alt="charges-battery.png" *ngIf="!bsData2">
+                            </div>
+                            <img src="./assets/dead-battery.png" alt="charges-battery.png" *ngIf="emptyBoxNumber === 2">
+                        </div>
+                    </div>
+                    <div class="battery-box-p">
+                        <div class="battery-box-heading">
+                            <p>बैटरी-3</p>
+                        </div>
+                        <div class="battery-box">
+                            <div *ngIf="emptyBoxNumber !== 3">
+                            <app-test-animation *ngIf="bsData3"></app-test-animation>
+                            <img src="./assets/charges-battery.png" alt="charges-battery.png" *ngIf="!bsData3">
+                            </div>
+                            <img src="./assets/dead-battery.png" alt="charges-battery.png" *ngIf="emptyBoxNumber === 3">
+                        </div>
+                    </div>
+                    <div class="battery-box-p">
+                        <div class="battery-box-heading">
+                            <p>बैटरी-4</p>
+                        </div>
+                        <div class="battery-box">
+                            <div *ngIf="emptyBoxNumber !== 4">
+                            <app-test-animation *ngIf="bsData4"></app-test-animation>
+                            <img src="./assets/charges-battery.png" alt="charges-battery.png" *ngIf="!bsData4">
+                            </div>
+                            <img src="./assets/dead-battery.png" alt="charges-battery.png" *ngIf="emptyBoxNumber === 4">
+                        </div>
+                    </div>
+                    <div class="battery-box-p">
+                        <div class="battery-box-heading">
+                            <p>बैटरी-5</p>
+                        </div>
+                        <div class="battery-box">
+                            <div *ngIf="emptyBoxNumber !== 5">
+                            <app-test-animation *ngIf="bsData5"></app-test-animation>
+                            <img src="./assets/charges-battery.png" alt="charges-battery.png" *ngIf="!bsData5">
+                            </div>
+                            <img src="./assets/dead-battery.png" alt="charges-battery.png" *ngIf="emptyBoxNumber === 5">
+                        </div>
+                    </div>
+                    <div class="battery-box-p">
+                        <div class="battery-box-heading">
+                            <p>बैटरी-6</p>
+                        </div>
+                        <div class="battery-box">
+                            <div *ngIf="emptyBoxNumber !== 6">
+                            <app-test-animation *ngIf="bsData6"></app-test-animation>
+                            <img src="./assets/charges-battery.png" alt="charges-battery.png" *ngIf="!bsData6">
+                            </div>
+                            <img src="./assets/dead-battery.png" alt="charges-battery.png" *ngIf="emptyBoxNumber === 6">
+                        </div>
+                    </div>
+                </div>
+                <div class="status-indicators">
+                    <div class="barttery-status-indicator">
+                        <div class="indicator-box">
+                            <div class="indicator-icon">
+                                <img src="./assets/charges-battery.png" alt="charges-battery.png" class="ibattery">
+
+                            </div>
+                            <div class="indicator-text">
+                                <p>पूरी तरह चार्ज है</p>
+                            </div>
+                        </div>
+                        <div class="indicator-box">
+                            <div class="indicator-icon">
+                                <img src="./assets/charging-battery.png" alt="charges-battery.png" class="ibattery">
+
+                            </div>
+                            <div class="indicator-text">
+                                <p>चार्ज हो रहा है</p>
+                            </div>
+                        </div>
+                        <div class="indicator-box">
+                            <div class="indicator-icon">
+                                <img src="./assets/dead-battery.png" alt="charges-battery.png" class="ibattery">
+
+                            </div>
+                            <div class="indicator-text">
+                                <p>बैटरी नहीं है</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="client-details" *ngIf="selectedUser">
+            <div class="img-text-div">
+                <div class="vehicle-image-div">
+                    <img [src]="selectedUser.profileImageUrl" alt="client-image.png" class="client-image">
+                </div>
+                <div class="text-details">
+                    <div class="details-heading">
+                        <h6>ग्राहक आईडी: </h6>
+                        <h6>नाम:</h6>
+                        <h6>मोबाइल नंबर:</h6>
+                        <h6>वाहन नंबर:</h6>
+                    </div>
+                    <div class="details-value">
+                        <h6>{{selectedUser.userId}}</h6>
+                        <h6>{{selectedUser.userName}}</h6>
+                        <h6>{{selectedUser.mobileNumber}}</h6>
+                        <h6>{{selectedUser.vehicleNumber}}</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Popup Background Blur -->
+        <div class="popup-overlay" *ngIf="showPopup"></div>
+
+        <!-- Popup Component -->
+        <div class="popup-window" *ngIf="showPopup">
+            <app-inserting-animation (close)="closePopup()"></app-inserting-animation>
+        </div>
+    </div>
+</div>
