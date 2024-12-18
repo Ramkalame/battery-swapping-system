@@ -11,13 +11,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrl: './greet-page.component.css'
 })
 export class GreetPageComponent implements OnInit {
+  private timeOutId!:any;
 
   constructor(private router:Router){}
 
   ngOnInit(){
-  setTimeout(() => {
+  this.timeOutId = setTimeout(() => {
     this.router.navigate(['/']);
   }, 3000); 
+  }
+
+  ngOnDestroy(){
+    clearTimeout(this.timeOutId);
   }
 
 }
