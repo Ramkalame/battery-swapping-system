@@ -2,6 +2,7 @@ package com.bss.service.impl;
 
 import com.bss.dto.UserDto;
 import com.bss.entity.User;
+import com.bss.entity.enums.UserType;
 import com.bss.exception.EntityNotFoundException;
 import com.bss.repository.UserRepository;
 import com.bss.service.UserService;
@@ -36,6 +37,12 @@ public class UserServiceImpl implements UserService {
                 .vehicleNumber(userDto.getVehicleNumber())
                 .profileImageUrl(userDto.getProfileImageUrl())
                 .build();
+        if (userDto.getUserType().equals(UserType.RICKSHAW.name())){
+            newUser.setUserType(UserType.RICKSHAW);
+        }
+        if (userDto.getUserType().equals(UserType.SCOOTER.name())){
+            newUser.setUserType(UserType.SCOOTER);
+        }
         return userRepository.save(newUser);
     }
 
@@ -53,6 +60,12 @@ public class UserServiceImpl implements UserService {
             existingUser.setMobileNumber(userDto.getMobileNumber());
             existingUser.setVehicleNumber(userDto.getVehicleNumber());
             existingUser.setProfileImageUrl(userDto.getProfileImageUrl());
+            if (userDto.getUserType().equals(UserType.RICKSHAW.name())){
+                existingUser.setUserType(UserType.RICKSHAW);
+            }
+            if (userDto.getUserType().equals(UserType.SCOOTER.name())){
+                existingUser.setUserType(UserType.SCOOTER);
+            }
             return userRepository.save(existingUser);
         }
         return null;

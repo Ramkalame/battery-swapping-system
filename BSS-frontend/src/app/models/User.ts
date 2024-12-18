@@ -4,6 +4,7 @@ export class User{
     mobileNumber:string;
     vehicleNumber:string;
     profileImageUrl:string;
+    userType: UserType;
 
     constructor(){
         this.userId = ' ';
@@ -11,9 +12,15 @@ export class User{
         this.mobileNumber = ' ';
         this.vehicleNumber = ' ';
         this.profileImageUrl = ' ';
+        this.userType = UserType.SCOOTER;
     }
 }
 
+export enum UserType {
+    SCOOTER = "SCOOTER",
+    RICKSHAW = "RICKSHAW",
+  }
+  
 
 export class ApiResponse<T> {
     data: T;
