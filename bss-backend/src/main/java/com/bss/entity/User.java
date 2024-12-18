@@ -22,5 +22,4 @@ public class User {
     private String vehicleNumber;
     private String profileImageUrl;
     private UserType userType;
-
 }
