@@ -120,6 +120,7 @@ export class DashboardComponent implements OnInit {
         }, 5000);
       },
       error: (error: any) => {
+        this.router.navigate(['/invalid-credential'])
         console.log('Something Went Wrong');
       },
     });
