@@ -35,9 +35,9 @@ export class UserProfileComponent implements OnInit {
       next: (response: ApiResponse<User>) => {
         console.log(response.data)
         this.user = response.data;
-        // this.timeoutId = setTimeout(() => {
-        //   this.router.navigate(['/dashboard', this.rfId]);
-        // }, 4500);
+        this.timeoutId = setTimeout(() => {
+          this.router.navigate(['/dashboard', this.rfId]);
+        }, 4500);
       },
       error: (error: any) => {
         this.router.navigate(['/invalid-credential']);

@@ -29,8 +29,8 @@ export class InsertingAnimationComponent implements OnInit {
   newOpenBox!: number;
   openDoorDuringInserting!: number; // This will store which box is open
   openDoorDuringTaking!: number;
-  isTakingBatteryAnimationShow: boolean = true;
-  isInsertingBatteryAnimationShow: boolean = false;
+  isTakingBatteryAnimationShow: boolean = false;
+  isInsertingBatteryAnimationShow: boolean = true;
   activeStep = 1; // Start with step-1
   isWaitingAnimationShow: boolean = false;
 
@@ -182,7 +182,7 @@ export class InsertingAnimationComponent implements OnInit {
         this.updateTheNewEmptyBox(this.openDoorDuringTaking);
         // this.isWaitingAnimationShow = true;
       }
-    }, 35000);
+    }, 45000);
   }
 
   //To verify the battery status after taking and taking battery
@@ -205,7 +205,7 @@ export class InsertingAnimationComponent implements OnInit {
           },
         });
       }
-    }, 35000);
+    }, 45000);
   }
 
   // This to open the first fully charnged battery box door only
