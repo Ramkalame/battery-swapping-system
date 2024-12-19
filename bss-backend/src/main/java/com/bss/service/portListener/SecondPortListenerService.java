@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class SecondPortListenerService {
 
-    private final String portName = "COM1";
+    private final String portName = "COM6";
     private final SocketService socketService;
     private SerialPort serialPort;
 
@@ -50,7 +50,7 @@ public class SecondPortListenerService {
         }
     }
 
-   @PreDestroy
+    @PreDestroy
     private void closeSerialPort() {
         if (serialPort != null && serialPort.isOpen()) {
             serialPort.closePort();
