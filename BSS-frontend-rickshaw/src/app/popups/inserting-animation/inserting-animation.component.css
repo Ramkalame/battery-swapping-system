@@ -53,10 +53,15 @@
   align-items: center;
 }
 /* ========================= Start Spiner Animation=============================================================================== */
-
-
+.box-container-second{
+  height: 600px;
+}
+.center{
+  width: 100%;
+  background:transparent;
+}
 .message-text{
-  color: wheat;
+  color: white;
 }
 .message-text h1{
   font-size:40px;
