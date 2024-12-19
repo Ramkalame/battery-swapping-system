@@ -89,8 +89,8 @@ export class InsertingAnimationComponent implements OnInit {
   }
   ngOnDestroy(): void {
     // Clear interval to avoid memory leaks
-    clearInterval(this.intervalId);
-    clearInterval(this.intervalId2);
+    clearTimeout(this.intervalId);
+    clearTimeout(this.intervalId2);
     //Unsubscribe all the subscriptions
     this.bsSubscription1?.unsubscribe();
     this.bsSubscription2?.unsubscribe();
@@ -171,7 +171,7 @@ export class InsertingAnimationComponent implements OnInit {
   toVerfiyBatteryStatusOfEmptyBoxP1() {
     console.log('-------L VrifyP1 Called------');
     //it will set interval for 40 seconds after calling this method
-    this.intervalId2 = setInterval(() => {
+    this.intervalId2 = setTimeout(() => {
       //this condition will check wether the battery status of the empty box is 0(charging) or 1(error detetected)
       if (this.bsArray[this.openDoorDuringInserting] === 0) {
         console.log('-------L VrifyP1 INSIDE CONDITION------');
@@ -179,7 +179,7 @@ export class InsertingAnimationComponent implements OnInit {
         //then it will find the first charged battery
         this.checkAndOpenFullyChargedBatteryBox();
         //update the new empty box number in database
-        this.updateTheNewEmptyBox(this.openDoorDuringInserting);
+        this.updateTheNewEmptyBox(this.openDoorDuringTaking);
         // this.isWaitingAnimationShow = true;
       }
     }, 35000);
@@ -189,9 +189,9 @@ export class InsertingAnimationComponent implements OnInit {
   toVerfiyBatteryStatusOfEmptyBoxP2() {
     console.log('-------L VrifyP2 Called------');
     //it will set interval for 40 seconds after calling this method
-    this.intervalId2 = setInterval(() => {
+    this.intervalId2 = setTimeout(() => {
       //this condition will check wether the battery status of the empty box is 0(charging) or 1(error detetected)
-      if (this.bsArray[this.openDoorDuringInserting] === 1) {
+      if (this.bsArray[this.openDoorDuringTaking] === 1) {
         //this will execute if the battery status of the empty box is 1 (means error becauser battery is taken )
         //afte completion navigate to the greet page
         this.batteryTransactionSubscription = this.apiService.addBatteryTransactions(this.rfId).subscribe({
