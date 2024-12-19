@@ -49,7 +49,6 @@ import { Subscription } from 'rxjs';
   ],
 })
 export class DashboardComponent implements OnInit {
-
   //var to remove after component destruction
   private timeoutId!: any;
   private timeoutId2!: any;
@@ -59,6 +58,10 @@ export class DashboardComponent implements OnInit {
   private bsSubscription4!: Subscription;
   private bsSubscription5!: Subscription;
   private bsSubscription6!: Subscription;
+  private bsSubscription7!: Subscription;
+  private bsSubscription8!: Subscription;
+  private bsSubscription9!: Subscription;
+  private bsSubscription10!: Subscription;
   private userDetailsSubscription!: Subscription;
   private emptyBoxSubscription!: Subscription;
 
@@ -73,12 +76,16 @@ export class DashboardComponent implements OnInit {
   bsData4: boolean = true;
   bsData5: boolean = true;
   bsData6: boolean = true;
+  bsData7: boolean = true;
+  bsData8: boolean = true;
+  bsData9: boolean = true;
+  bsData10: boolean = true;
 
   constructor(
     private webSocketService: WebsocketService,
     private apiService: ApiService,
     private route: ActivatedRoute,
-    private router: Router,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -96,6 +103,11 @@ export class DashboardComponent implements OnInit {
     this.subscribeToBox4Bs();
     this.subscribeToBox5Bs();
     this.subscribeToBox6Bs();
+    this.subscribeToBox7Bs();
+    this.subscribeToBox9Bs();
+    this.subscribeToBox8Bs();
+    this.subscribeToBox9Bs();
+    this.subscribeToBox10Bs();
   }
 
   ngOnDestroy(): void {
@@ -107,6 +119,10 @@ export class DashboardComponent implements OnInit {
     this.bsSubscription4?.unsubscribe();
     this.bsSubscription5?.unsubscribe();
     this.bsSubscription6?.unsubscribe();
+    this.bsSubscription7?.unsubscribe();
+    this.bsSubscription8?.unsubscribe();
+    this.bsSubscription9?.unsubscribe();
+    this.bsSubscription10?.unsubscribe();
     this.userDetailsSubscription?.unsubscribe();
     this.emptyBoxSubscription?.unsubscribe();
   }
@@ -115,17 +131,16 @@ export class DashboardComponent implements OnInit {
     this.userDetailsSubscription = this.apiService.getUserById(rfId).subscribe({
       next: (response: ApiResponse<User>) => {
         this.selectedUser = response.data;
-        // this.timeoutId = setTimeout(() => {
-        //   this.openPopup();
-        // }, 5000);
+        this.timeoutId = setTimeout(() => {
+          this.openPopup();
+        }, 5000);
       },
       error: (error: any) => {
-        this.router.navigate(['/invalid-credential'])
+        this.router.navigate(['/invalid-credential']);
         console.log('Something Went Wrong');
       },
     });
   }
-
 
   getCurrentEmptyBox() {
     this.emptyBoxSubscription = this.apiService.getCurrentEmptyBox().subscribe({
@@ -139,10 +154,9 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-
   // Subscribe to Box 1 Battery Status sensor
   subscribeToBox1Bs() {
-    this.bsSubscription1 =  this.webSocketService
+    this.bsSubscription1 = this.webSocketService
       .subscribeToBatteryStatusTopic('01')
       .subscribe((response) => {
         console.log('Received Box 1 Battery Status response:', response);
@@ -182,7 +196,6 @@ export class DashboardComponent implements OnInit {
       });
   }
 
-
   // Subscribe to Box 4 Battery Status sensor
   subscribeToBox4Bs() {
     this.bsSubscription4 = this.webSocketService
@@ -221,6 +234,62 @@ export class DashboardComponent implements OnInit {
           this.bsData6 = true;
         } else {
           this.bsData6 = false;
+        }
+      });
+  }
+
+  // Subscribe to Box 7 Battery Status sensor
+  subscribeToBox7Bs() {
+    this.bsSubscription7 = this.webSocketService
+      .subscribeToBatteryStatusTopic('07')
+      .subscribe((response) => {
+        console.log('Received Box 7 Battery Status response:', response);
+        if (response === '0') {
+          this.bsData7 = true;
+        } else {
+          this.bsData7 = false;
+        }
+      });
+  }
+
+  // Subscribe to Box 8 Battery Status sensor
+  subscribeToBox8Bs() {
+    this.bsSubscription8 = this.webSocketService
+      .subscribeToBatteryStatusTopic('08')
+      .subscribe((response) => {
+        console.log('Received Box 8 Battery Status response:', response);
+        if (response === '0') {
+          this.bsData8 = true;
+        } else {
+          this.bsData8 = false;
+        }
+      });
+  }
+
+  // Subscribe to Box 9 Battery Status sensor
+  subscribeToBox9Bs() {
+    this.bsSubscription9 = this.webSocketService
+      .subscribeToBatteryStatusTopic('09')
+      .subscribe((response) => {
+        console.log('Received Box 9 Battery Status response:', response);
+        if (response === '0') {
+          this.bsData9 = true;
+        } else {
+          this.bsData9 = false;
+        }
+      });
+  }
+
+  // Subscribe to Box 9 Battery Status sensor
+  subscribeToBox10Bs() {
+    this.bsSubscription10 = this.webSocketService
+      .subscribeToBatteryStatusTopic('10')
+      .subscribe((response) => {
+        console.log('Received Box 10 Battery Status response:', response);
+        if (response === '0') {
+          this.bsData10 = true;
+        } else {
+          this.bsData10 = false;
         }
       });
   }
