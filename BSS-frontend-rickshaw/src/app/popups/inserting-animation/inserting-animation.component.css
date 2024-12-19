@@ -166,8 +166,11 @@ video::-webkit-media-controls {
 }
 
 
-.blinking-box {
-animation: blink 1s infinite;
+.blinking-box-inserting {
+animation: inserting-blink 1s infinite;
+}
+.blinking-box-taking {
+animation: taking-blink 1s infinite;
 }
 /* ============================================================== */
 
@@ -182,7 +185,7 @@ z-index: 1050;
 /* ============================================================== */
 
 
-@keyframes blink {
+@keyframes inserting-blink {
   0% {
     background-color: #b89e0a;
   }
@@ -191,6 +194,17 @@ z-index: 1050;
   }
   100% {
     background-color: #b89e0a;
+  }
+}
+@keyframes taking-blink {
+  0% {
+    background-color: #36c024;
+  }
+  50% {
+    background-color: #ffffff;
+  }
+  100% {
+    background-color: #36c024;
   }
 }
 
