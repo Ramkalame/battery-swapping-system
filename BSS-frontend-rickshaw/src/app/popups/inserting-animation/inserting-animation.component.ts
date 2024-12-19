@@ -208,6 +208,7 @@ export class InsertingAnimationComponent implements OnInit {
       if (batteryStatus === 1) {
         // This will execute if the battery status is 1 (fully charged)
         this.openDoorDuringTaking = i; // Assign the box number (starting from 1) to openDoor variable
+        this.openDoorDuringInserting=0;
         console.log(`Box ${i} is fully charged.`);
         // Command to open the fully charged battery box
         this.showBufferingBeforP2();
