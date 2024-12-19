@@ -17,7 +17,15 @@
 .greet-text h1{
     font-size: 200px;
     color: white;
+    margin-top:40px;
+    line-height: 10px;
+}
+.greet-text h6{
+    font-size: 100px;
+    color: white;
     margin-top:80px;
+    line-height: 10px;
+    font-weight: 400;
 }
 
 .banner-img img{

@@ -39,9 +39,9 @@ export class BufferingComponent implements OnInit {
   getUserDetails(rfId: string) {
     this.userDetailsSubscription = this.apiService.getUserById(rfId).subscribe({
       next: (response: ApiResponse<User>) => {
-        this.timeoutId = setTimeout(() => {
-          this.router.navigate(['/user-profile', this.rfId]);
-        }, 1500);
+        // this.timeoutId = setTimeout(() => {
+        //   this.router.navigate(['/user-profile', this.rfId]);
+        // }, 1500);
       },
       error: (error: any) => {
         this.router.navigate(['/invalid-credential']);

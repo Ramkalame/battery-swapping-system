@@ -16,9 +16,9 @@ export class GreetPageComponent implements OnInit {
   constructor(private router:Router){}
 
   ngOnInit(){
-  this.timeOutId = setTimeout(() => {
-    this.router.navigate(['/']);
-  }, 3000); 
+  // this.timeOutId = setTimeout(() => {
+  //   this.router.navigate(['/']);
+  // }, 3000); 
   }
 
   ngOnDestroy(){

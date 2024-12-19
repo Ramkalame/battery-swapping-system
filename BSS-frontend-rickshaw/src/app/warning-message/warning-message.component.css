@@ -14,14 +14,21 @@
     align-items: center;
     color: wheat;
     font-weight: bold;
-    font-size: 30px;
+    font-size: 70px;
 }
 p{
-    margin-bottom: 50px;
+    line-height: 15px;
+}
+.margin{
+    margin-bottom: 170px;
+    
 }
 .warning-img{
     display: flex;
     justify-content: center;
     align-items: center;
 
+}
+.warning-img img{
+    height: 500px;
 }

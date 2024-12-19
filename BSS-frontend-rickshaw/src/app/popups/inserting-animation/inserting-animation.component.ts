@@ -29,8 +29,8 @@ export class InsertingAnimationComponent implements OnInit {
   newOpenBox!: number;
   openDoorDuringInserting!: number; // This will store which box is open
   openDoorDuringTaking!: number;
-  isTakingBatteryAnimationShow: boolean = false;
-  isInsertingBatteryAnimationShow: boolean = true;
+  isTakingBatteryAnimationShow: boolean = true;
+  isInsertingBatteryAnimationShow: boolean = false;
   activeStep = 1; // Start with step-1
   isWaitingAnimationShow: boolean = false;
 
