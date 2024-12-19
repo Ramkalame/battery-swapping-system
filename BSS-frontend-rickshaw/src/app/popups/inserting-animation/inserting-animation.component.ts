@@ -3,6 +3,7 @@ import {
   ChangeDetectorRef,
   Component,
   EventEmitter,
+  Input,
   OnInit,
   Output,
 } from '@angular/core';
@@ -23,6 +24,8 @@ import { Subscription } from 'rxjs';
   styleUrl: './inserting-animation.component.css',
 })
 export class InsertingAnimationComponent implements OnInit {
+
+  @Input() rfId!:string;
   @Output() close = new EventEmitter<void>();
   newOpenBox!: number;
   openDoorDuringInserting!: number; // This will store which box is open
@@ -172,8 +175,6 @@ export class InsertingAnimationComponent implements OnInit {
       if (this.bsArray[this.openDoorDuringInserting] === 0) {
         console.log('-------L VrifyP1 INSIDE CONDITION------');
         //this will execute if the battery status of the empty box is 0 (charging)
-        //this command is to close the door after successful verification
-        // this.commandToCloseTheDoor(`CLOSE${this.openDoor}`);
         //then it will find the first charged battery
         this.checkAndOpenFullyChargedBatteryBox();
         //update the new empty box number in database
@@ -191,8 +192,8 @@ export class InsertingAnimationComponent implements OnInit {
       //this condition will check wether the battery status of the empty box is 0(charging) or 1(error detetected)
       if (this.bsArray[this.openDoorDuringInserting] === 1) {
         //this will execute if the battery status of the empty box is 1 (means error becauser battery is taken )
-        // this.commandToCloseTheDoor(`B0${this.openDoor}SD0`);
         //afte completion navigate to the greet page
+        this.apiService.addBatteryTransactions(this.rfId);
         this.router.navigate(['/greet']);
       }
     }, 35000);
@@ -206,7 +207,7 @@ export class InsertingAnimationComponent implements OnInit {
       const batteryStatus = this.bsArray[i]; // Access the box status
       if (batteryStatus === 1) {
         // This will execute if the battery status is 1 (fully charged)
-        this.openDoorDuringInserting = i; // Assign the box number (starting from 1) to openDoor variable
+        this.openDoorDuringTaking = i; // Assign the box number (starting from 1) to openDoor variable
         console.log(`Box ${i} is fully charged.`);
         // Command to open the fully charged battery box
         this.showBufferingBeforP2();
@@ -220,7 +221,7 @@ export class InsertingAnimationComponent implements OnInit {
   showBufferingBeforP2() {
     this.isWaitingAnimationShow = true;
     setTimeout(() => {
-      this.isWaitingAnimationShow =false;
+      this.isWaitingAnimationShow = false;
       this.isTakingBatteryAnimationShow = true;
     }, 3000);
   }

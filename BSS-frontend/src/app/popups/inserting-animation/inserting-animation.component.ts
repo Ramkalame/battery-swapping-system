@@ -159,11 +159,8 @@ export class InsertingAnimationComponent implements OnInit {
         //update the new empty box number in database
         this.updateTheNewEmptyBox(this.openDoor);
         //show the taking battery animation
-        this.isTakingBatteryAnimationShow = true;
-        //hide the inerting battery animation
-        this.isInsertingBatteryAnimationShow = false;
       }
-    }, 30000);
+    }, 35000);
   }
 
   //To verify the battery status after taking and taking battery
@@ -179,7 +176,7 @@ export class InsertingAnimationComponent implements OnInit {
         //afte completion navigate to the greet page
         this.router.navigate(['/greet']);
       }
-    }, 30000);
+    }, 35000);
   }
 
   // This to open the first fully charnged battery box door only
@@ -192,11 +189,21 @@ export class InsertingAnimationComponent implements OnInit {
         // This will execute if the battery status is 1 (fully charged)
         this.openDoor = i; // Assign the box number (starting from 1) to openDoor variable
         console.log(`Box ${i} is fully charged.`);
+        this.showBufferingBeforP2();
+        this.isInsertingBatteryAnimationShow = false;
         // Command to open the fully charged battery box
         this.commandToOpenTheDoor(`B${i}SD1`);
         break; // Exit the loop after opening the first fully charged box
       }
     }
+  }
+
+  showBufferingBeforP2() {
+    this.isWaitingAnimationShow = true;
+    setTimeout(() => {
+      this.isWaitingAnimationShow =false;
+      this.isTakingBatteryAnimationShow = true;
+    }, 3000);
   }
 
   updateTheNewEmptyBox(boxNumber: number) {

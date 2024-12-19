@@ -6,7 +6,7 @@ import com.bss.entity.EmptyBox;
 
 public interface BatteryTransactionService {
 
-    public BatteryTransaction createTransaction(BatteryTransactionDto batteryTransactionDto);
+    public BatteryTransaction createTransaction(String rfId);
     public BatteryTransaction getBySerialNumber(Long serialNumber);
     public BatteryTransaction getByUserName(String userName);
     public BatteryTransaction getByVehicleNumber(String vehicleNumber);

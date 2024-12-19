@@ -168,7 +168,7 @@
 
         <!-- Popup Component -->
         <div class="popup-window" *ngIf="showPopup">
-            <app-inserting-animation (close)="closePopup()"></app-inserting-animation>
+            <app-inserting-animation (close)="closePopup()" [rfId]="rfId"></app-inserting-animation>
         </div>
     </div>
 </div>
