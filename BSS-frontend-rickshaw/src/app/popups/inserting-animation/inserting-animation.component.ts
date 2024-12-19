@@ -11,7 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ApiService } from '../../services/api.service';
 import { ApiResponse } from '../../models/User';
-import { EmptyBox } from '../../models/BatteryTransaction';
+import { BatteryTransaction, EmptyBox } from '../../models/BatteryTransaction';
 import { WebsocketService } from '../../services/websocket.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -24,12 +24,11 @@ import { Subscription } from 'rxjs';
   styleUrl: './inserting-animation.component.css',
 })
 export class InsertingAnimationComponent implements OnInit {
-
-  @Input() rfId!:string;
+  @Input() rfId!: string;
   @Output() close = new EventEmitter<void>();
   newOpenBox!: number;
   openDoorDuringInserting!: number; // This will store which box is open
-  openDoorDuringTaking!:number;
+  openDoorDuringTaking!: number;
   isTakingBatteryAnimationShow: boolean = false;
   isInsertingBatteryAnimationShow: boolean = true;
   activeStep = 1; // Start with step-1
@@ -52,6 +51,7 @@ export class InsertingAnimationComponent implements OnInit {
   private openDoorSubscription!: Subscription;
   private closeDoorSubscription!: Subscription;
   private updateEmptyBoxSubscription!: Subscription;
+  private batteryTransactionSubscription!: Subscription;
 
   //charged battery status
   bsArray: number[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; //first index ignored
@@ -106,6 +106,7 @@ export class InsertingAnimationComponent implements OnInit {
     this.openDoorSubscription?.unsubscribe();
     this.closeDoorSubscription?.unsubscribe();
     this.updateEmptyBoxSubscription?.unsubscribe();
+    this.batteryTransactionSubscription?.unsubscribe();
   }
 
   startAnimationSequence(): void {
@@ -193,8 +194,16 @@ export class InsertingAnimationComponent implements OnInit {
       if (this.bsArray[this.openDoorDuringInserting] === 1) {
         //this will execute if the battery status of the empty box is 1 (means error becauser battery is taken )
         //afte completion navigate to the greet page
-        this.apiService.addBatteryTransactions(this.rfId);
-        this.router.navigate(['/greet']);
+        this.batteryTransactionSubscription = this.apiService.addBatteryTransactions(this.rfId).subscribe({
+          next: (response: ApiResponse<BatteryTransaction>) => {
+            console.log('-------L Battery Transaction Called------');
+            console.log(response.message + ' :-' + response.data);
+            this.router.navigate(['/greet']);
+          },
+          error: (error: any) => {
+            console.log('Something Went Wrong');
+          },
+        });
       }
     }, 35000);
   }
