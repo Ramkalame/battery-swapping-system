@@ -18,7 +18,7 @@ export class GreetPageComponent implements OnInit {
   ngOnInit(){
   this.timeOutId = setTimeout(() => {
     this.router.navigate(['/']);
-  }, 3000); 
+  }, 4000); 
   }
 
   ngOnDestroy(){

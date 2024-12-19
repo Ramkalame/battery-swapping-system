@@ -15,8 +15,8 @@
     border-bottom: none;
 }
 .b-body{
-    height: 156px;
-  width: 105px;
+    height: 166px;
+    width: 115px;
     border: 3px solid #D9DCE1;
     border-radius: 13px;
     display: flex;
@@ -25,7 +25,7 @@
     align-items: flex-end;
 }
 .charging-level{
-    width: 105px;
+    width: 115px;
     background-color: #EAAD07;
     animation: show-charging-level 3s ease-in-out infinite;
 }
@@ -33,7 +33,9 @@
 .zigzck{
     position: absolute;
     margin-top: 25px;
+    
 }
+
 @keyframes show-charging-level{
     0%{
         height: 40px;

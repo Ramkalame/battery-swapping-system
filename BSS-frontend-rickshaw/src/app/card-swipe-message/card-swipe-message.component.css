@@ -17,7 +17,7 @@
 .message-text h1{
     color: rgb(255, 255, 255);
     font-weight: bold;
-    font-size: 50px;
+    font-size: 70px;
 }
 
 /* ===================================== animation circle==================== */
@@ -27,8 +27,8 @@
     align-items: center;
 }
 .ani-circle{
-    height: 394px;
-    width: 700px;
+    height: auto;
+    width: 1000px;
     border: 2px solid white;
     border-radius: 10px;
     display: flex;

@@ -12,7 +12,7 @@
     color: wheat;
 }
 .message-text h1{
-    font-size:40px;
+    font-size:70px;
     margin-bottom:50px;
     font-weight: bold;
 }
@@ -25,10 +25,10 @@
 
 /* The spinner */
 .spinner {
-    width: 180px;
-    height: 180px;
-    border: 10px solid #ddd; /* Light gray */
-    border-top: 10px solid #3e59c6; /* Blue */
+    width: 250px;
+    height: 250px;
+    border: 15px solid #ddd; /* Light gray */
+    border-top: 15px solid #3e59c6; /* Blue */
     border-radius: 50%;
     animation: spin 1s linear infinite;
 }
