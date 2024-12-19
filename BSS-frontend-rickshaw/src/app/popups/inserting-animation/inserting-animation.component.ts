@@ -177,12 +177,9 @@ export class InsertingAnimationComponent implements OnInit {
         this.checkAndOpenFullyChargedBatteryBox();
         //update the new empty box number in database
         this.updateTheNewEmptyBox(this.openDoor);
-        //show the taking battery animation
-        this.isTakingBatteryAnimationShow = true;
-        //hide the inerting battery animation
-        this.isInsertingBatteryAnimationShow = false;
+        // this.isWaitingAnimationShow = true;
       }
-    }, 30000);
+    }, 35000);
   }
 
   //To verify the battery status after taking and taking battery
@@ -197,7 +194,7 @@ export class InsertingAnimationComponent implements OnInit {
         //afte completion navigate to the greet page
         this.router.navigate(['/greet']);
       }
-    }, 30000);
+    }, 35000);
   }
 
   // This to open the first fully charnged battery box door only
@@ -211,10 +208,20 @@ export class InsertingAnimationComponent implements OnInit {
         this.openDoor = i; // Assign the box number (starting from 1) to openDoor variable
         console.log(`Box ${i} is fully charged.`);
         // Command to open the fully charged battery box
+        this.showBufferingBeforP2();
+        this.isInsertingBatteryAnimationShow = false;
         this.commandToOpenTheDoor(`OPEN${i}`);
         break; // Exit the loop after opening the first fully charged box
       }
     }
+  }
+
+  showBufferingBeforP2() {
+    this.isWaitingAnimationShow = true;
+    setTimeout(() => {
+      this.isWaitingAnimationShow =false;
+      this.isTakingBatteryAnimationShow = true;
+    }, 3000);
   }
 
   updateTheNewEmptyBox(boxNumber: number) {
@@ -224,7 +231,6 @@ export class InsertingAnimationComponent implements OnInit {
       .subscribe({
         next: (response: ApiResponse<EmptyBox>) => {
           console.log(response.message + ' :-' + response.data.boxNumber);
-          //after updating verify the battery status
           this.toVerfiyBatteryStatusOfEmptyBoxP2();
         },
         error: (error: any) => {
