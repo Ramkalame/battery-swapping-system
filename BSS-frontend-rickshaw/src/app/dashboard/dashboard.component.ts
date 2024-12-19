@@ -133,7 +133,7 @@ export class DashboardComponent implements OnInit {
         this.selectedUser = response.data;
         this.timeoutId = setTimeout(() => {
           this.openPopup();
-        }, 5000);
+        }, 2000);
       },
       error: (error: any) => {
         this.router.navigate(['/invalid-credential']);

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiResponse, User } from '../models/User';
-import { EmptyBox } from '../models/BatteryTransaction';
+import { BatteryTransaction, BatteryTransactionDto, EmptyBox } from '../models/BatteryTransaction';
 
 @Injectable({
   providedIn: 'root',
@@ -42,4 +42,11 @@ export class ApiService {
     return this.http.post<ApiResponse<string>>(url, null);
   }
   
+
+  //api call method to store the transaction of battey
+  addBatteryTransactions(rfId:string):Observable<ApiResponse<BatteryTransaction>>{
+    const endpoint = `/${rfId}`;
+    const url = `${this.BASE_URL_TRANSACTIONS}${endpoint}`;
+    return this.http.post<ApiResponse<BatteryTransaction>>(url, null);
+  }
 }

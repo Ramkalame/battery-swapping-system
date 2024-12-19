@@ -3,6 +3,7 @@ import {
   ChangeDetectorRef,
   Component,
   EventEmitter,
+  Input,
   OnInit,
   Output,
 } from '@angular/core';
@@ -10,7 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ApiService } from '../../services/api.service';
 import { ApiResponse } from '../../models/User';
-import { EmptyBox } from '../../models/BatteryTransaction';
+import { BatteryTransaction, EmptyBox } from '../../models/BatteryTransaction';
 import { WebsocketService } from '../../services/websocket.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -23,9 +24,11 @@ import { Subscription } from 'rxjs';
   styleUrl: './inserting-animation.component.css',
 })
 export class InsertingAnimationComponent implements OnInit {
+  @Input() rfId!: string;
   @Output() close = new EventEmitter<void>();
   newOpenBox!: number;
-  openDoor!: number; // This will store which box is open
+  openDoorDuringInserting!: number; // This will store which box is open
+  openDoorDuringTaking!: number;
   isTakingBatteryAnimationShow: boolean = false;
   isInsertingBatteryAnimationShow: boolean = true;
   activeStep = 1; // Start with step-1
@@ -48,6 +51,7 @@ export class InsertingAnimationComponent implements OnInit {
   private openDoorSubscription!: Subscription;
   private closeDoorSubscription!: Subscription;
   private updateEmptyBoxSubscription!: Subscription;
+  private batteryTransactionSubscription!: Subscription;
 
   //charged battery status
   bsArray: number[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; //first index ignored
@@ -85,8 +89,8 @@ export class InsertingAnimationComponent implements OnInit {
   }
   ngOnDestroy(): void {
     // Clear interval to avoid memory leaks
-    clearInterval(this.intervalId);
-    clearInterval(this.intervalId2);
+    clearTimeout(this.intervalId);
+    clearTimeout(this.intervalId2);
     //Unsubscribe all the subscriptions
     this.bsSubscription1?.unsubscribe();
     this.bsSubscription2?.unsubscribe();
@@ -102,6 +106,7 @@ export class InsertingAnimationComponent implements OnInit {
     this.openDoorSubscription?.unsubscribe();
     this.closeDoorSubscription?.unsubscribe();
     this.updateEmptyBoxSubscription?.unsubscribe();
+    this.batteryTransactionSubscription?.unsubscribe();
   }
 
   startAnimationSequence(): void {
@@ -119,9 +124,9 @@ export class InsertingAnimationComponent implements OnInit {
           console.log('-------L Empty Box Called------');
           console.log(response.message + ' :-' + response.data.boxNumber);
           //this method will fetch the latest empty box number from the database
-          this.openDoor = response.data.boxNumber;
+          this.openDoorDuringInserting = response.data.boxNumber;
           //this command is used to open the empty box to insert dischared battey
-          this.commandToOpenTheDoor('OPEN' + this.openDoor);
+          this.commandToOpenTheDoor('OPEN' + this.openDoorDuringInserting);
           //after the command it will call the method to verify the battery status whether the battery is charging or not
           //this methd will execute after 40 seconds of delay to ensure the batterys status is correct
           this.toVerfiyBatteryStatusOfEmptyBoxP1();
@@ -166,17 +171,15 @@ export class InsertingAnimationComponent implements OnInit {
   toVerfiyBatteryStatusOfEmptyBoxP1() {
     console.log('-------L VrifyP1 Called------');
     //it will set interval for 40 seconds after calling this method
-    this.intervalId2 = setInterval(() => {
+    this.intervalId2 = setTimeout(() => {
       //this condition will check wether the battery status of the empty box is 0(charging) or 1(error detetected)
-      if (this.bsArray[this.openDoor] === 0) {
+      if (this.bsArray[this.openDoorDuringInserting] === 0) {
         console.log('-------L VrifyP1 INSIDE CONDITION------');
         //this will execute if the battery status of the empty box is 0 (charging)
-        //this command is to close the door after successful verification
-        // this.commandToCloseTheDoor(`CLOSE${this.openDoor}`);
         //then it will find the first charged battery
         this.checkAndOpenFullyChargedBatteryBox();
         //update the new empty box number in database
-        this.updateTheNewEmptyBox(this.openDoor);
+        this.updateTheNewEmptyBox(this.openDoorDuringTaking);
         // this.isWaitingAnimationShow = true;
       }
     }, 35000);
@@ -186,13 +189,21 @@ export class InsertingAnimationComponent implements OnInit {
   toVerfiyBatteryStatusOfEmptyBoxP2() {
     console.log('-------L VrifyP2 Called------');
     //it will set interval for 40 seconds after calling this method
-    this.intervalId2 = setInterval(() => {
+    this.intervalId2 = setTimeout(() => {
       //this condition will check wether the battery status of the empty box is 0(charging) or 1(error detetected)
-      if (this.bsArray[this.openDoor] === 1) {
+      if (this.bsArray[this.openDoorDuringTaking] === 1) {
         //this will execute if the battery status of the empty box is 1 (means error becauser battery is taken )
-        // this.commandToCloseTheDoor(`B0${this.openDoor}SD0`);
         //afte completion navigate to the greet page
-        this.router.navigate(['/greet']);
+        this.batteryTransactionSubscription = this.apiService.addBatteryTransactions(this.rfId).subscribe({
+          next: (response: ApiResponse<BatteryTransaction>) => {
+            console.log('-------L Battery Transaction Called------');
+            console.log(response.message + ' :-' + response.data);
+            this.router.navigate(['/greet']);
+          },
+          error: (error: any) => {
+            console.log('Something Went Wrong');
+          },
+        });
       }
     }, 35000);
   }
@@ -205,7 +216,8 @@ export class InsertingAnimationComponent implements OnInit {
       const batteryStatus = this.bsArray[i]; // Access the box status
       if (batteryStatus === 1) {
         // This will execute if the battery status is 1 (fully charged)
-        this.openDoor = i; // Assign the box number (starting from 1) to openDoor variable
+        this.openDoorDuringTaking = i; // Assign the box number (starting from 1) to openDoor variable
+        this.openDoorDuringInserting=0;
         console.log(`Box ${i} is fully charged.`);
         // Command to open the fully charged battery box
         this.showBufferingBeforP2();
@@ -219,7 +231,7 @@ export class InsertingAnimationComponent implements OnInit {
   showBufferingBeforP2() {
     this.isWaitingAnimationShow = true;
     setTimeout(() => {
-      this.isWaitingAnimationShow =false;
+      this.isWaitingAnimationShow = false;
       this.isTakingBatteryAnimationShow = true;
     }, 3000);
   }

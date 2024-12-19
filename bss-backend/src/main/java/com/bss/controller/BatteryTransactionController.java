@@ -21,9 +21,9 @@ public class BatteryTransactionController {
     private final BatteryTransactionService batteryTransactionService;
 
 
-    @PostMapping
-    public ResponseEntity<ApiResponse<BatteryTransaction>> createTransaction(@RequestBody BatteryTransactionDto batteryTransactionDto){
-        BatteryTransaction responseData = batteryTransactionService.createTransaction(batteryTransactionDto);
+    @PostMapping("/{rfId}")
+    public ResponseEntity<ApiResponse<BatteryTransaction>> createTransaction(@PathVariable("rfId") String rfId){
+        BatteryTransaction responseData = batteryTransactionService.createTransaction(rfId);
 
         ApiResponse<BatteryTransaction> apiResponse = ApiResponse.<BatteryTransaction>builder()
                 .data(responseData)
