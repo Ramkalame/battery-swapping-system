@@ -11,7 +11,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 
 export const routes: Routes = [
   {path: '',component: HomeComponent,},
-  {path:'user-profile',component: UserProfileComponent},
+  {path:'user-profile/:rfId',component: UserProfileComponent},
   {path: 'dashboard/:rfId',component: DashboardComponent,},
   {path: 'greet',component: GreetPageComponent,},
   { path: 'card-swaipe-message', component: CardSwipeMessageComponent },
