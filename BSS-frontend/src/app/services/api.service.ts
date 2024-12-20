@@ -2,12 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiResponse, User } from '../models/User';
-import { EmptyBox } from '../models/BatteryTransaction';
+import { BatteryTransaction, EmptyBox } from '../models/BatteryTransaction';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
+  
   private readonly BASE_URL_USERS: string =
     'http://localhost:8080/api/v1/users';
   private readonly BASE_URL_TRANSACTIONS: string =
@@ -40,6 +41,11 @@ export class ApiService {
     const endpoint = `/${command}`;
     const url = `${this.BASE_URL_ARDUINO}${endpoint}`;
     return this.http.post<ApiResponse<string>>(url, null);
+  }
+  addBatteryTransactions(rfId:string):Observable<ApiResponse<BatteryTransaction>>{
+    const endpoint = `/${rfId}`;
+    const url = `${this.BASE_URL_TRANSACTIONS}${endpoint}`;
+    return this.http.post<ApiResponse<BatteryTransaction>>(url, null);
   }
   
 }

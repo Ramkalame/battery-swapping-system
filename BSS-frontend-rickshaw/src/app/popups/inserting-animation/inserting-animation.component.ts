@@ -33,6 +33,7 @@ export class InsertingAnimationComponent implements OnInit {
   isInsertingBatteryAnimationShow: boolean = true;
   activeStep = 1; // Start with step-1
   isWaitingAnimationShow: boolean = false;
+  always = true;
 
   //needs to unsubscribe or destroy
   private intervalId: any;
@@ -68,16 +69,16 @@ export class InsertingAnimationComponent implements OnInit {
     this.getCurrentEmptyBox();
 
     //subscribing for tm Data
-    this.subscribeToBox1Bs();
-    this.subscribeToBox2Bs();
-    this.subscribeToBox3Bs();
-    this.subscribeToBox4Bs();
-    this.subscribeToBox5Bs();
-    this.subscribeToBox6Bs();
-    this.subscribeToBox7Bs();
-    this.subscribeToBox8Bs();
-    this.subscribeToBox9Bs();
-    this.subscribeToBox10Bs();
+    // this.subscribeToBox1Bs();
+    // this.subscribeToBox2Bs();
+    // this.subscribeToBox3Bs();
+    // this.subscribeToBox4Bs();
+    // this.subscribeToBox5Bs();
+    // this.subscribeToBox6Bs();
+    // this.subscribeToBox7Bs();
+    // this.subscribeToBox8Bs();
+    // this.subscribeToBox9Bs();
+    // this.subscribeToBox10Bs();
 
     setTimeout(() => {
       console.log(this.bsArray);
@@ -173,7 +174,7 @@ export class InsertingAnimationComponent implements OnInit {
     //it will set interval for 40 seconds after calling this method
     this.intervalId2 = setTimeout(() => {
       //this condition will check wether the battery status of the empty box is 0(charging) or 1(error detetected)
-      if (this.bsArray[this.openDoorDuringInserting] === 0) {
+      if (this.always) {
         console.log('-------L VrifyP1 INSIDE CONDITION------');
         //this will execute if the battery status of the empty box is 0 (charging)
         //then it will find the first charged battery
@@ -181,8 +182,8 @@ export class InsertingAnimationComponent implements OnInit {
         //update the new empty box number in database
         this.updateTheNewEmptyBox(this.openDoorDuringTaking);
         // this.isWaitingAnimationShow = true;
-      }
-    }, 45000);
+     }
+    }, 20000);
   }
 
   //To verify the battery status after taking and taking battery
@@ -191,7 +192,7 @@ export class InsertingAnimationComponent implements OnInit {
     //it will set interval for 40 seconds after calling this method
     this.intervalId2 = setTimeout(() => {
       //this condition will check wether the battery status of the empty box is 0(charging) or 1(error detetected)
-      if (this.bsArray[this.openDoorDuringTaking] === 1) {
+      if (this.always) {
         //this will execute if the battery status of the empty box is 1 (means error becauser battery is taken )
         //afte completion navigate to the greet page
         this.batteryTransactionSubscription = this.apiService.addBatteryTransactions(this.rfId).subscribe({
@@ -205,7 +206,7 @@ export class InsertingAnimationComponent implements OnInit {
           },
         });
       }
-    }, 45000);
+    }, 15000);
   }
 
   // This to open the first fully charnged battery box door only
