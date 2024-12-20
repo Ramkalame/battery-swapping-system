@@ -115,7 +115,7 @@
                 </div>
             </div>
         </div>
-        <div class="client-details" *ngIf="selectedUser">
+        <div class="client-details" >
             <div class="img-text-div">
                 <div class="vehicle-image-div">
                     <img [src]="selectedUser.profileImageUrl" alt="client-image.png" class="client-image">
@@ -135,13 +135,13 @@
                     </div>
                 </div>
             </div>
-        </div>
+    </div>
         <!-- Popup Background Blur -->
         <div class="popup-overlay" *ngIf="showPopup"></div>
 
         <!-- Popup Component -->
         <div class="popup-window" *ngIf="showPopup">
-            <app-inserting-animation (close)="closePopup()"></app-inserting-animation>
+            <app-inserting-animation (close)="closePopup()" [rfId]="rfId"></app-inserting-animation>
         </div>
     </div>
 </div>
