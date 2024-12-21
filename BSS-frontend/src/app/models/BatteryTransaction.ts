@@ -38,3 +38,14 @@ export class EmptyBox {
         this.boxNumber = boxNumber;
     }
 }
+
+
+export class BatteryStatus {
+    id: string;
+    status: number;
+
+    constructor(id: string, status: number) {
+        this.id = id;
+        this.status = status;
+    }
+}

@@ -58,7 +58,7 @@ export class ApiService {
   }
 
 
-   //api to get all battery status
+   //api to update the battery status
    updateBatteryStatus(data:BatteryStatus): Observable<ApiResponse<BatteryStatus>>{
     const endpoint = '/battery-status';
     const url = `${this.BASE_URL_TRANSACTIONS}${endpoint}`;

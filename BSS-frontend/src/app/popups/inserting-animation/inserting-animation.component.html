@@ -7,12 +7,12 @@
                     <h3 *ngIf="isTakingBatteryAnimationShow">चार्ज बैटरी बाहर निकाल लें</h3>
                 </div>
                 <div class="battery-box-container">
-                    <div class="battery-box" [ngClass]="{'blinking-box': openDoor == 1}"></div>
-                    <div class="battery-box" [ngClass]="{'blinking-box': openDoor == 2}"></div>
-                    <div class="battery-box" [ngClass]="{'blinking-box': openDoor == 3}"></div>
-                    <div class="battery-box" [ngClass]="{'blinking-box': openDoor == 4}"></div>
-                    <div class="battery-box" [ngClass]="{'blinking-box': openDoor == 5}"></div>
-                    <div class="battery-box" [ngClass]="{'blinking-box': openDoor == 6}"></div>
+                    <div class="battery-box" [ngClass]="{'blinking-box-inserting': openDoorDuringInserting == 1, 'blinking-box-taking': openDoorDuringTaking==  1}"> 1</div>
+                    <div class="battery-box" [ngClass]="{'blinking-box-inserting': openDoorDuringInserting == 2, 'blinking-box-taking': openDoorDuringTaking==  2}"> 2</div>
+                    <div class="battery-box" [ngClass]="{'blinking-box-inserting': openDoorDuringInserting == 3, 'blinking-box-taking': openDoorDuringTaking==  3}"> 3</div>
+                    <div class="battery-box" [ngClass]="{'blinking-box-inserting': openDoorDuringInserting == 4, 'blinking-box-taking': openDoorDuringTaking==  4}"> 4</div>
+                    <div class="battery-box" [ngClass]="{'blinking-box-inserting': openDoorDuringInserting == 5, 'blinking-box-taking': openDoorDuringTaking==  5}"> 5</div>
+                    <div class="battery-box" [ngClass]="{'blinking-box-inserting': openDoorDuringInserting == 6, 'blinking-box-taking': openDoorDuringTaking==  6}"> 6</div>
                 </div>
             </div>
             <div class="animation-container">
@@ -83,7 +83,7 @@
                 </div>
             </div>
         </div>
-        <div class="box-container" *ngIf="isWaitingAnimationShow">
+        <div class="box-container-second" *ngIf="isWaitingAnimationShow">
             <div class="center">
                 <div class="message-text">
                     <h1>कृपया प्रतीक्षा करें ....</h1>
