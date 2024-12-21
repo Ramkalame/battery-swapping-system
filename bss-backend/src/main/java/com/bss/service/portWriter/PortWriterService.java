@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class PortWriterService {
 
-    private final String portName = "COM9";
+    private final String portName = "COM4";
     private SerialPort serialPort;
 
     @PostConstruct

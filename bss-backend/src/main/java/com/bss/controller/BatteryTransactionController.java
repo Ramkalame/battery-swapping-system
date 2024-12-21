@@ -1,6 +1,7 @@
 package com.bss.controller;
 
 import com.bss.dto.BatteryTransactionDto;
+import com.bss.entity.BatteryStatus;
 import com.bss.entity.BatteryTransaction;
 import com.bss.entity.EmptyBox;
 import com.bss.helper.ApiResponse;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -68,4 +70,36 @@ public class BatteryTransactionController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(apiResponse);
     }
+
+    @GetMapping("/battery-status")
+    public ResponseEntity<ApiResponse<List<BatteryStatus>>> getAllBatteryStatus(){
+        List<BatteryStatus> responseData = batteryTransactionService.getAllBatteryStatus();
+
+        ApiResponse<List<BatteryStatus>> apiResponse = ApiResponse.<List<BatteryStatus>>builder()
+                .data(responseData)
+                .message("Battery Status Fetched")
+                .statusCode(HttpStatus.CREATED.value())
+                .timestamp(LocalDateTime.now())
+                .success(true)
+                .build();
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(apiResponse);
+    }
+
+    @PutMapping("/battery-status")
+    public ResponseEntity<ApiResponse<BatteryStatus>> updateBatteryStatus(@RequestBody BatteryStatus batteryStatus){
+        BatteryStatus responseData = batteryTransactionService.updateBatteryStatus(batteryStatus);
+
+        ApiResponse<BatteryStatus> apiResponse = ApiResponse.<BatteryStatus>builder()
+                .data(responseData)
+                .message("Battery Status Updated")
+                .statusCode(HttpStatus.CREATED.value())
+                .timestamp(LocalDateTime.now())
+                .success(true)
+                .build();
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(apiResponse);
+    }
+
+
 }

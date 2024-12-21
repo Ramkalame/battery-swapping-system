@@ -1,14 +1,17 @@
 package com.bss.service.impl;
 
 import com.bss.dto.BatteryTransactionDto;
+import com.bss.entity.BatteryStatus;
 import com.bss.entity.BatteryTransaction;
 import com.bss.entity.EmptyBox;
 import com.bss.entity.User;
+import com.bss.repository.BatteryStatusRepository;
 import com.bss.repository.BatteryTransactionRepository;
 import com.bss.repository.EmptyBoxRepository;
 import com.bss.service.BatteryTransactionService;
 import com.bss.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -18,36 +21,18 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class BatteryTransactionServiceImpl implements BatteryTransactionService {
 
     private final BatteryTransactionRepository batteryTransactionRepository;
     private final UserService userService;
     private final EmptyBoxRepository emptyBoxRepository;
+    private final BatteryStatusRepository batteryStatusRepository;
 
     @Override
     public BatteryTransaction createTransaction(String rfId) {
         // Get the existing user by RFID
         User existingUser = userService.getUserById(rfId);
-
-        // Retrieve the list of battery transactions for the given vehicle number
-        List<BatteryTransaction> transactionList = batteryTransactionRepository.findByVehicleNumber(existingUser.getVehicleNumber());
-
-        // Get the current time
-        LocalDate today = LocalDate.now();
-
-        // Iterate through the transaction list to check if there is any transaction within the last 24 hours
-        for (BatteryTransaction transaction : transactionList) {
-            // If the transaction timestamp is within the last 24 hours, update it
-            if (transaction.getTimeStamp().toLocalDate().isEqual(today)) {
-                // Increment the transaction count
-                transaction.setNoOfTransaction(transaction.getNoOfTransaction() + 1);
-                // Update the timestamp
-                transaction.setTimeStamp(LocalDateTime.now());
-                // Save the updated transaction back to the database
-                return batteryTransactionRepository.save(transaction);
-            }
-        }
-
         // If no transactions are found within the last 24 hours, create a new transaction
         BatteryTransaction newBatteryTransaction = BatteryTransaction.builder()
                 .userName(existingUser.getUserName())
@@ -112,5 +97,18 @@ public class BatteryTransactionServiceImpl implements BatteryTransactionService 
     @Override
     public EmptyBox getCurrentEmptyBox() {
         return emptyBoxRepository.findById("id1").orElse(null);
+    }
+
+    @Override
+    public List<BatteryStatus> getAllBatteryStatus() {
+        return batteryStatusRepository.findAll();
+    }
+
+    @Override
+    public BatteryStatus updateBatteryStatus(BatteryStatus batteryStatus) {
+        log.info("Status Data {}: {}",batteryStatus.getId(),batteryStatus.getStatus());
+        BatteryStatus existing = batteryStatusRepository.findById(batteryStatus.getId()).orElse(null);
+        existing.setStatus(batteryStatus.getStatus());
+        return batteryStatusRepository.save(existing);
     }
 }
