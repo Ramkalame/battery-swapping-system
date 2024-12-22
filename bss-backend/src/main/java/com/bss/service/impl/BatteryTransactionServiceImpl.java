@@ -17,7 +17,9 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -29,6 +31,7 @@ public class BatteryTransactionServiceImpl implements BatteryTransactionService 
     private final UserService userService;
     private final EmptyBoxRepository emptyBoxRepository;
     private final BatteryStatusRepository batteryStatusRepository;
+    private final FireStoreService fireStoreService;
 
     @Override
     public BatteryTransaction createTransaction(String rfId) {
@@ -39,12 +42,16 @@ public class BatteryTransactionServiceImpl implements BatteryTransactionService 
                 .userName(existingUser.getUserName())
                 .vehicleNumber(existingUser.getVehicleNumber())
                 .timeStamp(LocalDateTime.now())
-                .noOfTransaction(1L)
+                .noOfTransaction(1)
                 .build();
 
         // Save the new transaction to the database
-        return batteryTransactionRepository.save(newBatteryTransaction);
+        BatteryTransaction savedTransaction = batteryTransactionRepository.save(newBatteryTransaction);
+        //store in firebase also
+        fireStoreService.saveData(savedTransaction);
+        return savedTransaction;
     }
+
 
 
     @Override

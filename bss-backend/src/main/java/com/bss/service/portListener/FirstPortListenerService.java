@@ -1,6 +1,6 @@
 /*package com.bss.service.portListener;
 
-import com.bss.service.SocketService;
+import com.bss.service.impl.SocketService;
 import com.fazecast.jSerialComm.SerialPort;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;

@@ -1,6 +1,7 @@
-package com.bss.entity;
+package com.bss.dto;
 
 
+import com.google.cloud.Timestamp;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,17 +15,16 @@ import java.time.LocalDateTime;
 
 @Data
 @Builder
-@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class BatteryTransaction {
+public class BatteryTransactionFirebase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long serialNumber;
     private String userName;
     private String vehicleNumber;
-    private LocalDateTime timeStamp;
+    private Timestamp timeStamp;
     private int noOfTransaction;
 
 }
