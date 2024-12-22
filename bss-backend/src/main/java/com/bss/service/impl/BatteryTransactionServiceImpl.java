@@ -18,6 +18,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -100,6 +101,16 @@ public class BatteryTransactionServiceImpl implements BatteryTransactionService 
     }
 
     @Override
+    public BatteryStatus addBatteryStatus(BatteryStatus batteryStatus) {
+        BatteryStatus newBatteryStatus = BatteryStatus.builder()
+                .id(batteryStatus.getId())
+                .status(batteryStatus.getStatus())
+                .timestamp(LocalDateTime.now())
+                .build();
+        return  batteryStatusRepository.save(newBatteryStatus);
+    }
+
+    @Override
     public List<BatteryStatus> getAllBatteryStatus() {
         return batteryStatusRepository.findAll();
     }
@@ -109,6 +120,7 @@ public class BatteryTransactionServiceImpl implements BatteryTransactionService 
         log.info("Status Data {}: {}",batteryStatus.getId(),batteryStatus.getStatus());
         BatteryStatus existing = batteryStatusRepository.findById(batteryStatus.getId()).orElse(null);
         existing.setStatus(batteryStatus.getStatus());
+        existing.setTimestamp(LocalDateTime.now());
         return batteryStatusRepository.save(existing);
     }
 }

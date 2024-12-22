@@ -25,6 +25,8 @@ public interface BatteryTransactionService {
 
 
     //method for battery status
+    public BatteryStatus addBatteryStatus(BatteryStatus batteryStatus);
     public List<BatteryStatus> getAllBatteryStatus();
     public BatteryStatus updateBatteryStatus(BatteryStatus batteryStatus);
+
 }

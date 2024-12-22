@@ -1,6 +1,5 @@
 package com.bss.controller;
 
-import com.bss.dto.BatteryTransactionDto;
 import com.bss.entity.BatteryStatus;
 import com.bss.entity.BatteryTransaction;
 import com.bss.entity.EmptyBox;
@@ -48,12 +47,12 @@ public class BatteryTransactionController {
         ApiResponse<EmptyBox> apiResponse = ApiResponse.<EmptyBox>builder()
                 .data(responseData)
                 .message("Empty Box Number Updated")
-                .statusCode(HttpStatus.CREATED.value())
+                .statusCode(HttpStatus.OK.value())
                 .timestamp(LocalDateTime.now())
                 .success(true)
                 .build();
 
-        return  ResponseEntity.status(HttpStatus.CREATED).body(apiResponse);
+        return  ResponseEntity.status(HttpStatus.OK).body(apiResponse);
     }
 
     @GetMapping("/empty-box-number")
@@ -63,6 +62,22 @@ public class BatteryTransactionController {
         ApiResponse<EmptyBox> apiResponse = ApiResponse.<EmptyBox>builder()
                 .data(responseData)
                 .message("Empty Box Number Fetched")
+                .statusCode(HttpStatus.OK.value())
+                .timestamp(LocalDateTime.now())
+                .success(true)
+                .build();
+
+        return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
+    }
+
+    //Battery Status APIs
+    @PostMapping("/battery-status")
+    public ResponseEntity<?>  addBatteryStatus(@RequestBody BatteryStatus batteryStatus){
+        BatteryStatus responseData = batteryTransactionService.addBatteryStatus(batteryStatus);
+
+        ApiResponse<BatteryStatus> apiResponse = ApiResponse.<BatteryStatus>builder()
+                .data(responseData)
+                .message("Battery Status Created")
                 .statusCode(HttpStatus.CREATED.value())
                 .timestamp(LocalDateTime.now())
                 .success(true)
@@ -78,12 +93,12 @@ public class BatteryTransactionController {
         ApiResponse<List<BatteryStatus>> apiResponse = ApiResponse.<List<BatteryStatus>>builder()
                 .data(responseData)
                 .message("Battery Status Fetched")
-                .statusCode(HttpStatus.CREATED.value())
+                .statusCode(HttpStatus.OK.value())
                 .timestamp(LocalDateTime.now())
                 .success(true)
                 .build();
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(apiResponse);
+        return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
     }
 
     @PutMapping("/battery-status")
@@ -93,12 +108,12 @@ public class BatteryTransactionController {
         ApiResponse<BatteryStatus> apiResponse = ApiResponse.<BatteryStatus>builder()
                 .data(responseData)
                 .message("Battery Status Updated")
-                .statusCode(HttpStatus.CREATED.value())
+                .statusCode(HttpStatus.OK.value())
                 .timestamp(LocalDateTime.now())
                 .success(true)
                 .build();
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(apiResponse);
+        return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
     }
 
 
