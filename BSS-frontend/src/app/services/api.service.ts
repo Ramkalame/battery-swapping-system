@@ -8,6 +8,7 @@ import { BatteryStatus, BatteryTransaction, EmptyBox } from '../models/BatteryTr
   providedIn: 'root',
 })
 export class ApiService {
+  
   private readonly BASE_URL_USERS: string =
     'http://localhost:8080/api/v1/users';
   private readonly BASE_URL_TRANSACTIONS: string =
@@ -41,7 +42,6 @@ export class ApiService {
     const url = `${this.BASE_URL_ARDUINO}${endpoint}`;
     return this.http.post<ApiResponse<string>>(url, null);
   }
-
   //api call method to store the transaction of battey
   addBatteryTransactions(rfId:string):Observable<ApiResponse<BatteryTransaction>>{
     const endpoint = `/${rfId}`;

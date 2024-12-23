@@ -39,6 +39,7 @@ export class InsertingAnimationComponent implements OnInit {
   activeStep = 1; 
   //to show or hide the waiting buffer animation
   isWaitingAnimationShow: boolean = false;
+  always = true;
 
   //needs to unsubscribe or destroy
   private intervalId: any;
