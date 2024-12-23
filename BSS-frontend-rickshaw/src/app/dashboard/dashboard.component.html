@@ -15,8 +15,8 @@
                         </div>
                         <div class="battery-box">
                             <div *ngIf="emptyBoxNumber !== 1">
-                            <app-test-animation *ngIf="bsData1"></app-test-animation>
-                            <img src="./assets/charges-battery.png" alt="charges-battery.png" *ngIf="!bsData1">
+                                <app-test-animation *ngIf="bsData1==0"></app-test-animation>
+                                <img src="./assets/charges-battery.png" alt="charges-battery.png" *ngIf="bsData1==1">
                             </div>
                             <img src="./assets/dead-battery.png" alt="charges-battery.png" *ngIf="emptyBoxNumber === 1">
                         </div>
@@ -27,8 +27,8 @@
                         </div>
                         <div class="battery-box">
                             <div *ngIf="emptyBoxNumber !== 2">
-                            <app-test-animation *ngIf="bsData2"></app-test-animation>
-                            <img src="./assets/charges-battery.png" alt="charges-battery.png" *ngIf="!bsData2">
+                                <app-test-animation *ngIf="bsData2==0"></app-test-animation>
+                                <img src="./assets/charges-battery.png" alt="charges-battery.png" *ngIf="bsData2==1">
                             </div>
                             <img src="./assets/dead-battery.png" alt="charges-battery.png" *ngIf="emptyBoxNumber === 2">
                         </div>
@@ -39,8 +39,8 @@
                         </div>
                         <div class="battery-box">
                             <div *ngIf="emptyBoxNumber !== 3">
-                            <app-test-animation *ngIf="bsData3"></app-test-animation>
-                            <img src="./assets/charges-battery.png" alt="charges-battery.png" *ngIf="!bsData3">
+                                <app-test-animation *ngIf="bsData3==0"></app-test-animation>
+                                <img src="./assets/charges-battery.png" alt="charges-battery.png" *ngIf="bsData3==1">
                             </div>
                             <img src="./assets/dead-battery.png" alt="charges-battery.png" *ngIf="emptyBoxNumber === 3">
                         </div>
@@ -51,8 +51,8 @@
                         </div>
                         <div class="battery-box">
                             <div *ngIf="emptyBoxNumber !== 4">
-                            <app-test-animation *ngIf="bsData4"></app-test-animation>
-                            <img src="./assets/charges-battery.png" alt="charges-battery.png" *ngIf="!bsData4">
+                                <app-test-animation *ngIf="bsData4==0"></app-test-animation>
+                                <img src="./assets/charges-battery.png" alt="charges-battery.png" *ngIf="bsData4==1">
                             </div>
                             <img src="./assets/dead-battery.png" alt="charges-battery.png" *ngIf="emptyBoxNumber === 4">
                         </div>
@@ -63,8 +63,8 @@
                         </div>
                         <div class="battery-box">
                             <div *ngIf="emptyBoxNumber !== 5">
-                            <app-test-animation *ngIf="bsData5"></app-test-animation>
-                            <img src="./assets/charges-battery.png" alt="charges-battery.png" *ngIf="!bsData5">
+                                <app-test-animation *ngIf="bsData5==0"></app-test-animation>
+                                <img src="./assets/charges-battery.png" alt="charges-battery.png" *ngIf="bsData5==1">
                             </div>
                             <img src="./assets/dead-battery.png" alt="charges-battery.png" *ngIf="emptyBoxNumber === 5">
                         </div>
@@ -75,8 +75,8 @@
                         </div>
                         <div class="battery-box">
                             <div *ngIf="emptyBoxNumber !== 6">
-                            <app-test-animation *ngIf="bsData6"></app-test-animation>
-                            <img src="./assets/charges-battery.png" alt="charges-battery.png" *ngIf="!bsData6">
+                                <app-test-animation *ngIf="bsData6==0"></app-test-animation>
+                                <img src="./assets/charges-battery.png" alt="charges-battery.png" *ngIf="bsData6==1">
                             </div>
                             <img src="./assets/dead-battery.png" alt="charges-battery.png" *ngIf="emptyBoxNumber === 6">
                         </div>
@@ -87,8 +87,8 @@
                         </div>
                         <div class="battery-box">
                             <div *ngIf="emptyBoxNumber !== 7">
-                            <app-test-animation *ngIf="bsData7"></app-test-animation>
-                            <img src="./assets/charges-battery.png" alt="charges-battery.png" *ngIf="!bsData7">
+                                <app-test-animation *ngIf="bsData7==0"></app-test-animation>
+                                <img src="./assets/charges-battery.png" alt="charges-battery.png" *ngIf="bsData7==1">
                             </div>
                             <img src="./assets/dead-battery.png" alt="charges-battery.png" *ngIf="emptyBoxNumber === 7">
                         </div>
@@ -99,8 +99,8 @@
                         </div>
                         <div class="battery-box">
                             <div *ngIf="emptyBoxNumber !== 8">
-                            <app-test-animation *ngIf="bsData8"></app-test-animation>
-                            <img src="./assets/charges-battery.png" alt="charges-battery.png" *ngIf="!bsData8">
+                                <app-test-animation *ngIf="bsData8==0"></app-test-animation>
+                                <img src="./assets/charges-battery.png" alt="charges-battery.png" *ngIf="bsData8==1">
                             </div>
                             <img src="./assets/dead-battery.png" alt="charges-battery.png" *ngIf="emptyBoxNumber === 8">
                         </div>
@@ -111,8 +111,8 @@
                         </div>
                         <div class="battery-box">
                             <div *ngIf="emptyBoxNumber !== 9">
-                            <app-test-animation *ngIf="bsData9"></app-test-animation>
-                            <img src="./assets/charges-battery.png" alt="charges-battery.png" *ngIf="!bsData9">
+                                <app-test-animation *ngIf="bsData9==0"></app-test-animation>
+                                <img src="./assets/charges-battery.png" alt="charges-battery.png" *ngIf="bsData9==1">
                             </div>
                             <img src="./assets/dead-battery.png" alt="charges-battery.png" *ngIf="emptyBoxNumber === 9">
                         </div>
@@ -123,10 +123,11 @@
                         </div>
                         <div class="battery-box">
                             <div *ngIf="emptyBoxNumber !== 10">
-                            <app-test-animation *ngIf="bsData10"></app-test-animation>
-                            <img src="./assets/charges-battery.png" alt="charges-battery.png" *ngIf="!bsData10">
+                                <app-test-animation *ngIf="bsData10==0"></app-test-animation>
+                                <img src="./assets/charges-battery.png" alt="charges-battery.png" *ngIf="bsData10==1">
                             </div>
-                            <img src="./assets/dead-battery.png" alt="charges-battery.png" *ngIf="emptyBoxNumber === 10">
+                            <img src="./assets/dead-battery.png" alt="charges-battery.png"
+                                *ngIf="emptyBoxNumber === 10">
                         </div>
                     </div>
                 </div>

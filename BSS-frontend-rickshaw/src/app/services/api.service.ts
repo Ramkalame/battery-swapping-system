@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ApiResponse, User } from '../models/User';
+import { ApiResponse, BatteryStatus, User } from '../models/User';
 import { BatteryTransaction, BatteryTransactionDto, EmptyBox } from '../models/BatteryTransaction';
 
 @Injectable({
@@ -48,5 +48,20 @@ export class ApiService {
     const endpoint = `/${rfId}`;
     const url = `${this.BASE_URL_TRANSACTIONS}${endpoint}`;
     return this.http.post<ApiResponse<BatteryTransaction>>(url, null);
+  }
+
+  //api to get all battery status
+  getAllBatteryStatus(): Observable<ApiResponse<BatteryStatus[]>>{
+    const endpoint = '/battery-status';
+    const url = `${this.BASE_URL_TRANSACTIONS}${endpoint}`;
+    return this.http.get<ApiResponse<BatteryStatus[]>>(url);
+  }
+
+
+   //api to update the battery status
+   updateBatteryStatus(data:BatteryStatus): Observable<ApiResponse<BatteryStatus>>{
+    const endpoint = '/battery-status';
+    const url = `${this.BASE_URL_TRANSACTIONS}${endpoint}`;
+    return this.http.put<ApiResponse<BatteryStatus>>(url,data);
   }
 }

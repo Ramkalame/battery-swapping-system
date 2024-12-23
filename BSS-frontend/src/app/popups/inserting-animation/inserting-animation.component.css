@@ -1,4 +1,4 @@
-.container{
+.container {
   width: 100vw;
   display: flex;
   justify-content: center;
@@ -6,10 +6,9 @@
   margin-right: 10px;
 }
 
-
 /* ================Box Container========================================================= */
 
-.box-container{
+.box-container {
   height: 600px;
   background-color: rgb(255, 255, 255);
   display: flex;
@@ -17,50 +16,54 @@
   align-items: center;
   overflow: hidden;
 }
-.battery-container{
+.battery-container {
   height: 100%;
   width: 450px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  background-color: #3F62F0;
+  background-color: #3f62f0;
   padding: 20px;
 }
-.heading{
+.heading {
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.heading h3{
+.heading h3 {
   font-size: 40px;
   font-weight: 500;
   line-height: 10px;
   color: white;
   margin: 5px;
 }
-.animation-container{
+.animation-container {
   width: 1100px;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-
 }
-.col{
+.col {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
 }
 /* ========================= Start Spiner Animation=============================================================================== */
-
-
-.message-text{
+.box-container-second {
+  height: 600px;
+}
+.center {
+  width: 100%;
+  background: transparent;
+}
+.message-text {
   color: wheat;
 }
-.message-text h1{
-  font-size:70px;
-  margin-bottom:50px;
+.message-text h1 {
+  font-size: 40px;
+  margin-bottom: 50px;
   font-weight: bold;
 }
 .buffering-container {
@@ -83,17 +86,15 @@
 
 @keyframes spin {
   0% {
-      transform: rotate(0deg);
+    transform: rotate(0deg);
   }
   100% {
-      transform: rotate(360deg);
+    transform: rotate(360deg);
   }
 }
 
-
-
 /* ========================= End Spiner Animation=============================================================================== */
-.step{
+.step {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -101,7 +102,7 @@
   height: 430px;
   width: 350px;
 }
-.process{
+.process {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -109,29 +110,26 @@
   border-radius: 50%;
   height: 300px;
   width: 300px;
-  overflow: hidden; 
+  overflow: hidden;
   transition: all 0.5s ease-in-out;
 }
 .animate {
   animation: blink2 1s infinite;
 }
-.hide-video-player{
+.hide-video-player {
   height: 50px;
-  background-color:white;
+  background-color: white;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.hide-video-player h5{
-  color: black;
-}
-h5{
-  font-family:sans-serif;
+h5 {
+  font-family: sans-serif;
   font-size: 25px;
-  color: rgb(25, 126, 30);
+  color: rgb(0, 0, 0);
   font-weight: bold;
 }
-video{
+video {
   height: 400px;
   width: 400px;
   pointer-events: none;
@@ -141,7 +139,7 @@ video::-webkit-media-controls {
   display: none !important; /* Hides controls for Webkit browsers */
 }
 /* ================================================ container deiv======================== */
-.battery-box-container{
+.battery-box-container {
   height: 300px;
   width: 400px;
   background-color: #ffffff4d;
@@ -153,9 +151,8 @@ video::-webkit-media-controls {
   border: 3px #e9e7e7 solid;
   padding-right: 10px;
   border-radius: 10px;
-
 }
-.battery-box{
+.battery-box {
   height: 100px;
   width: 100px;
   background-color: white;
@@ -165,25 +162,46 @@ video::-webkit-media-controls {
   justify-content: center;
   align-items: center;
   font-size: 50px;
-  color: black;
 }
 
-
-.blinking-box {
-animation: blink 1s infinite;
+.blinking-box-inserting {
+  animation: inserting-blink 1s infinite;
+}
+.blinking-box-taking {
+  animation: taking-blink 1s infinite;
 }
 /* ============================================================== */
 
 .popup-content {
-border-radius: 8px;
-/* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); */
-max-width: 1200px;
-z-index: 1050;
+  border-radius: 8px;
+  /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); */
+  max-width: 1200px;
+  z-index: 1050;
 }
 
-
 /* ============================================================== */
-
+@keyframes inserting-blink {
+  0% {
+    background-color: #e56717;
+  }
+  50% {
+    background-color: #ffffff;
+  }
+  100% {
+    background-color: #e56717;
+  }
+}
+@keyframes taking-blink {
+  0% {
+    background-color: #36c024;
+  }
+  50% {
+    background-color: #ffffff;
+  }
+  100% {
+    background-color: #36c024;
+  }
+}
 
 @keyframes inserting-blink {
   0% {
@@ -219,6 +237,6 @@ z-index: 1050;
   }
   100% {
     border: 3px solid rgb(27, 129, 27);
-    opacity: 1;
+    opacity: 1;
   }
 }

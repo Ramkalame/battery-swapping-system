@@ -43,3 +43,14 @@ export class ApiResponse<T> {
         this.success = success;
     }
 }
+
+
+export class BatteryStatus {
+    id: string;
+    status: number;
+
+    constructor(id: string, status: number) {
+        this.id = id;
+        this.status = status;
+    }
+}

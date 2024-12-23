@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiResponse, User } from '../models/User';
-import { BatteryTransaction, EmptyBox } from '../models/BatteryTransaction';
+import { BatteryStatus, BatteryTransaction, EmptyBox } from '../models/BatteryTransaction';
 
 @Injectable({
   providedIn: 'root',
@@ -42,10 +42,26 @@ export class ApiService {
     const url = `${this.BASE_URL_ARDUINO}${endpoint}`;
     return this.http.post<ApiResponse<string>>(url, null);
   }
+  //api call method to store the transaction of battey
   addBatteryTransactions(rfId:string):Observable<ApiResponse<BatteryTransaction>>{
     const endpoint = `/${rfId}`;
     const url = `${this.BASE_URL_TRANSACTIONS}${endpoint}`;
     return this.http.post<ApiResponse<BatteryTransaction>>(url, null);
+  }
+
+  //api to get all battery status
+  getAllBatteryStatus(): Observable<ApiResponse<BatteryStatus[]>>{
+    const endpoint = '/battery-status';
+    const url = `${this.BASE_URL_TRANSACTIONS}${endpoint}`;
+    return this.http.get<ApiResponse<BatteryStatus[]>>(url);
+  }
+
+
+   //api to update the battery status
+   updateBatteryStatus(data:BatteryStatus): Observable<ApiResponse<BatteryStatus>>{
+    const endpoint = '/battery-status';
+    const url = `${this.BASE_URL_TRANSACTIONS}${endpoint}`;
+    return this.http.put<ApiResponse<BatteryStatus>>(url,data);
   }
   
 }
