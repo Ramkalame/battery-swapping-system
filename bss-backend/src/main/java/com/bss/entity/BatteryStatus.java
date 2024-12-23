@@ -28,7 +28,7 @@ public class BatteryStatus {
     }
 
     public boolean isTwoHoursOld(){
-        return  this.timestamp.isBefore(LocalDateTime.now().minusHours(2));
+        return  this.timestamp.isBefore(LocalDateTime.now().minusHours(4));
     }
 
     public boolean isOneMinutesOld(){

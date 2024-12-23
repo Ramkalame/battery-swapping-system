@@ -32,9 +32,11 @@ export class BatteryTransactionDto{
 export class EmptyBox {
     id: string;
     boxNumber: number;
+    timestamp?:Date;
 
-    constructor(id: string, boxNumber: number) {
+    constructor(id: string, boxNumber: number,timestamp:Date) {
         this.id = id;
         this.boxNumber = boxNumber;
+        this.timestamp = timestamp;
     }
 }

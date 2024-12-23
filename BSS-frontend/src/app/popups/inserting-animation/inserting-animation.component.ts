@@ -189,11 +189,11 @@ export class InsertingAnimationComponent implements OnInit {
   checkAndOpenFullyChargedBatteryBox() {
     console.log('------- Fully Charged Check Called ------');
     //sort the array from b1 to b10
-    const sortedBsArray = this.bsArray.sort((a, b) =>
-      a.id === 'b10' ? 1 : b.id === 'b10' ? -1 : 0
-    );
+    // const sortedBsArray = this.bsArray.sort((a, b) =>
+    //   a.id === 'b10' ? 1 : b.id === 'b10' ? -1 : 0
+    // );
     //loop through the array and find the first charged battery
-    for (let batteryStatus of sortedBsArray) {
+    for (let batteryStatus of this.bsArray) {
       //check if the battery status is 1
       if (batteryStatus.status === 1) {
         //assign the charged battery box number to blink
