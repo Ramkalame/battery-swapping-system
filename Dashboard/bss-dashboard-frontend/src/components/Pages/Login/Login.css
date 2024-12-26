@@ -1,0 +1,13 @@
+.loginBtn {
+  background: linear-gradient(85deg, #20d691 4.33%, #7ae5b5 95.67%), #d9d9d9;
+}
+
+.loginBtn:hover {
+  background: linear-gradient(85deg, #1bb67b 4.33%, #64bd95 95.67%), #d9d9d9;
+}
+
+
+.login-img{
+  /* height:700px; */
+  width: 830px;
+}

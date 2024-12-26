@@ -15,7 +15,7 @@ public class FirstPortListenerService {
 
     private final String portName = "COM3";
 
-    private final SocketService socketService;
+    private final SocketService socketService;workbe
     private SerialPort serialPort;
 
     @PostConstruct

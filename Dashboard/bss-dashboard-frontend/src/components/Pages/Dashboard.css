@@ -1,0 +1,65 @@
+.sub-txt {
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 500;
+}
+.sub-txt-1 {
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.head-txt {
+    font-size: 34px;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 42px;
+}
+.head-txt-1 {
+    font-size: 30px;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 42px;
+}
+.img-section-wrapper{
+    display: flex;
+    gap:20px;
+    align-items: center;
+}
+
+.img-section-totoba {
+    /* height: 60px; */
+    width: 180px;
+    
+}
+.img-section-creda{
+    height: 60px;
+    width: 60px;
+    overflow: hidden;
+}
+.img-section-iit {
+    height: 60px;
+    width: 60px;
+    background: #e6effe;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.map-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.map-cnt {
+    background-color: #202020;
+    /* margin-top: 20px; */
+}
+
+.track-circle {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #4adda2;
+    box-shadow: 0px 0px 15px 3px #4adda2;
+}

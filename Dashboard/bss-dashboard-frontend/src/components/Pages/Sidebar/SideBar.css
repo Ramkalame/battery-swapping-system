@@ -1,0 +1,21 @@
+.items {
+    color: #ffffff4d;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 700;
+    margin-left: 1em;
+}
+
+.icon-size {
+    font-size: 24px;
+    color: #ffffff4d;
+}
+
+.icon-click{
+    color: #4adda2;
+    
+}
+
+.items:hover {
+    color: #4adda2;
+}
