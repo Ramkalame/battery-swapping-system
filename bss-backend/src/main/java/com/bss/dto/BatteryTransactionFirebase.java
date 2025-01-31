@@ -2,7 +2,6 @@ package com.bss.dto;
 
 
 import com.google.cloud.Timestamp;
-import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -11,7 +10,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -24,7 +22,8 @@ public class BatteryTransactionFirebase {
     private Long serialNumber;
     private String userName;
     private String vehicleNumber;
+    private String vehicleType;
     private Timestamp timeStamp;
     private int noOfTransaction;
-
+    private double swappingCost;
 }

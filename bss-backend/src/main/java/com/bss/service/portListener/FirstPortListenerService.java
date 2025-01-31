@@ -1,4 +1,4 @@
-/*package com.bss.service.portListener;
+package com.bss.service.portListener;
 
 import com.bss.service.impl.SocketService;
 import com.fazecast.jSerialComm.SerialPort;
@@ -120,4 +120,3 @@ public class FirstPortListenerService {
     }
 
 }
-*/

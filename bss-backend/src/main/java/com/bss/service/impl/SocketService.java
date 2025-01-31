@@ -25,7 +25,6 @@ public class SocketService {
             // Format topic dynamically based on box and sensor
             String topic = String.format("/topic/box/%s/%s", boxNumber, sensorType.toLowerCase());
             log.info("Sending message to topic {}: {}", topic, message);
-
             // Send the message to the topic
             simpMessagingTemplate.convertAndSend(topic, message);
         } catch (Exception e) {

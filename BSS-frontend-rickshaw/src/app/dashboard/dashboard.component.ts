@@ -49,11 +49,22 @@ import { Subscription } from 'rxjs';
   ],
 })
 export class DashboardComponent implements OnInit {
+
   //var to remove after component destruction
   private timeoutId!: any;
   private userDetailsSubscription!: Subscription;
-  private emptyBoxSubscription!: Subscription;
-  private batteryStatusSubscription!: Subscription;
+
+  // battery status subscription 
+  private bsSubscription1!: Subscription;
+  private bsSubscription2!: Subscription;
+  private bsSubscription3!: Subscription;
+  private bsSubscription4!: Subscription;
+  private bsSubscription5!: Subscription;
+  private bsSubscription6!: Subscription;
+  private bsSubscription7!: Subscription;
+  private bsSubscription8!: Subscription;
+  private bsSubscription9!: Subscription;
+  private bsSubscription10!: Subscription;
 
   //to store the user details
   selectedUser!: User;
@@ -79,6 +90,7 @@ export class DashboardComponent implements OnInit {
   bsData10!: number;
 
   constructor(
+    private webSocketService: WebsocketService,
     private apiService: ApiService,
     private route: ActivatedRoute,
     private router: Router
@@ -87,14 +99,10 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     // Retrieve the rfId parameter from the route
     this.route.params.subscribe((params) => {
-      this.rfId = params['rfId']; 
+      this.rfId = params['rfId'];
     });
     //to get the user details on the page load
     this.getUserDetails(this.rfId);
-    //to get the current empty box number on page load
-    this.getCurrentEmptyBox(); 
-    //to fetch the all battery status on the page load
-    this.getAllBatteryStatus();
   }
 
   ngOnDestroy(): void {
@@ -102,8 +110,6 @@ export class DashboardComponent implements OnInit {
     clearTimeout(this.timeoutId);
     clearTimeout(this.timeoutId);
     this.userDetailsSubscription?.unsubscribe();
-    this.emptyBoxSubscription?.unsubscribe();
-    this.batteryStatusSubscription?.unsubscribe();
   }
 
   //Fetch user details from the database by id
@@ -125,74 +131,38 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  //to fetch the last updated empty box from the databse
-  getCurrentEmptyBox() {
-    this.emptyBoxSubscription = this.apiService.getCurrentEmptyBox().subscribe({
-      next: (response: ApiResponse<EmptyBox>) => {
-        console.log(response.message + ' :-' + response.data.boxNumber);
-        //assign the empty box number to the variable
-        this.emptyBoxNumber = response.data.boxNumber;
-      },
-      error: (error: any) => {
-        console.log('Something Went Wrong');
-      },
-    });
+
+  // Subscribe to battery status
+  subscribeToBatteryStatus(): void {
+    for (let i = 1; i <= 10; i++) {
+      const subscription = this.webSocketService
+        .subscribeToBatteryStatusTopic(i.toString())
+        .subscribe((status: any) => {
+          // Store the battery status in the bsData object
+          this.bsData[i] = status;
+        });
+
+      // Add the subscription to the list
+      this.bsSubscriptions.push(subscription);
+    }
   }
 
-  //to fetch the battery status for all the databases
-  getAllBatteryStatus() {
-    this.batteryStatusSubscription = this.apiService
-      .getAllBatteryStatus()
-      .subscribe({
-        next: (response: ApiResponse<BatteryStatus[]>) => {
-          //assign the fetched data to the variable
-          this.bsArray = response.data;
-          console.log(response.data);
-          //call the assign method to respectively assign the the battery status data to box wise.
-          this.assign();
-        },
-        error: (error: any) => {
-          console.log('Something Went Wrong');
-        },
-      });
+  clearSubscriptions(): void {
+    // Clear all the subscriptions for battery statuses
+    for (let i = 1; i <= 10; i++) {
+      this[`bsSubscription${i}`]?.unsubscribe();
+    }
   }
 
-  //loop the battery status array and assign the data to the respective variable
-  assign() {
-    this.bsArray.forEach((batteryStatus, index) => {
-      if (batteryStatus.id === 'b1') {
-        this.bsData1 = batteryStatus.status;
-      } else if (batteryStatus.id === 'b2') {
-        this.bsData2 = batteryStatus.status;
-      } else if (batteryStatus.id === 'b3') {
-        this.bsData3 = batteryStatus.status;
-      } else if (batteryStatus.id === 'b4') {
-        this.bsData4 = batteryStatus.status;
-      } else if (batteryStatus.id === 'b5') {
-        this.bsData5 = batteryStatus.status;
-      } else if (batteryStatus.id === 'b6') {
-        this.bsData6 = batteryStatus.status;
-      } else if (batteryStatus.id === 'b7') {
-        this.bsData7 = batteryStatus.status;
-      } else if (batteryStatus.id === 'b8') {
-        this.bsData8 = batteryStatus.status;
-      } else if (batteryStatus.id === 'b9') {
-        this.bsData9 = batteryStatus.status;
-      } else if (batteryStatus.id === 'b10') {
-        this.bsData10 = batteryStatus.status;
-      }
-    });
-  }
 
   // Show the popup
   openPopup(): void {
     this.showPopup = true;
-    console.log('popup button trigger'); 
+    console.log('popup button trigger');
   }
 
-  
   //close the popup
   closePopup(): void {
-    this.showPopup = false; 
+    this.showPopup = false;
   }
 }

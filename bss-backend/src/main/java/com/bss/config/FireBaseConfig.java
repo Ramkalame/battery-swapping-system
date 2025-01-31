@@ -16,14 +16,15 @@ public class FireBaseConfig {
 
     @Bean
     public Firestore firestore() throws IOException {
-        FileInputStream serviceAccount =
-                new FileInputStream("src/main/resources/firebase.json");
+        FileInputStream serviceAccount1 =
+                new FileInputStream("src/main/resources/cred.json");
 
-        FirebaseOptions options = FirebaseOptions.builder()
-                .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+        FirebaseOptions options1 = FirebaseOptions.builder()
+                .setCredentials(GoogleCredentials.fromStream(serviceAccount1))
                 .build();
 
-        FirebaseApp.initializeApp(options);
-        return FirestoreClient.getFirestore();
+        FirebaseApp firebaseApp1 = FirebaseApp.initializeApp(options1);
+        return FirestoreClient.getFirestore(firebaseApp1);
     }
+
 }

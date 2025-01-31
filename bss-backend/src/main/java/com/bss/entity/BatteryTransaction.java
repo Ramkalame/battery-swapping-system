@@ -24,7 +24,9 @@ public class BatteryTransaction {
     private Long serialNumber;
     private String userName;
     private String vehicleNumber;
+    private String vehicleType; //new added
     private LocalDateTime timeStamp;
     private int noOfTransaction;
+    private double swappingCost;
 
 }

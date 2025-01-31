@@ -40,5 +40,4 @@ public class BatteryStatus {
         this.timestamp = LocalDateTime.now();
     }
 
-
 }
