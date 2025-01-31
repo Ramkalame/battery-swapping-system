@@ -82,20 +82,20 @@ export class WebsocketService {
   //   return this.subscribeToTopic<string>(topic);
   // }
 
-  subscribeToTemperatureTopic(boxNumber:string):Observable<any> {
-    const topic = `/topic/box/${boxNumber}/tm`;
-    return this.subscribeToTopic<string>(topic);
-  }
+  // subscribeToTemperatureTopic(boxNumber:string):Observable<any> {
+  //   const topic = `/topic/box/${boxNumber}/tm`;
+  //   return this.subscribeToTopic<string>(topic);
+  // }
 
   subscribeToBatteryStatusTopic(boxNumber:string):Observable<any> {
     const topic = `/topic/box/${boxNumber}/bs`;
     return this.subscribeToTopic<string>(topic);
   }
 
-  subscribeToSolenoidTopic(boxNumber:string):Observable<any> {
-    const topic = `/topic/box/${boxNumber}/sd`;
-    return this.subscribeToTopic<string>(topic);
-  }
+  // subscribeToSolenoidTopic(boxNumber:string):Observable<any> {
+  //   const topic = `/topic/box/${boxNumber}/sd`;
+  //   return this.subscribeToTopic<string>(topic);
+  // }
 
 
 }

@@ -4,6 +4,7 @@ import com.bss.dto.UserDto;
 import com.bss.entity.User;
 import com.bss.helper.ApiResponse;
 import com.bss.service.UserService;
+import com.bss.service.impl.FireStoreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final FireStoreService fireStoreService;
 
     @GetMapping
     public ResponseEntity<?> getAllUser(){
@@ -36,7 +38,7 @@ public class UserController {
 
     @GetMapping("/{userId}")
     public ResponseEntity<?> getUserById(@PathVariable("userId") String userId){
-        User response = userService.getUserById(userId);
+        User response = userService.getFirebaseUserById(userId);
 
         ApiResponse<User> apiResponse = ApiResponse.<User>builder()
                 .data(response)
@@ -88,5 +90,22 @@ public class UserController {
                 .build();
         return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
     }
+
+    @GetMapping("/firebase")
+    public void firebaseUser(){
+        fireStoreService.fetchDataFromFirestore();
+    }
+
+    @DeleteMapping("/firebase/{email}")
+    public void deleteAuthenticationUser(@PathVariable("email") String email){
+        fireStoreService.deleteUserByEmail(email);
+    }
+
+    @PutMapping("/update-vehicle-number")
+    public void updateVehicleNumber(@RequestParam String currentVehicleNumber, @RequestParam String newVehicleNumber) {
+        fireStoreService.updateVehicleNumber(currentVehicleNumber, newVehicleNumber);
+    }
+
+
 
 }

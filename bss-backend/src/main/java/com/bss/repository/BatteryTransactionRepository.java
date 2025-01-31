@@ -12,7 +12,6 @@ import java.util.Optional;
 public interface BatteryTransactionRepository extends JpaRepository<BatteryTransaction,Long> {
 
     Optional<BatteryTransaction> findByUserName(String userName);
-    Optional<BatteryTransaction> findByTimeStamp(LocalDateTime timeStamp);
     Optional<BatteryTransaction> findByNoOfTransaction(Long noOfTransaction);
     List<BatteryTransaction> findByVehicleNumber(String vehicleNumber);
 }

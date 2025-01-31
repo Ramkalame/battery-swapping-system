@@ -1,6 +1,6 @@
 package com.bss.service.portListener;
 
-import com.bss.service.SocketService;
+import com.bss.service.impl.SocketService;
 import com.fazecast.jSerialComm.SerialPort;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class SecondPortListenerService {
 
-    private final String portName = "COM6";
+    private final String portName = "COM15";
     private final SocketService socketService;
     private SerialPort serialPort;
 
@@ -71,7 +71,7 @@ public class SecondPortListenerService {
 
         if (message.startsWith("RF")) {
             String sensorType = message.substring(2);
-            String rfId = message.substring(2);
+            String rfId = message.substring(2,10);
             log.info("Port: {} - Sensor {}: Data -> {}", portName, sensorType, rfId);
             socketService.sendRfSensorMessage(rfId);
         } else {

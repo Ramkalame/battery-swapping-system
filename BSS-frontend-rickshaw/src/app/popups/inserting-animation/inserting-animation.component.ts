@@ -10,7 +10,7 @@ import {
 import { FormsModule } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ApiService } from '../../services/api.service';
-import { ApiResponse } from '../../models/User';
+import { ApiResponse, BatteryStatus } from '../../models/User';
 import { BatteryTransaction, EmptyBox } from '../../models/BatteryTransaction';
 import { WebsocketService } from '../../services/websocket.service';
 import { Router } from '@angular/router';
@@ -24,92 +24,80 @@ import { Subscription } from 'rxjs';
   styleUrl: './inserting-animation.component.css',
 })
 export class InsertingAnimationComponent implements OnInit {
+
+  //assign the rfId while calling this component
   @Input() rfId!: string;
   @Output() close = new EventEmitter<void>();
-  newOpenBox!: number;
-  openDoorDuringInserting!: number; // This will store which box is open
+  //to store the empty current active box for inserting battery
+  openDoorDuringInserting!: number; 
+  //to store the box number for taking the charged battery
   openDoorDuringTaking!: number;
+  //to show the animation while inserting and taking 
   isTakingBatteryAnimationShow: boolean = false;
   isInsertingBatteryAnimationShow: boolean = true;
-  activeStep = 1; // Start with step-1
+  // Start with step-1 for animation sequence
+  activeStep = 1; 
+  //to show or hide the waiting buffer animation
   isWaitingAnimationShow: boolean = false;
   always = true;
 
   //needs to unsubscribe or destroy
   private intervalId: any;
   private intervalId2: any;
-  private bsSubscription1!: Subscription;
-  private bsSubscription2!: Subscription;
-  private bsSubscription3!: Subscription;
-  private bsSubscription4!: Subscription;
-  private bsSubscription5!: Subscription;
-  private bsSubscription6!: Subscription;
-  private bsSubscription7!: Subscription;
-  private bsSubscription8!: Subscription;
-  private bsSubscription9!: Subscription;
-  private bsSubscription10!: Subscription;
   private getEmptyBoxSubscription!: Subscription;
   private openDoorSubscription!: Subscription;
-  private closeDoorSubscription!: Subscription;
   private updateEmptyBoxSubscription!: Subscription;
   private batteryTransactionSubscription!: Subscription;
+  private batteryStatusSubscription!: Subscription;
 
   //charged battery status
-  bsArray: number[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; //first index ignored
+  bsArray!: BatteryStatus[];
 
   constructor(
     private apiService: ApiService,
-    private webSocketService: WebsocketService,
     private router: Router,
-    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
+    //call all the method on page loading
     this.startAnimationSequence();
     this.getCurrentEmptyBox();
-
-    //subscribing for tm Data
-    // this.subscribeToBox1Bs();
-    // this.subscribeToBox2Bs();
-    // this.subscribeToBox3Bs();
-    // this.subscribeToBox4Bs();
-    // this.subscribeToBox5Bs();
-    // this.subscribeToBox6Bs();
-    // this.subscribeToBox7Bs();
-    // this.subscribeToBox8Bs();
-    // this.subscribeToBox9Bs();
-    // this.subscribeToBox10Bs();
-
-    setTimeout(() => {
-      console.log(this.bsArray);
-    }, 3000);
+    this.getAllBatteryStatus();
   }
 
+  // Emit an event to close the popup
   closePopup(): void {
-    this.close.emit(); // Emit an event to close the popup
+    this.close.emit(); 
+
   }
   ngOnDestroy(): void {
     // Clear interval to avoid memory leaks
     clearTimeout(this.intervalId);
     clearTimeout(this.intervalId2);
     //Unsubscribe all the subscriptions
-    this.bsSubscription1?.unsubscribe();
-    this.bsSubscription2?.unsubscribe();
-    this.bsSubscription3?.unsubscribe();
-    this.bsSubscription4?.unsubscribe();
-    this.bsSubscription5?.unsubscribe();
-    this.bsSubscription6?.unsubscribe();
-    this.bsSubscription7?.unsubscribe();
-    this.bsSubscription8?.unsubscribe();
-    this.bsSubscription9?.unsubscribe();
-    this.bsSubscription10?.unsubscribe();
     this.getEmptyBoxSubscription?.unsubscribe();
     this.openDoorSubscription?.unsubscribe();
-    this.closeDoorSubscription?.unsubscribe();
     this.updateEmptyBoxSubscription?.unsubscribe();
     this.batteryTransactionSubscription?.unsubscribe();
+    this.batteryStatusSubscription?.unsubscribe();
   }
 
+  //to fetch all the battery status from the database.
+  getAllBatteryStatus() {
+    this.batteryStatusSubscription = this.apiService
+      .getAllBatteryStatus()
+      .subscribe({
+        next: (response: ApiResponse<BatteryStatus[]>) => {
+          //assign the fetched data to the battery status array
+          this.bsArray = response.data;
+        },
+        error: (error: any) => {
+          console.log('Something Went Wrong');
+        },
+      });
+  }
+
+  //to start the animatin sequence
   startAnimationSequence(): void {
     this.intervalId = setInterval(() => {
       this.activeStep = this.activeStep < 3 ? this.activeStep + 1 : 1; // Loop through steps
@@ -122,14 +110,13 @@ export class InsertingAnimationComponent implements OnInit {
       .getCurrentEmptyBox()
       .subscribe({
         next: (response: ApiResponse<EmptyBox>) => {
-          console.log('-------L Empty Box Called------');
+          console.log('-------Empty Box Called------');
           console.log(response.message + ' :-' + response.data.boxNumber);
-          //this method will fetch the latest empty box number from the database
+          //assign the empty box number to the variable
           this.openDoorDuringInserting = response.data.boxNumber;
-          //this command is used to open the empty box to insert dischared battey
+          //now send command to the arduino to open the door of empty box
           this.commandToOpenTheDoor('OPEN' + this.openDoorDuringInserting);
-          //after the command it will call the method to verify the battery status whether the battery is charging or not
-          //this methd will execute after 40 seconds of delay to ensure the batterys status is correct
+          //to verify the battery status after process 1
           this.toVerfiyBatteryStatusOfEmptyBoxP1();
         },
         error: (error: any) => {
@@ -144,8 +131,7 @@ export class InsertingAnimationComponent implements OnInit {
       .sendCommandToArduino(command)
       .subscribe({
         next: (response: ApiResponse<string>) => {
-          console.log('-------L OPEN Door Called------');
-          console.log('Command sent to Arduion OPEN DOOR: ' + response.data);
+          console.log('-------OPEN Door Called------',command);
         },
         error: (error: any) => {
           console.log('Something Went Wrong');
@@ -153,211 +139,108 @@ export class InsertingAnimationComponent implements OnInit {
       });
   }
 
-  //this is to give command to the arduino to close the door
-  commandToCloseTheDoor(command: string) {
-    this.closeDoorSubscription = this.apiService
-      .sendCommandToArduino(command)
-      .subscribe({
-        next: (response: ApiResponse<string>) => {
-          console.log('-------L Close Door Called------');
-          console.log('Command sent to Arduion CLOSE DOOR: ' + response.data);
-        },
-        error: (error: any) => {
-          console.log('Something Went Wrong');
-        },
-      });
-  }
-
-  //To verify the battery status after taking and inserting battery
+  //To verify the battery status after inserting battery
   toVerfiyBatteryStatusOfEmptyBoxP1() {
-    console.log('-------L VrifyP1 Called------');
-    //it will set interval for 40 seconds after calling this method
+    console.log('-------VrifyP1 Called------');
+    //it will execute after 45 second time interval
     this.intervalId2 = setTimeout(() => {
-      //this condition will check wether the battery status of the empty box is 0(charging) or 1(error detetected)
-      if (this.always) {
-        console.log('-------L VrifyP1 INSIDE CONDITION------');
-        //this will execute if the battery status of the empty box is 0 (charging)
-        //then it will find the first charged battery
-        this.checkAndOpenFullyChargedBatteryBox();
-        //update the new empty box number in database
-        this.updateTheNewEmptyBox(this.openDoorDuringTaking);
-        // this.isWaitingAnimationShow = true;
-     }
-    }, 20000);
+      //after inserting the battery called the method to check the first full charged battery
+      this.checkAndOpenFullyChargedBatteryBox();
+      //update the empty box in database 
+      this.updateTheNewEmptyBox(this.openDoorDuringTaking);
+      //}
+    }, 15000);
   }
 
   //To verify the battery status after taking and taking battery
   toVerfiyBatteryStatusOfEmptyBoxP2() {
-    console.log('-------L VrifyP2 Called------');
-    //it will set interval for 40 seconds after calling this method
+    console.log('-------VrifyP2 Called------');
     this.intervalId2 = setTimeout(() => {
-      //this condition will check wether the battery status of the empty box is 0(charging) or 1(error detetected)
-      if (this.always) {
-        //this will execute if the battery status of the empty box is 1 (means error becauser battery is taken )
-        //afte completion navigate to the greet page
-        this.batteryTransactionSubscription = this.apiService.addBatteryTransactions(this.rfId).subscribe({
+      //add a record of new transaction in the database
+      this.batteryTransactionSubscription = this.apiService
+        .addBatteryTransactions(this.rfId)
+        .subscribe({
+
           next: (response: ApiResponse<BatteryTransaction>) => {
-            console.log('-------L Battery Transaction Called------');
+            console.log('-------Battery Transaction Called------');
             console.log(response.message + ' :-' + response.data);
+            const data: BatteryStatus = {
+              id: `b${this.openDoorDuringTaking}`,
+              status: 0,
+            };
+            //update the taken box status as 0
+            this.apiService.updateBatteryStatus(data).subscribe({
+              next: (response: ApiResponse<BatteryStatus>) => {
+                console.log('Battery Status Updated: ' + response.data);
+              },
+              error: (error: any) => {
+                console.log('Something Went Wrong');
+              },
+            });
+            //then navigate to the greet page
             this.router.navigate(['/greet']);
           },
           error: (error: any) => {
             console.log('Something Went Wrong');
           },
         });
-      }
+      // }
+
     }, 15000);
   }
 
   // This to open the first fully charnged battery box door only
   checkAndOpenFullyChargedBatteryBox() {
-    console.log('-------L Fully Charged Check Called------');
-    // Use a for loop to iterate from 1 to 6 for the box numbers
-    for (let i = 1; i <= 10; i++) {
-      const batteryStatus = this.bsArray[i]; // Access the box status
-      if (batteryStatus === 1) {
-        // This will execute if the battery status is 1 (fully charged)
-        this.openDoorDuringTaking = i; // Assign the box number (starting from 1) to openDoor variable
-        this.openDoorDuringInserting=0;
-        console.log(`Box ${i} is fully charged.`);
-        // Command to open the fully charged battery box
+    console.log('------- Fully Charged Check Called ------');
+    //sort the array from b1 to b10
+    const sortedBsArray = this.bsArray.sort((a, b) =>
+      a.id === 'b10' ? 1 : b.id === 'b10' ? -1 : 0
+    );
+    //loop through the array and find the first charged battery
+    for (let batteryStatus of sortedBsArray) {
+      //check if the battery status is 1
+      if (batteryStatus.status === 1) {
+        //assign the charged battery box number to blink
+        this.openDoorDuringTaking = Number(batteryStatus.id.substring(1));
+        //set the empty box number to 0
+        this.openDoorDuringInserting = 0;
+        //show the buffering for  3 second 
         this.showBufferingBeforP2();
+        //hide the inserting battery animation
+        //command to opent the charged battery box door
         this.isInsertingBatteryAnimationShow = false;
-        this.commandToOpenTheDoor(`OPEN${i}`);
-        break; // Exit the loop after opening the first fully charged box
+        this.commandToOpenTheDoor(`OPEN${this.openDoorDuringTaking}`);
+        break;
       }
     }
   }
 
+  //show the buffering animation
   showBufferingBeforP2() {
+    //set the animation variable to true
     this.isWaitingAnimationShow = true;
     setTimeout(() => {
+      //then after 3 second hide the buffering animation
       this.isWaitingAnimationShow = false;
+      //then show the battery taking animation
       this.isTakingBatteryAnimationShow = true;
     }, 3000);
   }
 
+  //update the new empty box in the db
   updateTheNewEmptyBox(boxNumber: number) {
-    console.log('-------L Update Empty Box Called Called------');
+    console.log('-------Update Empty Box Called------');
     this.updateEmptyBoxSubscription = this.apiService
       .updateCurrentEmptyBox(boxNumber)
       .subscribe({
         next: (response: ApiResponse<EmptyBox>) => {
           console.log(response.message + ' :-' + response.data.boxNumber);
+          //call the verify method for the second process 
           this.toVerfiyBatteryStatusOfEmptyBoxP2();
         },
         error: (error: any) => {
           console.log('Something Went Wrong');
         },
-      });
-  }
-
-  // Subscribe to Box 1 Battery Status sensor
-  subscribeToBox1Bs() {
-    this.bsSubscription1 = this.webSocketService
-      .subscribeToBatteryStatusTopic('01')
-      .subscribe((response) => {
-        // console.log('Received Box 1 Battery Status response:', response);
-        this.bsArray[1] = Number(response);
-        this.cdr.detectChanges(); // Notify Angular about the change
-      });
-  }
-
-  //Subscribe to Box2 Battery Status Sensor
-  subscribeToBox2Bs() {
-    this.bsSubscription2 = this.webSocketService
-      .subscribeToBatteryStatusTopic('02')
-      .subscribe((response) => {
-        // console.log('Received Box 2 Battery Status response:', response);
-        this.bsArray[2] = Number(response);
-        this.cdr.detectChanges(); // Notify Angular about the change
-      });
-  }
-
-  //Subscribe to Box3 Battery Status Sensor
-  subscribeToBox3Bs() {
-    this.bsSubscription3 = this.webSocketService
-      .subscribeToBatteryStatusTopic('03')
-      .subscribe((response) => {
-        // console.log('Received Box 3 Battery Status response:', response);
-        this.bsArray[3] = Number(response);
-        this.cdr.detectChanges(); // Notify Angular about the change
-      });
-  }
-
-  // Subscribe to Box 4 Battery Status sensor
-  subscribeToBox4Bs() {
-    this.bsSubscription4 = this.webSocketService
-      .subscribeToBatteryStatusTopic('04')
-      .subscribe((response) => {
-        // console.log('Received Box 4 Battery Status response:', response);
-        this.bsArray[4] = Number(response);
-        this.cdr.detectChanges(); // Notify Angular about the change
-      });
-  }
-
-  // Subscribe to Box 5 Battery Status sensor
-  subscribeToBox5Bs() {
-    this.bsSubscription5 = this.webSocketService
-      .subscribeToBatteryStatusTopic('05')
-      .subscribe((response) => {
-        // console.log('Received Box 5 Battery Status response:', response);
-        this.bsArray[5] = Number(response);
-        this.cdr.detectChanges(); // Notify Angular about the change
-      });
-  }
-
-  // Subscribe to Box 6 Battery Status sensor
-  subscribeToBox6Bs() {
-    this.bsSubscription6 = this.webSocketService
-      .subscribeToBatteryStatusTopic('06')
-      .subscribe((response) => {
-        // console.log('Received Box 6 Battery Status response:', response);
-        this.bsArray[6] = Number(response);
-        this.cdr.detectChanges(); // Notify Angular about the change
-      });
-  }
-  // Subscribe to Box 7 Battery Status sensor
-  subscribeToBox7Bs() {
-    this.bsSubscription7 = this.webSocketService
-      .subscribeToBatteryStatusTopic('07')
-      .subscribe((response) => {
-        // console.log('Received Box 7 Battery Status response:', response);
-        this.bsArray[7] = Number(response);
-        this.cdr.detectChanges(); // Notify Angular about the change
-      });
-  }
-
-  // Subscribe to Box 8 Battery Status sensor
-  subscribeToBox8Bs() {
-    this.bsSubscription8 = this.webSocketService
-      .subscribeToBatteryStatusTopic('08')
-      .subscribe((response) => {
-        // console.log('Received Box 8 Battery Status response:', response);
-        this.bsArray[8] = Number(response);
-        this.cdr.detectChanges(); // Notify Angular about the change
-      });
-  }
-
-  // Subscribe to Box 9 Battery Status sensor
-  subscribeToBox9Bs() {
-    this.bsSubscription9 = this.webSocketService
-      .subscribeToBatteryStatusTopic('09')
-      .subscribe((response) => {
-        // console.log('Received Box 9 Battery Status response:', response);
-        this.bsArray[9] = Number(response);
-        this.cdr.detectChanges(); // Notify Angular about the change
-      });
-  }
-
-  // Subscribe to Box 9 Battery Status sensor
-  subscribeToBox10Bs() {
-    this.bsSubscription10 = this.webSocketService
-      .subscribeToBatteryStatusTopic('10')
-      .subscribe((response) => {
-        // console.log('Received Box 10 Battery Status response:', response);
-        this.bsArray[10] = Number(response);
-        this.cdr.detectChanges(); // Notify Angular about the change
       });
   }
 }

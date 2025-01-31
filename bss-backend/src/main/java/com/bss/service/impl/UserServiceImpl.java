@@ -16,6 +16,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final FireStoreService fireStoreService;
 
     @Override
     public List<User> getAllUser() {
@@ -26,6 +27,11 @@ public class UserServiceImpl implements UserService {
     public User getUserById(String userId) {
         return userRepository.findById(userId).orElseThrow(() ->
                 new EntityNotFoundException("User is not registered"));
+    }
+
+    @Override
+    public User getFirebaseUserById(String tagId) {
+        return fireStoreService.fetchUserFromFirebaseUsingTagId(tagId);
     }
 
     @Override
@@ -48,8 +54,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String deleteUser(String userId) {
-        userRepository.findById(userId).ifPresent(userRepository::delete);
-        return "User "+userId+"Deleted Successfully";
+//        userRepository.findById(userId).ifPresent(userRepository::delete);
+        fireStoreService.deleteUserByUserName(userId);
+        return "User "+userId+" Deleted Successfully";
     }
 
     @Override

@@ -38,3 +38,16 @@ export class EmptyBox {
         this.boxNumber = boxNumber;
     }
 }
+
+
+export class BatteryStatus {
+    id: string;
+    status: number;
+    timestamp?:Date;
+
+    constructor(id: string, status: number,timestamp:Date) {
+        this.id = id;
+        this.status = status;
+        this.timestamp = timestamp;
+    }
+}
