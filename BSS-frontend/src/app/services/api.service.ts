@@ -8,6 +8,7 @@ import { BatteryStatus, BatteryTransaction, EmptyBox } from '../models/BatteryTr
   providedIn: 'root',
 })
 export class ApiService {
+  
   private readonly BASE_URL_USERS: string =
     'http://localhost:8080/api/v1/users';
   private readonly BASE_URL_TRANSACTIONS: string =

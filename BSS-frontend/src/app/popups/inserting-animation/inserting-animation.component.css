@@ -77,10 +77,11 @@
 .spinner {
   width: 180px;
   height: 180px;
-  border: 10px solid #ddd; /* Light gray */
-  border-top: 10px solid #3e59c6; /* Blue */
+  border: 15px solid #ddd; /* Light gray */
+  border-top: 15px solid #3e59c6; /* Blue */
   border-radius: 50%;
   animation: spin 1s linear infinite;
+  margin-top: 50px;
 }
 
 @keyframes spin {
@@ -202,15 +203,26 @@ video::-webkit-media-controls {
   }
 }
 
-@keyframes blink {
+@keyframes inserting-blink {
   0% {
-    background-color: #b89e0a;
+    background-color: #e56717;
   }
   50% {
     background-color: #ffffff;
   }
   100% {
-    background-color: #b89e0a;
+    background-color: #e56717;
+  }
+}
+@keyframes taking-blink {
+  0% {
+    background-color: #36c024;
+  }
+  50% {
+    background-color: #ffffff;
+  }
+  100% {
+    background-color: #36c024;
   }
 }
 

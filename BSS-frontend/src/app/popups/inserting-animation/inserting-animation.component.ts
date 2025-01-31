@@ -184,6 +184,7 @@ export class InsertingAnimationComponent implements OnInit {
       // }
     }, 30000);
   }
+ 
 
   // This to open the first fully charnged battery box door only
   checkAndOpenFullyChargedBatteryBox() {
@@ -239,4 +240,5 @@ export class InsertingAnimationComponent implements OnInit {
         },
       });
   }
+  
 }

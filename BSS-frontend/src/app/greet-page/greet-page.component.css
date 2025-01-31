@@ -31,7 +31,6 @@
   width: 100%;
   height: 100%;
 }
-
 .banner-img {
   height: 300px;
   margin-bottom: 70px;
@@ -47,3 +46,4 @@
 .banner1 {
   object-fit: contain;
 }
+

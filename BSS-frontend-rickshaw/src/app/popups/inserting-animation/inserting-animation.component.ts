@@ -39,6 +39,7 @@ export class InsertingAnimationComponent implements OnInit {
   activeStep = 1; 
   //to show or hide the waiting buffer animation
   isWaitingAnimationShow: boolean = false;
+  always = true;
 
   //needs to unsubscribe or destroy
   private intervalId: any;
@@ -159,6 +160,7 @@ export class InsertingAnimationComponent implements OnInit {
       this.batteryTransactionSubscription = this.apiService
         .addBatteryTransactions(this.rfId)
         .subscribe({
+
           next: (response: ApiResponse<BatteryTransaction>) => {
             console.log('-------Battery Transaction Called------');
             console.log(response.message + ' :-' + response.data);
@@ -183,6 +185,7 @@ export class InsertingAnimationComponent implements OnInit {
           },
         });
       // }
+
     }, 15000);
   }
 
