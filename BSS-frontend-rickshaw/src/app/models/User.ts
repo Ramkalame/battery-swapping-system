@@ -1,27 +1,49 @@
-export class User{
-    userId:string;
-    userName:string;
-    mobileNumber:string;
-    vehicleNumber:string;
-    profileImageUrl:string;
-    userType: UserType;
-
-    constructor(){
-        this.userId = ' ';
-        this.userName = ' ';
-        this.mobileNumber = ' ';
-        this.vehicleNumber = ' ';
-        this.profileImageUrl = ' ';
-        this.userType = UserType.SCOOTER;
-    }
-}
-
-export enum UserType {
-    SCOOTER = "SCOOTER",
-    RICKSHAW = "RICKSHAW",
+export interface Customer {
+    id: string;
+    fullName: string;
+    email: string;
+    mobileNumber: string;
+    password: string;
+    tagId: string;
+    isRFIDAssigned: boolean;
+    customerImage: string;
+    latitude: number;
+    longitude: number;
+    registrationTime: string;
+    role: Role;
+    currentlyPluggedBatteryId: string;
+    address: Address;
+    vehicle: Vehicle;
   }
   
-
+  export interface Address {
+    id: string;
+    streetName: string;
+    cityName: string;
+    districtName: string;
+    zipCODE: string;
+    stateName: string;
+    countryName: string;
+  }
+  
+  export interface Vehicle {
+    id: string;
+    vehicleType: VehicleType;
+    vehicleNumber: string;
+    model: string;
+    brand: string;
+  }
+  
+  export enum VehicleType {
+    E_RICKSHAW = 'E_RICKSHAW',
+    E_SCOOTER = 'E_SCOOTER'
+  }
+  
+  export enum Role {
+    USER = 'USER',
+    ADMIN = 'ADMIN'
+  }
+  
 export class ApiResponse<T> {
     data: T;
     message: string;
@@ -45,12 +67,14 @@ export class ApiResponse<T> {
 }
 
 
-export class BatteryStatus {
-    id: string;
-    status: number;
+export interface BatteryStatus {
 
-    constructor(id: string, status: number) {
-        this.id = id;
-        this.status = status;
-    }
+    boxNumber: string;
+    batteryStatus: Status;
+}
+
+export enum Status {
+    EMPTY = 'EMPTY', 
+    CHARGING = 'CHARGING', 
+    FULL_CHARGED = 'FULL_CHARGED'
 }

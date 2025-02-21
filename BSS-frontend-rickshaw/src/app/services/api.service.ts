@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ApiResponse, BatteryStatus, User } from '../models/User';
+import { ApiResponse, BatteryStatus, Customer } from '../models/User';
 import { BatteryTransaction, BatteryTransactionDto, EmptyBox } from '../models/BatteryTransaction';
 
 @Injectable({
@@ -14,26 +14,27 @@ export class ApiService {
     'http://localhost:8080/api/v1/transactions';
   private readonly BASE_URL_ARDUINO: string =
     'http://localhost:8080/api/v1/arduino';
+  private baseUrl:string="http://localhost:8080/api/v1/main";
 
   constructor(private http: HttpClient) {}
 
-  getUserById(userId: string): Observable<ApiResponse<User>> {
-    const endpoint = `/${userId}`;
-    const url = `${this.BASE_URL_USERS}${endpoint}`;
-    return this.http.get<ApiResponse<User>>(url);
+  getUserById(userId: string): Observable<ApiResponse<Customer>> {
+    const endpoint = `/fetch-user-by/${userId}`;
+    const url = `${this.baseUrl}${endpoint}`;
+    return this.http.get<ApiResponse<Customer>>(url);
   }
 
-  updateCurrentEmptyBox(boxNumber: number): Observable<ApiResponse<EmptyBox>> {
-    const endpoint = `/empty-box-number/${boxNumber}`;
-    const url = `${this.BASE_URL_TRANSACTIONS}${endpoint}`;
-    return this.http.put<ApiResponse<EmptyBox>>(url, null);
-  }
+  // updateCurrentEmptyBox(boxNumber: number): Observable<ApiResponse<EmptyBox>> {
+  //   const endpoint = `/empty-box-number/${boxNumber}`;
+  //   const url = `${this.BASE_URL_TRANSACTIONS}${endpoint}`;
+  //   return this.http.put<ApiResponse<EmptyBox>>(url, null);
+  // }
 
-  getCurrentEmptyBox(): Observable<ApiResponse<EmptyBox>> {
-    const endpoint = '/empty-box-number';
-    const url = `${this.BASE_URL_TRANSACTIONS}${endpoint}`;
-    return this.http.get<ApiResponse<EmptyBox>>(url);
-  }
+  // getCurrentEmptyBox(): Observable<ApiResponse<EmptyBox>> {
+  //   const endpoint = '/empty-box-number';
+  //   const url = `${this.BASE_URL_TRANSACTIONS}${endpoint}`;
+  //   return this.http.get<ApiResponse<EmptyBox>>(url);
+  // }
 
   //Method to send command to the solenoid
   sendCommandToArduino(command: string): Observable<ApiResponse<string>> {
@@ -45,23 +46,22 @@ export class ApiService {
 
   //api call method to store the transaction of battey
   addBatteryTransactions(rfId:string):Observable<ApiResponse<BatteryTransaction>>{
-    const endpoint = `/${rfId}`;
+    const endpoint = `/add-new-battery-transaction/${rfId}`;
     const url = `${this.BASE_URL_TRANSACTIONS}${endpoint}`;
     return this.http.post<ApiResponse<BatteryTransaction>>(url, null);
   }
 
   //api to get all battery status
   getAllBatteryStatus(): Observable<ApiResponse<BatteryStatus[]>>{
-    const endpoint = '/battery-status';
-    const url = `${this.BASE_URL_TRANSACTIONS}${endpoint}`;
+    const url = `${this.baseUrl}/fetch-all-battery-status`;
     return this.http.get<ApiResponse<BatteryStatus[]>>(url);
   }
 
 
-   //api to update the battery status
-   updateBatteryStatus(data:BatteryStatus): Observable<ApiResponse<BatteryStatus>>{
-    const endpoint = '/battery-status';
-    const url = `${this.BASE_URL_TRANSACTIONS}${endpoint}`;
-    return this.http.put<ApiResponse<BatteryStatus>>(url,data);
-  }
+  //  //api to update the battery status
+  //  updateBatteryStatus(data:BatteryStatus): Observable<ApiResponse<BatteryStatus>>{
+  //   const endpoint = '/battery-status';
+  //   const url = `${this.BASE_URL_TRANSACTIONS}${endpoint}`;
+  //   return this.http.put<ApiResponse<BatteryStatus>>(url,data);
+  // }
 }

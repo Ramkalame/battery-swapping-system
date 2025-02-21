@@ -7,10 +7,13 @@ import { BufferingComponent } from './buffering/buffering.component';
 import { InsertingAnimationComponent } from './popups/inserting-animation/inserting-animation.component';
 import { TestAnimationComponent } from './test-animation/test-animation.component';
 import { WarningMessageComponent } from './warning-message/warning-message.component';
+import { batteryStatusResolver } from './dashboard/battery-status.resolver';
 
 export const routes: Routes = [
   {path: '',component: HomeComponent,},
-  {path: 'dashboard/:rfId',component: DashboardComponent,},
+  {path: 'dashboard/:rfId',component: DashboardComponent
+    // , resolve: {allBatteryStatusData: batteryStatusResolver}
+  },
   {path: 'greet',component: GreetPageComponent,},
   { path: 'card-swaipe-message', component: CardSwipeMessageComponent },
   { path: 'wait/:rfId', component: BufferingComponent },

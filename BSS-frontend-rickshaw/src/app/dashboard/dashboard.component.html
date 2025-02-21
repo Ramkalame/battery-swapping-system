@@ -9,133 +9,27 @@
             </div>
             <div class="battery-indicator-div">
                 <div class="batteries-box">
-                    <div class="battery-box-p">
+                    <div *ngFor="let batteryStatus of batteryState; let i = index">
+                      <div class="battery-box-p">
                         <div class="battery-box-heading">
-                            <p>बैटरी-1</p>
+                          <p>{{ 'बैटरी-' + (i + 1) }}</p>  <!-- Display the box number dynamically -->
                         </div>
                         <div class="battery-box">
-                            <div *ngIf="emptyBoxNumber !== 1">
-                                <app-test-animation *ngIf="bsData1==0"></app-test-animation>
-                                <img src="./assets/charges-battery.png" alt="charges-battery.png" *ngIf="bsData1==1">
-                            </div>
-                            <img src="./assets/dead-battery.png" alt="charges-battery.png" *ngIf="emptyBoxNumber === 1">
+                          <div *ngIf="batteryStatus.batteryStatus !== Status.EMPTY">
+                            <app-test-animation *ngIf="batteryStatus.batteryStatus === Status.CHARGING"></app-test-animation>
+                            <img [src]="getBatteryStatusImage(batteryStatus.batteryStatus)" alt="battery-status-image" />
+                          </div>
+                          <img *ngIf="batteryStatus.batteryStatus === Status.EMPTY" [src]="getBatteryStatusImage(batteryStatus.batteryStatus)" alt="dead-battery" />
                         </div>
+                      </div>
                     </div>
-                    <div class="battery-box-p">
-                        <div class="battery-box-heading">
-                            <p>बैटरी-2</p>
-                        </div>
-                        <div class="battery-box">
-                            <div *ngIf="emptyBoxNumber !== 2">
-                                <app-test-animation *ngIf="bsData2==0"></app-test-animation>
-                                <img src="./assets/charges-battery.png" alt="charges-battery.png" *ngIf="bsData2==1">
-                            </div>
-                            <img src="./assets/dead-battery.png" alt="charges-battery.png" *ngIf="emptyBoxNumber === 2">
-                        </div>
-                    </div>
-                    <div class="battery-box-p">
-                        <div class="battery-box-heading">
-                            <p>बैटरी-3</p>
-                        </div>
-                        <div class="battery-box">
-                            <div *ngIf="emptyBoxNumber !== 3">
-                                <app-test-animation *ngIf="bsData3==0"></app-test-animation>
-                                <img src="./assets/charges-battery.png" alt="charges-battery.png" *ngIf="bsData3==1">
-                            </div>
-                            <img src="./assets/dead-battery.png" alt="charges-battery.png" *ngIf="emptyBoxNumber === 3">
-                        </div>
-                    </div>
-                    <div class="battery-box-p">
-                        <div class="battery-box-heading">
-                            <p>बैटरी-4</p>
-                        </div>
-                        <div class="battery-box">
-                            <div *ngIf="emptyBoxNumber !== 4">
-                                <app-test-animation *ngIf="bsData4==0"></app-test-animation>
-                                <img src="./assets/charges-battery.png" alt="charges-battery.png" *ngIf="bsData4==1">
-                            </div>
-                            <img src="./assets/dead-battery.png" alt="charges-battery.png" *ngIf="emptyBoxNumber === 4">
-                        </div>
-                    </div>
-                    <div class="battery-box-p">
-                        <div class="battery-box-heading">
-                            <p>बैटरी-5</p>
-                        </div>
-                        <div class="battery-box">
-                            <div *ngIf="emptyBoxNumber !== 5">
-                                <app-test-animation *ngIf="bsData5==0"></app-test-animation>
-                                <img src="./assets/charges-battery.png" alt="charges-battery.png" *ngIf="bsData5==1">
-                            </div>
-                            <img src="./assets/dead-battery.png" alt="charges-battery.png" *ngIf="emptyBoxNumber === 5">
-                        </div>
-                    </div>
-                    <div class="battery-box-p">
-                        <div class="battery-box-heading">
-                            <p>बैटरी-6</p>
-                        </div>
-                        <div class="battery-box">
-                            <div *ngIf="emptyBoxNumber !== 6">
-                                <app-test-animation *ngIf="bsData6==0"></app-test-animation>
-                                <img src="./assets/charges-battery.png" alt="charges-battery.png" *ngIf="bsData6==1">
-                            </div>
-                            <img src="./assets/dead-battery.png" alt="charges-battery.png" *ngIf="emptyBoxNumber === 6">
-                        </div>
-                    </div>
-                    <div class="battery-box-p">
-                        <div class="battery-box-heading">
-                            <p>बैटरी-7</p>
-                        </div>
-                        <div class="battery-box">
-                            <div *ngIf="emptyBoxNumber !== 7">
-                                <app-test-animation *ngIf="bsData7==0"></app-test-animation>
-                                <img src="./assets/charges-battery.png" alt="charges-battery.png" *ngIf="bsData7==1">
-                            </div>
-                            <img src="./assets/dead-battery.png" alt="charges-battery.png" *ngIf="emptyBoxNumber === 7">
-                        </div>
-                    </div>
-                    <div class="battery-box-p">
-                        <div class="battery-box-heading">
-                            <p>बैटरी-8</p>
-                        </div>
-                        <div class="battery-box">
-                            <div *ngIf="emptyBoxNumber !== 8">
-                                <app-test-animation *ngIf="bsData8==0"></app-test-animation>
-                                <img src="./assets/charges-battery.png" alt="charges-battery.png" *ngIf="bsData8==1">
-                            </div>
-                            <img src="./assets/dead-battery.png" alt="charges-battery.png" *ngIf="emptyBoxNumber === 8">
-                        </div>
-                    </div>
-                    <div class="battery-box-p">
-                        <div class="battery-box-heading">
-                            <p>बैटरी-9</p>
-                        </div>
-                        <div class="battery-box">
-                            <div *ngIf="emptyBoxNumber !== 9">
-                                <app-test-animation *ngIf="bsData9==0"></app-test-animation>
-                                <img src="./assets/charges-battery.png" alt="charges-battery.png" *ngIf="bsData9==1">
-                            </div>
-                            <img src="./assets/dead-battery.png" alt="charges-battery.png" *ngIf="emptyBoxNumber === 9">
-                        </div>
-                    </div>
-                    <div class="battery-box-p">
-                        <div class="battery-box-heading">
-                            <p>बैटरी-10</p>
-                        </div>
-                        <div class="battery-box">
-                            <div *ngIf="emptyBoxNumber !== 10">
-                                <app-test-animation *ngIf="bsData10==0"></app-test-animation>
-                                <img src="./assets/charges-battery.png" alt="charges-battery.png" *ngIf="bsData10==1">
-                            </div>
-                            <img src="./assets/dead-battery.png" alt="charges-battery.png"
-                                *ngIf="emptyBoxNumber === 10">
-                        </div>
-                    </div>
-                </div>
+                  </div>
+                  
                 <div class="status-indicators">
                     <div class="barttery-status-indicator">
                         <div class="indicator-box">
                             <div class="indicator-icon">
-                                <img src="./assets/charges-battery.png" alt="charges-battery.png" class="ibattery">
+                                <img src="./assets/charged-battery.png" alt="charged-battery.png" class="ibattery">
 
                             </div>
                             <div class="indicator-text">
@@ -144,7 +38,7 @@
                         </div>
                         <div class="indicator-box">
                             <div class="indicator-icon">
-                                <img src="./assets/charging-battery.png" alt="charges-battery.png" class="ibattery">
+                                <img src="./assets/charging-battery.png" alt="charging-battery.png" class="ibattery">
 
                             </div>
                             <div class="indicator-text">
@@ -153,7 +47,7 @@
                         </div>
                         <div class="indicator-box">
                             <div class="indicator-icon">
-                                <img src="./assets/dead-battery.png" alt="charges-battery.png" class="ibattery">
+                                <img src="./assets/empty-battery.png" alt="empty-battery.png" class="ibattery">
 
                             </div>
                             <div class="indicator-text">

@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ApiService } from '../services/api.service';
 import { Subscription } from 'rxjs';
-import { ApiResponse, User } from '../models/User';
+import { ApiResponse, Customer } from '../models/User';
 
 @Component({
   selector: 'app-buffering',
@@ -38,14 +38,19 @@ export class BufferingComponent implements OnInit {
 
   getUserDetails(rfId: string) {
     this.userDetailsSubscription = this.apiService.getUserById(rfId).subscribe({
-      next: (response: ApiResponse<User>) => {
-        this.timeoutId = setTimeout(() => {
-          this.router.navigate(['/user-profile', this.rfId]);
-        }, 1500);
+      next: (response: ApiResponse<Customer>) => {
+        if(response.success){
+          this.timeoutId = setTimeout(() => {
+            this.router.navigate(['/user-profile', this.rfId]);
+          }, 1500);
+        }else{
+          console.log(response.message)
+        }
+        
       },
       error: (error: any) => {
         this.router.navigate(['/invalid-credential']);
-        console.log('Something Went Wrong');
+        console.log(error.error.message)
       },
     });
   }

@@ -12,8 +12,8 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Slf4j
 public class SecondPortListenerService {
-
-    private final String portName = "COM15";
+//RFID port listener
+    private final String portName = "COM17";
     private final SocketService socketService;
     private SerialPort serialPort;
 
@@ -25,10 +25,10 @@ public class SecondPortListenerService {
 
         logAvailablePorts();
         if (serialPort.openPort()) {
-            log.info("{}: Serial port opened successfully!",portName);
+            log.info("{}: Serial port RFID opened successfully!",portName);
 
             new Thread(() -> {
-                log.info("Reading thread started for: {}",portName);
+                log.info("Reading thread started for RFID : {}",portName);
                 try {
                     while (serialPort.isOpen()) {
                         byte[] buffer = new byte[2048];
@@ -36,11 +36,11 @@ public class SecondPortListenerService {
                         if (numRead > 0) {
                             handleIncomingData(buffer, numRead);
                         } else {
-                            log.warn("No data read from serial port: {}",portName);
+                            log.warn("No data read from serial port for RFID : {}",portName);
                         }
                     }
                 } catch (Exception e) {
-                    log.error("Error reading from serial port: {}",portName );
+                    log.error("Error reading from serial port for RFID: {}",portName );
                 } finally {
                     closeSerialPort();
                 }

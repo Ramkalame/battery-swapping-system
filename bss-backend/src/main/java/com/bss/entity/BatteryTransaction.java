@@ -9,24 +9,23 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 
 @Data
 @Builder
-@Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Document(collection = "battery-transactions")
 public class BatteryTransaction {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long serialNumber;
-    private String userName;
-    private String vehicleNumber;
-    private String vehicleType; //new added
-    private LocalDateTime timeStamp;
-    private int noOfTransaction;
-    private double swappingCost;
+    private String id;
+    private String batterySwappingCost;
+    private LocalDateTime batterySwappingDateTime;
+    private String batteryUniqueId;
+    private String  customerId;
+    private String adminId;
 
 }

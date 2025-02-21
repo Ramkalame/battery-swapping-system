@@ -6,13 +6,21 @@
                     <h3 *ngIf="isInsertingBatteryAnimationShow">बैटरी अंदर रखें</h3>
                     <h3 *ngIf="isTakingBatteryAnimationShow">चार्ज बैटरी बाहर निकाल लें</h3>
                 </div>
-                <div class="battery-box-container">
-                    <div class="battery-box" [ngClass]="{'blinking-box-inserting': openDoorDuringInserting == 1, 'blinking-box-taking': openDoorDuringTaking==  1}"> 1</div>
-                    <div class="battery-box" [ngClass]="{'blinking-box-inserting': openDoorDuringInserting == 2, 'blinking-box-taking': openDoorDuringTaking==  2}"> 2</div>
-                    <div class="battery-box" [ngClass]="{'blinking-box-inserting': openDoorDuringInserting == 3, 'blinking-box-taking': openDoorDuringTaking==  3}"> 3</div>
-                    <div class="battery-box" [ngClass]="{'blinking-box-inserting': openDoorDuringInserting == 4, 'blinking-box-taking': openDoorDuringTaking==  4}"> 4</div>
-                    <div class="battery-box" [ngClass]="{'blinking-box-inserting': openDoorDuringInserting == 5, 'blinking-box-taking': openDoorDuringTaking==  5}"> 5</div>
-                    <div class="battery-box" [ngClass]="{'blinking-box-inserting': openDoorDuringInserting == 6, 'blinking-box-taking': openDoorDuringTaking==  6}"> 6</div>
+
+                <div *ngIf="isInsertingBatteryAnimationShow" class="battery-box-container">
+                    <div class="battery-box" *ngFor="let box of batteryStatusForInserting; let i = index" [ngClass]="{
+                            'blinking-box-inserting': box.batteryStatus === 'EMPTY' && openDoorDuringInserting === box.boxNumber
+                        }">
+                        {{ i+1 }}
+                    </div>
+                </div>
+                <div class="battery-box-container" *ngIf="isTakingBatteryAnimationShow">
+                    <div  class="battery-box" *ngFor="let box of batteryStatusForTaking; let i = index" [ngClass]="{
+                            'blinking-box-taking': box.batteryStatus === 'FULL_CHARGED' && openDoorDuringTaking === box.boxNumber
+                        }">
+                        {{ i+1 }}
+                    </div>
+
                 </div>
             </div>
             <div class="animation-container">

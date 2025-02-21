@@ -1,11 +1,10 @@
 package com.bss.service.impl;
 
-import com.bss.entity.BatteryStatus;
-import com.bss.entity.BatteryTransaction;
-import com.bss.entity.EmptyBox;
-import com.bss.entity.User;
+import com.bss.entity.*;
+import com.bss.exception.EntityNotFoundException;
 import com.bss.repository.BatteryStatusRepository;
 import com.bss.repository.BatteryTransactionRepository;
+import com.bss.repository.CustomerRepository;
 import com.bss.repository.EmptyBoxRepository;
 import com.bss.service.BatteryTransactionService;
 import com.bss.service.UserService;
@@ -31,26 +30,18 @@ public class BatteryTransactionServiceImpl implements BatteryTransactionService 
     private final EmptyBoxRepository emptyBoxRepository;
     private final BatteryStatusRepository batteryStatusRepository;
     private final FireStoreService fireStoreService;
+    private final CustomerRepository customerRepository;
 
     @Override
     public BatteryTransaction createTransaction(String rfId) {
-        // Get the existing user by RFID
-        User existingUser = fireStoreService.fetchUserFromFirebaseUsingTagId(rfId);
-        // If no transactions are found within the last 24 hours, create a new transaction
+        Customer existingCustomer = customerRepository.findByTagId(rfId).orElseThrow(()-> new EntityNotFoundException("Customer With this RFID not found: "+rfId));
         BatteryTransaction newBatteryTransaction = BatteryTransaction.builder()
-                .userName(existingUser.getUserName())
-                .vehicleNumber(existingUser.getVehicleNumber())
-                .vehicleType("rickshaw") //new added
-                .timeStamp(LocalDateTime.now())
-                .noOfTransaction(1)
-                .swappingCost(60.00)
+                .customerId(existingCustomer.getTagId())
+                .batterySwappingDateTime(LocalDateTime.now())
+                .batterySwappingCost("28")
+                .adminId("1")
                 .build();
-
-        // Save the new transaction to the database
-        BatteryTransaction savedTransaction = batteryTransactionRepository.save(newBatteryTransaction);
-        //store in firebase also
-        fireStoreService.saveData(savedTransaction);
-        return savedTransaction;
+        return batteryTransactionRepository.save(newBatteryTransaction);
     }
 
 

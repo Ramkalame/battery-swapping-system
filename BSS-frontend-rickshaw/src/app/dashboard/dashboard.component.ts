@@ -7,13 +7,12 @@ import {
 } from '@angular/animations';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { ApiResponse, BatteryStatus, User } from '../models/User';
+import { ApiResponse, BatteryStatus, Customer, Status } from '../models/User';
 import { ApiService } from '../services/api.service';
 import { WebsocketService } from '../services/websocket.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { InsertingAnimationComponent } from '../popups/inserting-animation/inserting-animation.component';
-import { EmptyBox } from '../models/BatteryTransaction';
 import { TestAnimationComponent } from '../test-animation/test-animation.component';
 import { Subscription } from 'rxjs';
 
@@ -49,25 +48,14 @@ import { Subscription } from 'rxjs';
   ],
 })
 export class DashboardComponent implements OnInit {
+  Status = Status;
 
   //var to remove after component destruction
   private timeoutId!: any;
   private userDetailsSubscription!: Subscription;
 
-  // battery status subscription 
-  private bsSubscription1!: Subscription;
-  private bsSubscription2!: Subscription;
-  private bsSubscription3!: Subscription;
-  private bsSubscription4!: Subscription;
-  private bsSubscription5!: Subscription;
-  private bsSubscription6!: Subscription;
-  private bsSubscription7!: Subscription;
-  private bsSubscription8!: Subscription;
-  private bsSubscription9!: Subscription;
-  private bsSubscription10!: Subscription;
-
   //to store the user details
-  selectedUser!: User;
+  selectedUser!: Customer;
   //to store the current empty box number
   emptyBoxNumber!: number;
   //to store the rfid
@@ -75,34 +63,33 @@ export class DashboardComponent implements OnInit {
   //to open and close the popup
   showPopup = false;
   //to store the battery status fetched from database
-  bsArray: BatteryStatus[] = [];
+  batteryState: BatteryStatus[] = [];
 
-  //to store the battery status data for separate box
-  bsData1!: number;
-  bsData2!: number;
-  bsData3!: number;
-  bsData4!: number;
-  bsData5!: number;
-  bsData6!: number;
-  bsData7!: number;
-  bsData8!: number;
-  bsData9!: number;
-  bsData10!: number;
+
 
   constructor(
     private webSocketService: WebsocketService,
     private apiService: ApiService,
     private route: ActivatedRoute,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     // Retrieve the rfId parameter from the route
     this.route.params.subscribe((params) => {
       this.rfId = params['rfId'];
+      console.log("rfid in the dashboard component")
     });
+    const storedBatteryState = localStorage.getItem('batteryState');
+
+  if (storedBatteryState) {
+    this.batteryState = JSON.parse(storedBatteryState);
+    console.log('Loaded Battery Status from localStorage:', this.batteryState);
+  }
     //to get the user details on the page load
     this.getUserDetails(this.rfId);
+    
+
   }
 
   ngOnDestroy(): void {
@@ -115,9 +102,9 @@ export class DashboardComponent implements OnInit {
   //Fetch user details from the database by id
   getUserDetails(rfId: string) {
     this.userDetailsSubscription = this.apiService.getUserById(rfId).subscribe({
-      next: (response: ApiResponse<User>) => {
+      next: (response: any) => {
         //assign the fetched response to the selected user var
-        this.selectedUser = response.data;
+        this.selectedUser = response;
         //after 5 seconds delay open the popup
         this.timeoutId = setTimeout(() => {
           this.openPopup();
@@ -132,27 +119,21 @@ export class DashboardComponent implements OnInit {
   }
 
 
-  // Subscribe to battery status
-  subscribeToBatteryStatus(): void {
-    for (let i = 1; i <= 10; i++) {
-      const subscription = this.webSocketService
-        .subscribeToBatteryStatusTopic(i.toString())
-        .subscribe((status: any) => {
-          // Store the battery status in the bsData object
-          this.bsData[i] = status;
-        });
 
-      // Add the subscription to the list
-      this.bsSubscriptions.push(subscription);
+  getBatteryStatusImage(status: Status): string {
+    switch (status) {
+      case Status.EMPTY:
+        return 'assets/empty-battery.png';  // Path to "empty" battery image
+      case Status.CHARGING:
+        return 'assets/charging-battery.png';  // Path to "charging" battery image
+      case Status.FULL_CHARGED:
+        return 'assets/charged-battery.png';  // Path to "full" battery image
+      default:
+        return 'assets/empty_battery.png';  // Default to empty if unknown status
     }
   }
 
-  clearSubscriptions(): void {
-    // Clear all the subscriptions for battery statuses
-    for (let i = 1; i <= 10; i++) {
-      this[`bsSubscription${i}`]?.unsubscribe();
-    }
-  }
+
 
 
   // Show the popup

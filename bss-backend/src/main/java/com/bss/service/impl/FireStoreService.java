@@ -8,6 +8,7 @@ import com.bss.entity.enums.UserType;
 import com.bss.exception.EntityNotFoundException;
 import com.bss.helper.ConvertToFirestoreTimestamp;
 import com.bss.repository.BatteryStatusRepository;
+import com.bss.repository.BatteryTransactionRepository;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,30 +31,19 @@ public class FireStoreService {
 
     private final Firestore firestore;
     private final BatteryStatusRepository batteryStatusRepository;
+    private final BatteryTransactionRepository batteryTransactionRepository;
 
     public void saveData(BatteryTransaction batteryTransaction) {
 
-        BatteryTransactionFirebase transactionFirebase = BatteryTransactionFirebase.builder()
-                .serialNumber(batteryTransaction.getSerialNumber())
-                .userName(batteryTransaction.getUserName())
-                .vehicleNumber(batteryTransaction.getVehicleNumber())
-                .vehicleType(batteryTransaction.getVehicleType())
-                .timeStamp(ConvertToFirestoreTimestamp.convertToFirestoreTimestampData(batteryTransaction.getTimeStamp()))
-                .noOfTransaction(batteryTransaction.getNoOfTransaction())
-                .swappingCost(batteryTransaction.getSwappingCost())
+        BatteryTransaction transactionFirebase = BatteryTransaction.builder()
+                .customerId(batteryTransaction.getCustomerId())
+                .adminId(batteryTransaction.getAdminId())
+                .batterySwappingCost(batteryTransaction.getBatterySwappingCost())
+                .batterySwappingDateTime(batteryTransaction.getBatterySwappingDateTime())
+                .batteryUniqueId(batteryTransaction.getBatteryUniqueId())
                 .build();
-        System.out.println(transactionFirebase);
-        try {
-            log.info("Attempting to save transaction: {}", batteryTransaction);
-            ApiFuture<DocumentReference> transaction = firestore.collection("battery-transactions").add(transactionFirebase);
-            DocumentReference documentReference = transaction.get(); // Wait for the future to complete
-            log.info("Data sent successfully. Document ID: {}", documentReference.getId());
-        } catch (ExecutionException | InterruptedException e) {
-            log.error("Firestore operation interrupted or failed: {}", e.getMessage(), e);
-            Thread.currentThread().interrupt(); // Restore interrupted state
-        } catch (Exception e) {
-            log.error("An error occurred while saving data: {}", e.getMessage(), e);
-        }
+        batteryTransactionRepository.save(transactionFirebase);
+
     }
 
 

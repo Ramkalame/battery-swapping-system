@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ApiService } from '../services/api.service';
 import { Subscription } from 'rxjs';
-import { ApiResponse, User } from '../models/User';
+import { ApiResponse, BatteryStatus, Customer } from '../models/User';
 
 @Component({
   selector: 'app-buffering',
@@ -14,8 +14,10 @@ import { ApiResponse, User } from '../models/User';
 })
 export class BufferingComponent implements OnInit {
   private userDetailsSubscription!:Subscription;
+  private batteryStatusSubscription!: Subscription;
   private timeoutId!: any;
   rfId!: string;
+  batteryStatus: BatteryStatus[] = [];
 
   constructor(private route: ActivatedRoute, private router: Router,private apiService:ApiService) {}
 
@@ -27,9 +29,7 @@ export class BufferingComponent implements OnInit {
 
     this.getUserDetails(this.rfId);
 
-    this.timeoutId = setTimeout(() => {
-      this.router.navigate(['/dashboard', this.rfId]);
-    }, 1500);
+   
   }
   ngOnDestroy(): void {
     clearTimeout(this.timeoutId);
@@ -39,12 +39,39 @@ export class BufferingComponent implements OnInit {
 
    getUserDetails(rfId: string) {
       this.userDetailsSubscription = this.apiService.getUserById(rfId).subscribe({
-        next: (response: ApiResponse<User>) => {
+        next: (response: ApiResponse<Customer>) => {
+          if(response.success){
+            console.log("Customer Data in the Buffering Component: ", response.data);
+            this.getAllBatteryStatus();
+            this.timeoutId = setTimeout(() => {
+              this.router.navigate(['/dashboard', this.rfId]);
+            }, 1500);
+          }
         },
         error: (error: any) => {
           this.router.navigate(['/invalid-credential'])
-          console.log('Something Went Wrong');
+          console.log(error.error.message);
         },
+      });
+    }
+
+
+
+
+    getAllBatteryStatus() {
+      this.batteryStatusSubscription = this.apiService.getAllBatteryStatus().subscribe({
+        next:(response: ApiResponse<BatteryStatus[]>) => {
+          if (response.success) {
+            this.batteryStatus = response.data;
+            console.log("Battery Status Fetched: ", this.batteryStatus);
+            localStorage.setItem('batteryState', JSON.stringify(this.batteryStatus));
+          } else {
+            console.error('Failed to fetch battery status:', response.message);
+          } 
+        },
+        error: (error) => {
+          console.error(error.error.message);
+        }
       });
     }
 }

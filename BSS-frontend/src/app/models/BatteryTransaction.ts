@@ -40,14 +40,13 @@ export class EmptyBox {
 }
 
 
-export class BatteryStatus {
-    id: string;
-    status: number;
-    timestamp?:Date;
-
-    constructor(id: string, status: number,timestamp:Date) {
-        this.id = id;
-        this.status = status;
-        this.timestamp = timestamp;
-    }
+export interface BatteryStatus {
+    batteryStateId:String;
+    boxNumber:String;
+    sensorType:String;
+    batteryStatus:BatterisStatus;
+    
+}
+export enum BatterisStatus{
+    CHARGING, EMPTY, FULL_CHARGED
 }

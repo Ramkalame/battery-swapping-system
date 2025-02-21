@@ -10,6 +10,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 
 @Data
 @Builder
@@ -18,12 +20,10 @@ import lombok.NoArgsConstructor;
 public class BatteryTransactionFirebase {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long serialNumber;
-    private String userName;
-    private String vehicleNumber;
-    private String vehicleType;
-    private Timestamp timeStamp;
-    private int noOfTransaction;
-    private double swappingCost;
+    private String id;
+    private String batterySwappingCost;
+    private LocalDateTime batterySwappingDateTime;
+    private String batteryUniqueId;
+    private String  customerId;
+    private String adminId;
 }

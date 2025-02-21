@@ -16,6 +16,8 @@ export class GreetPageComponent implements OnInit {
   constructor(private router:Router){}
 
   ngOnInit(){
+
+  localStorage.removeItem("batteryState2")
   this.timeOutId = setTimeout(() => {
     this.router.navigate(['/']);
   }, 4000); 

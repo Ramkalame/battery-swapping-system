@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Slf4j
 public class PortWriterService {
-
-    private final String portName = "COM8";
+//arduino
+    private final String portName = "COM9";
     private SerialPort serialPort;
 
     @PostConstruct

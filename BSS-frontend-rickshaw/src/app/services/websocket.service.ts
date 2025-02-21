@@ -44,10 +44,7 @@ export class WebsocketService {
    * @param parser - A function to parse the incoming message (optional).
    * @returns An Observable that emits parsed messages of the expected type.
    */
-  subscribeToTopic<T>(
-    topic: string,
-    parser?: (message: string) => T
-  ): Observable<T> {
+  subscribeToTopic<T>(topic: string, parser?: (message: string) => T): Observable<T> {
     if (!this.messageSubjects[topic]) {
       this.messageSubjects[topic] = new Subject<T>();
 
@@ -87,7 +84,7 @@ export class WebsocketService {
   //   return this.subscribeToTopic<string>(topic);
   // }
 
-  subscribeToBatteryStatusTopic(boxNumber:string):Observable<any> {
+  subscribeToBatteryStatusTopic(boxNumber: string): Observable<any> {
     const topic = `/topic/box/${boxNumber}/bs`;
     return this.subscribeToTopic<string>(topic);
   }

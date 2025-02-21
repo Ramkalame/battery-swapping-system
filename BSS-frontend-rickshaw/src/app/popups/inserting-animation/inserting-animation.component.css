@@ -172,11 +172,18 @@ video::-webkit-media-controls {
 
 
 .blinking-box-inserting {
+  color: black;
 animation: inserting-blink 1s infinite;
 }
 .blinking-box-taking {
+  color: black;
 animation: taking-blink 1s infinite;
 }
+.default-dynamic-class{
+  background-color: #fff;
+  color:black;
+}
+
 /* ============================================================== */
 
 .popup-content {
@@ -210,6 +217,17 @@ z-index: 1050;
   }
   100% {
     background-color: #36c024;
+  }
+}
+@keyframes normal-blink {
+  0% {
+    background-color: #ffffff;
+  }
+  50% {
+    background-color: #ffffff;
+  }
+  100% {
+    background-color: #ffffff;
   }
 }
 
