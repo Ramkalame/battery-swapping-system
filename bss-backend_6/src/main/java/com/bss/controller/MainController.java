@@ -33,7 +33,6 @@ public class MainController {
                 .timestamp(LocalDateTime.now())
                 .statusCode(HttpStatus.OK.value())
                 .build();
-
         return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
     }
 
