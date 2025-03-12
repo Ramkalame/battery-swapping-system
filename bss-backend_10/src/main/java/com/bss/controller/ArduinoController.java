@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/api/v1/arduino")
-@CrossOrigin(origins = {"http://localhost:4200","http://127.0.0.1:4200","file://"})
+@CrossOrigin(origins = {"http://localhost:4200","http://127.0.0.1:4200"})
 @RequiredArgsConstructor
 public class ArduinoController {
 
