@@ -179,7 +179,6 @@ fetchUpdatedBatteryStatus() {
     next: (status: ApiResponse<BatteryStatus[]>) => {
       this.batteryStatusForTaking = status.data;
       console.log("Updated battery status fetched:", this.batteryStatusForTaking);
-      
       // Store updated battery status in localStorage
       localStorage.setItem("batteryState2", JSON.stringify(this.batteryStatusForTaking));
       this.isInsertingBatteryAnimationShow=false;
@@ -188,18 +187,13 @@ fetchUpdatedBatteryStatus() {
         // Reassign open door indices
       // this.assignOpenDoorIndicesDuringTaking();
       this.selectBoxForTaking();
-
       }, 5000);
-      
     },
     error: (error: any) => {
       console.error("Error fetching updated battery status:", error);
     },
   });
 }
-
-
-
 
 
 }

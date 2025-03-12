@@ -41,8 +41,7 @@ public class SocketService {
         try {
             // Format topic dynamically based on box and sensor
             String topic ="/topic/rf";
-            log.info("Sending message to rf topic {}: {}", topic, message);
-
+            log.info("📡 Sending message to RF topic {}: {}", topic, message);
             // Send the message to the topic
             simpMessagingTemplate.convertAndSend(topic, message);
         } catch (Exception e) {

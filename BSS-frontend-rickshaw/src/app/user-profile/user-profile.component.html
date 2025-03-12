@@ -4,7 +4,7 @@
     </div>
     <div class="profile-div">
         <div class="img-div">
-            <img [src]=customer?.customerImage alt="User Profile">
+            <img [src]=customer?.customerImage?.imgUrl alt="User Profile">
         </div>
         <div class="details-div">
             <div class="details-name">
@@ -14,7 +14,7 @@
                 <h6>वाहन नंबर:</h6>
             </div>
             <div class="details-value">
-                <h6>{{customer?.id}}</h6>
+                <h6>{{customer?.tagId}}</h6>
                 <h6>{{customer?.fullName}}</h6>
                 <h6>{{customer?.mobileNumber}}</h6>
                 <h6>{{customer?.vehicle?.vehicleNumber}}</h6>

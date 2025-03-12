@@ -1,5 +1,6 @@
 package com.bss.entity;
 
+import com.bss.dto.CloudImage;
 import com.bss.entity.enums.Role;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
@@ -10,8 +11,6 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
-
-
 @Data
 @Builder
 @AllArgsConstructor
@@ -27,7 +26,7 @@ public class Customer {
     private String password;
     private String tagId;
     private boolean isRFIDAssigned;
-    private String customerImage;
+    private CloudImage customerImage;
     private Double latitude;
     private Double longitude;
     private LocalDateTime registrationTime;

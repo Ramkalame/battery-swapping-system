@@ -28,11 +28,11 @@
                     <div class="barttery-status-indicator">
                         <div class="indicator-box">
                             <div class="indicator-icon">
-                                <img src="./assets/charges-battery.png" alt="charges-battery.png" class="ibattery">
+                                <img src="./assets/charged-battery.png" alt="charges-battery.png" class="ibattery">
 
                             </div>
                             <div class="indicator-text">
-                                <p>पूरी तरह चार्ज है</p>
+                                <p>पूरी तरह चार्ज है|</p>
                             </div>
                         </div>
                         <div class="indicator-box">
@@ -41,16 +41,16 @@
 
                             </div>
                             <div class="indicator-text">
-                                <p>चार्ज हो रहा है</p>
+                                <p>चार्ज हो रहा है|</p>
                             </div>
                         </div>
                         <div class="indicator-box">
                             <div class="indicator-icon">
-                                <img src="./assets/dead-battery.png" alt="charges-battery.png" class="ibattery">
+                                <img src="./assets/empty-battery.png" alt="charges-battery.png" class="ibattery">
 
                             </div>
                             <div class="indicator-text">
-                                <p>बैटरी नहीं है</p>
+                                <p>बैटरी नहीं है|</p>
                             </div>
                         </div>
                     </div>
@@ -60,7 +60,7 @@
         <div class="client-details" >
             <div class="img-text-div">
                 <div class="vehicle-image-div">
-                    <img [src]="customer.customerImage" alt="client-image.png" class="client-image">
+                    <img [src]="customer.customerImage.imgUrl" alt="client-image.png" class="client-image">
                 </div>
                 <div class="text-details">
                     <div class="details-heading">
@@ -70,7 +70,7 @@
                         <h6>वाहन नंबर:</h6>
                     </div>
                     <div class="details-value">
-                        <h6>{{customer.id}}</h6>
+                        <h6>{{customer.tagId}}</h6>
                         <h6>{{customer.fullName}}</h6>
                         <h6>{{customer.mobileNumber}}</h6>
                         <h6>{{customer.vehicle.vehicleNumber}}</h6>

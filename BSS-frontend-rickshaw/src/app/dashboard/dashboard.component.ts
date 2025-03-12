@@ -53,7 +53,6 @@ export class DashboardComponent implements OnInit {
   //var to remove after component destruction
   private timeoutId!: any;
   private userDetailsSubscription!: Subscription;
-
   //to store the user details
   selectedUser!: Customer;
   //to store the current empty box number
@@ -88,8 +87,6 @@ export class DashboardComponent implements OnInit {
   }
     //to get the user details on the page load
     this.getUserDetails(this.rfId);
-    
-
   }
 
   ngOnDestroy(): void {

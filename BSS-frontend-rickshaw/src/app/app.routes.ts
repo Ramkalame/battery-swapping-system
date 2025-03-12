@@ -9,6 +9,7 @@ import { TestAnimationComponent } from './test-animation/test-animation.componen
 import { WarningMessageComponent } from './warning-message/warning-message.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { batteryStatusResolver } from './dashboard/battery-status.resolver';
+import { NoSwappingComponent } from './no-swapping/no-swapping.component';
 
 export const routes: Routes = [
   {path: '',component: HomeComponent,},
@@ -23,4 +24,5 @@ export const routes: Routes = [
   { path: 'wait/:rfId', component: BufferingComponent },
   { path: 'insert', component: InsertingAnimationComponent },
   { path: 'invalid-credential', component: WarningMessageComponent },
+  { path: 'no-swapping', component: NoSwappingComponent },
 ];

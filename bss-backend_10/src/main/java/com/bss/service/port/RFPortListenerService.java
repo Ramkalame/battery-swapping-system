@@ -1,6 +1,5 @@
-package com.bss.service.portListener;
+package com.bss.service.port;
 
-import com.bss.service.BatteryStateService;
 import com.bss.service.impl.SocketService;
 import com.fazecast.jSerialComm.SerialPort;
 import jakarta.annotation.PostConstruct;
@@ -12,11 +11,10 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class FirstPortListenerService {
-//Battery port listner
-    private final String portName = "COM16";
-
-    private final BatteryStateService batteryStateService;
+public class RFPortListenerService {
+//RFID port listener
+    private final String portName = "COM8";
+    private final SocketService socketService;
     private SerialPort serialPort;
 
     @PostConstruct
@@ -27,26 +25,22 @@ public class FirstPortListenerService {
 
         logAvailablePorts();
         if (serialPort.openPort()) {
-            log.info("{} Serial port opened successfully!", portName);
+            log.info("{}: Serial port RFID opened successfully!",portName);
 
             new Thread(() -> {
-                log.info("Reading thread started for port: {}",portName);
+                log.info("Reading thread started for RFID : {}",portName);
                 try {
                     while (serialPort.isOpen()) {
-//                        byte[] buffer = new byte[2048];
-                        byte[] buffer = new byte[256];
-//                        log.warn("This is Buffer data: {}", buffer);
+                        byte[] buffer = new byte[2048];
                         int numRead = serialPort.readBytes(buffer, buffer.length);
-//                        log.warn("This is num read: {}",numRead);
                         if (numRead > 0) {
-//                            log.warn("Num read is greater than 0: {}",numRead);
                             handleIncomingData(buffer, numRead);
                         } else {
-                            log.warn("No data read from serial port: {}",portName);
+                            log.warn("No data read from serial port for RFID : {}",portName);
                         }
                     }
                 } catch (Exception e) {
-                    log.error("❌ Error reading from serial port: {} - {}", portName, e.getMessage(), e);
+                    log.error("Error reading from serial port for RFID: {}",portName );
                 } finally {
                     closeSerialPort();
                 }
@@ -73,24 +67,17 @@ public class FirstPortListenerService {
 
     private void handleIncomingData(byte[] buffer, int numRead) {
         String rawData = logRawData(buffer, numRead);
-        String message = formatToPlainString(asciiToHex(rawData)).trim(); // Ensure clean parsing
+        String message = formatToPlainString(asciiToHex(rawData));
 
-        log.info("Port: {} - Received message: {}", portName, message);
-
-        // Validate expected format (e.g., "B01X" where X = 0,1,2)
-        if (message.matches("^B\\d{2}[0-2]$")) {
-            String boxNumber = message.substring(0, 3); // Extract "B01", "B02", etc.
-            String status = message.substring(3, 4);   // Extract "0", "1", "2"
-
-            log.info("✅ Parsed Data - Box: {} | Status: {}", boxNumber, status);
-
-            // Update battery state in Redis
-            batteryStateService.updateBatteryState(boxNumber, status);
+        if (message.startsWith("RF")) {
+            String sensorType = message.substring(0,2);
+            String rfId = message.substring(2,10);
+            log.info("Port: {} - Sensor {}: Data -> {}", portName, sensorType, rfId);
+            socketService.sendRfSensorMessage(rfId);
         } else {
-            log.warn("⚠️ Invalid message format on {}: {}", portName, message);
+            socketService.sendErrorMessage(portName+": Invalid message format: " + message);
         }
     }
-
 
     private String logRawData(byte[] buffer, int length) {
         StringBuilder rawData = new StringBuilder();
@@ -100,7 +87,7 @@ public class FirstPortListenerService {
                 rawData.append(", ");
             }
         }
-        log.info("Port: {} Received raw data: {}",portName , rawData);
+        log.info("Port: {} Received raw data: {}",portName, rawData);
         return rawData.toString();
     }
 
@@ -109,18 +96,14 @@ public class FirstPortListenerService {
         StringBuilder result = new StringBuilder();
         for (String code : codes) {
             try {
-                int asciiValue = Integer.parseInt(code, 16); // Convert hex to int
-                if (asciiValue < 32 || asciiValue > 126) {   // Ignore non-printable characters
-                    continue;
-                }
+                int asciiValue = Integer.parseInt(code, 16);
                 result.append((char) asciiValue);
             } catch (NumberFormatException e) {
-                log.error("❌ Invalid ASCII code in {}: {}", portName, code);
+                log.error("Port: {} Invalid ASCII code: {}",portName, code);
             }
         }
         return result.toString();
     }
-
 
     private String formatToPlainString(String asciiCodes) {
         String[] codes = asciiCodes.split("[,\s]+");
