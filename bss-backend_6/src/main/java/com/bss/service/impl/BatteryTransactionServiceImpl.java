@@ -12,13 +12,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -29,7 +24,6 @@ public class BatteryTransactionServiceImpl implements BatteryTransactionService 
     private final UserService userService;
     private final EmptyBoxRepository emptyBoxRepository;
     private final BatteryStatusRepository batteryStatusRepository;
-    private final FireStoreService fireStoreService;
     private final CustomerRepository customerRepository;
 
     @Override
@@ -90,7 +84,6 @@ public class BatteryTransactionServiceImpl implements BatteryTransactionService 
         existing.setTimestamp(LocalDateTime.now());
         BatteryStatus status = batteryStatusRepository.save(existing);
         //new line added
-        fireStoreService.updateBatteryStatusOfFirebase();
         return  status;
     }
 }

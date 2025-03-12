@@ -7,7 +7,6 @@ import com.bss.exception.EntityNotFoundException;
 import com.bss.repository.BatteryStateRepository;
 import com.bss.repository.SwappingStationRepository;
 import com.bss.service.BatteryStateService;
-import com.google.api.gax.rpc.InvalidArgumentException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;

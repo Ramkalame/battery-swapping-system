@@ -29,7 +29,6 @@ public class BatteryTransactionServiceImpl implements BatteryTransactionService 
     private final UserService userService;
     private final EmptyBoxRepository emptyBoxRepository;
     private final BatteryStatusRepository batteryStatusRepository;
-    private final FireStoreService fireStoreService;
     private final CustomerRepository customerRepository;
 
     @Override
@@ -90,7 +89,6 @@ public class BatteryTransactionServiceImpl implements BatteryTransactionService 
         existing.setTimestamp(LocalDateTime.now());
         BatteryStatus status = batteryStatusRepository.save(existing);
         //new line added
-        fireStoreService.updateBatteryStatusOfFirebase();
         return  status;
     }
 }
