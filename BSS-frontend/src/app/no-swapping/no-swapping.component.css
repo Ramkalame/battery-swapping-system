@@ -1,0 +1,22 @@
+.container {
+  width: 100vw;
+  height: 100vh;
+  background-color: #3f62f0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.message-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: wheat;
+  font-weight: bold;
+  font-size: 50px;
+  gap: 30px;
+}
+p {
+  margin-bottom: 50px;
+}

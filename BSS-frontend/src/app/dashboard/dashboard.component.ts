@@ -90,8 +90,6 @@ export class DashboardComponent implements OnInit {
   }
     //to get the user details on the page load
     this.getUserDetails(this.rfId);
-    
-
   }
 
   ngOnDestroy(): void {
@@ -131,11 +129,9 @@ export class DashboardComponent implements OnInit {
       case Status.FULL_CHARGED:
         return './assets/charged-battery.png';  // Path to "full" battery image
       default:
-        return './assets/empty_battery.png';  // Default to empty if unknown status
+        return './assets/empty-battery.png';  // Default to empty if unknown status
     }
   }
-
-
 
 
   // Show the popup

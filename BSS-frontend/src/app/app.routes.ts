@@ -5,9 +5,8 @@ import { GreetPageComponent } from './greet-page/greet-page.component';
 import { CardSwipeMessageComponent } from './card-swipe-message/card-swipe-message.component';
 import { BufferingComponent } from './buffering/buffering.component';
 import { InsertingAnimationComponent } from './popups/inserting-animation/inserting-animation.component';
-import { TestAnimationComponent } from './test-animation/test-animation.component';
 import { WarningMessageComponent } from './warning-message/warning-message.component';
-import { batteryStatusResolver } from './dashboard/battery-status.resolver';
+import { NoSwappingComponent } from './no-swapping/no-swapping.component';
 
 export const routes: Routes = [
   {path: '',component: HomeComponent,},
@@ -19,4 +18,5 @@ export const routes: Routes = [
   { path: 'wait/:rfId', component: BufferingComponent },
   { path: 'insert', component: InsertingAnimationComponent },
   { path: 'invalid-credential', component: WarningMessageComponent },
+  { path: 'no-swapping', component: NoSwappingComponent },
 ];

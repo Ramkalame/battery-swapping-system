@@ -15,7 +15,7 @@
                           <p>{{ 'बैटरी-' + (i + 1) }}</p>  <!-- Display the box number dynamically -->
                         </div>
                         <div class="battery-box">
-                          <div *ngIf="batteryStatus.batteryStatus !== Status.EMPTY">
+                          <div *ngIf="batteryStatus.batteryStatus != Status.EMPTY">
                             <app-test-animation *ngIf="batteryStatus.batteryStatus === Status.CHARGING"></app-test-animation>
                             <img [src]="getBatteryStatusImage(batteryStatus.batteryStatus)" alt="battery-status-image" />
                           </div>

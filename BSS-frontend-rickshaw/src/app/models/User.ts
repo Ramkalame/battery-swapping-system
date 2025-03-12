@@ -6,7 +6,7 @@ export interface Customer {
     password: string;
     tagId: string;
     isRFIDAssigned: boolean;
-    customerImage: string;
+    customerImage: CloudImage;
     latitude: number;
     longitude: number;
     registrationTime: string;
@@ -14,6 +14,11 @@ export interface Customer {
     currentlyPluggedBatteryId: string;
     address: Address;
     vehicle: Vehicle;
+  }
+
+  export interface CloudImage{
+    publicId: string;
+    imgUrl: string;
   }
   
   export interface Address {
