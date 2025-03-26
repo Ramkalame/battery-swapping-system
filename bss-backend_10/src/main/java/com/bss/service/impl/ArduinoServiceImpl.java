@@ -13,6 +13,7 @@ public class ArduinoServiceImpl implements ArduinoService {
 
     @Override
     public String sendCommandToArduino(String command) {
+        command = command.replaceFirst("OPENB0", "OPEN").replaceFirst("OPENB", "OPEN");
         secondPortService.sendToArduino(command);
         return "MSG Sent";
     }
