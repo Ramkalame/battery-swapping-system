@@ -9,6 +9,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -66,16 +69,25 @@ public class SecondPortService {
 
         log.info("🔄 Received message: {}", message);
 
-        if (message.matches("^B0[1-6][0-2]$")) {
-            String boxNumber = message.substring(0, 3);
-            String status = message.substring(3, 4);
-            log.info("✅ Parsed Data - Box: {} | Status: {}", boxNumber, status);
+        // ✅ Split the combined message into individual parts (BXXY format)
+        Pattern pattern = Pattern.compile("B0[1-9][0-2]|B10[0-2]"); // Matches B01X to B10X
+        Matcher matcher = pattern.matcher(message);
 
-            batteryStateService.updateBatteryState(boxNumber, status);
-        } else {
-            log.warn("⚠️ Invalid message format: {}", message);
+        while (matcher.find()) {
+            String parsedMessage = matcher.group();
+
+            if (parsedMessage.length() == 4) { // Ensure it follows BXXY format
+                String boxNumber = parsedMessage.substring(0, 3);
+                String status = parsedMessage.substring(3, 4);
+
+                log.info("✅ Parsed Data - Box: {} | Status: {}", boxNumber, status);
+                batteryStateService.updateBatteryState(boxNumber, status);
+            } else {
+                log.warn("⚠️ Invalid parsed message format: {}", parsedMessage);
+            }
         }
     }
+
 
     private String logRawData(byte[] buffer, int length) {
         StringBuilder rawData = new StringBuilder();
