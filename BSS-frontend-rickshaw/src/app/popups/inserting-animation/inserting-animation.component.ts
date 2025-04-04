@@ -111,12 +111,27 @@ export class InsertingAnimationComponent implements OnInit {
    */
  selectBoxForInsertion() {
   const emptyBox = this.batteryStatusForInserting.find((box) => box.batteryStatus === Status.EMPTY);
-  console.log( "this is  battery status for Empty box: ", emptyBox);
+  console.log("Battery status for Empty box: ", emptyBox);
   this.openDoorDuringInserting = emptyBox ? emptyBox.boxNumber.toString() : null;
-  console.log("Empty Box Now: ", this.openDoorDuringInserting)
+  console.log("Empty Box Now: ", this.openDoorDuringInserting);
+
+  // Start inserting animation (30s total)
+  this.isInsertingBatteryAnimationShow = true;
   this.commandToOpenTheDoor(`OPEN${this.openDoorDuringInserting}`);
-  this.OpneBufferingDelay = setTimeout(()=>{this.isWaitingAnimationShow=true},5500);
+
+  // After 30 seconds of inserting, show buffering
+  this.OpneBufferingDelay = setTimeout(() => {
+    this.isInsertingBatteryAnimationShow = false;
+    this.isWaitingAnimationShow = true;
+
+    // Buffering delay: 3 seconds
+    setTimeout(() => {
+      this.isWaitingAnimationShow = false;
+      this.selectBoxForTaking();  // Handles showing taking animation
+    }, 3000);
+  }, 30000);
 }
+
 
 
 
@@ -134,11 +149,11 @@ commandToOpenTheDoor(command: string) {
         console.log("Battery status cleared from localStorage.");
 
         // Fetch updated battery status
-        this.fetchbatteryStatusInterval = setTimeout(()=>{
-          console.log("Fetching updated battery status after 15 seconds...");
-          this.fetchUpdatedBatteryStatus();
+        // this.fetchbatteryStatusInterval = setTimeout(()=>{
+        //   console.log("Fetching updated battery status after 15 seconds...");
+        //   // this.fetchUpdatedBatteryStatus();
           
-        }, 5000);
+        // }, 5000);
         
       },
       error: (error: any) => {
@@ -151,48 +166,43 @@ commandToOpenTheDoor(command: string) {
    * Select the first fully charged battery for removal.
    */
 selectBoxForTaking() {
-  const fullBox = this.batteryStatusForTaking.find((box) => box.batteryStatus === Status.FULL_CHARGED);
-  console.log( "this is  battery status for full charged: ", fullBox);
+  const fullBox = this.batteryStatusForInserting.find((box) => box.batteryStatus === Status.FULL_CHARGED);
+  console.log("Battery status for full charged: ", fullBox);
   this.openDoorDuringTaking = fullBox ? fullBox.boxNumber.toString() : null;
-  console.log("Fuly CHarged Box Now: ", this.openDoorDuringTaking)
-  this.isWaitingAnimationShow=false;
-  this.isTakingBatteryAnimationShow=true;
+  console.log("Fully Charged Box Now: ", this.openDoorDuringTaking);
+
+  // Show taking animation (30 seconds)
+  this.isTakingBatteryAnimationShow = true;
   this.commandToOpenTheDoor(`OPEN${this.openDoorDuringTaking}`);
-  this.navigateGreatePageInterval = setTimeout(()=>{
-    // this.apiService.addBatteryTransactions(this.rfId).subscribe({
-    //   next:(response:any)=>{
-    //     console.log(response.message);
-    //   },
-    //   error:(error:any)=>{
-    //     console.log(error.error.message);
-    //   }
-    // })
-    this.router.navigate(['/greet'])
-  }, 5000)
-  
+
+  this.navigateGreatePageInterval = setTimeout(() => {
+    // Navigate to greet page
+    this.router.navigate(['/greet']);
+  }, 30000);
 }
 
+
 // Method to get the latest battery status
-fetchUpdatedBatteryStatus() {
-  this.apiService.getAllBatteryStatus().subscribe({
-    next: (status: ApiResponse<BatteryStatus[]>) => {
-      this.batteryStatusForTaking = status.data;
-      console.log("Updated battery status fetched:", this.batteryStatusForTaking);
-      // Store updated battery status in localStorage
-      localStorage.setItem("batteryState2", JSON.stringify(this.batteryStatusForTaking));
-      this.isInsertingBatteryAnimationShow=false;
-      this.isWaitingAnimationShow=true;
-      this.callAssignOpenDoorIndicesDuringTakingInterval = setTimeout(()=>{
-        // Reassign open door indices
-      // this.assignOpenDoorIndicesDuringTaking();
-      this.selectBoxForTaking();
-      }, 5000);
-    },
-    error: (error: any) => {
-      console.error("Error fetching updated battery status:", error);
-    },
-  });
-}
+// fetchUpdatedBatteryStatus() {
+//   this.apiService.getAllBatteryStatus().subscribe({
+//     next: (status: ApiResponse<BatteryStatus[]>) => {
+//       this.batteryStatusForTaking = status.data;
+//       console.log("Updated battery status fetched:", this.batteryStatusForTaking);
+//       // Store updated battery status in localStorage
+//       localStorage.setItem("batteryState2", JSON.stringify(this.batteryStatusForTaking));
+//       this.isInsertingBatteryAnimationShow=false;
+//       this.isWaitingAnimationShow=true;
+//       this.callAssignOpenDoorIndicesDuringTakingInterval = setTimeout(()=>{
+//         // Reassign open door indices
+//       // this.assignOpenDoorIndicesDuringTaking();
+//       this.selectBoxForTaking();
+//       }, 5000);
+//     },
+//     error: (error: any) => {
+//       console.error("Error fetching updated battery status:", error);
+//     },
+//   });
+// }
 
 
 }
