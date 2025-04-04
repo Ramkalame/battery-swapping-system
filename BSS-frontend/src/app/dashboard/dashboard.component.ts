@@ -10,12 +10,12 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ApiResponse, Customer, BatteryStatus, Status } from '../models/User';
 import { ApiService } from '../services/api.service';
 import { WebsocketService } from '../services/websocket.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { InsertingAnimationComponent } from '../popups/inserting-animation/inserting-animation.component';
 import { EmptyBox } from '../models/BatteryTransaction';
 import { TestAnimationComponent } from '../test-animation/test-animation.component';
 import { Subscription } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-dashboard',
@@ -123,8 +123,8 @@ export class DashboardComponent implements OnInit {
     switch (status) {
       case Status.EMPTY:
         return './assets/empty-battery.png'; // Path to "empty" battery image
-      case Status.CHARGING:
-        return './assets/charging-battery.png'; // Path to "charging" battery image
+      // case Status.CHARGING:
+      //   return './assets/charging-battery.png'; // Path to "charging" battery image
       case Status.FULL_CHARGED:
         return './assets/charged-battery.png'; // Path to "full" battery image
       default:
