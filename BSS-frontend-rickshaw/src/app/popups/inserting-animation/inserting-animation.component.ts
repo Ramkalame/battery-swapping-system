@@ -174,11 +174,28 @@ selectBoxForTaking() {
   // Show taking animation (30 seconds)
   this.isTakingBatteryAnimationShow = true;
   this.commandToOpenTheDoor(`OPEN${this.openDoorDuringTaking}`);
-
+  this.addBatteryTransaction();
   this.navigateGreatePageInterval = setTimeout(() => {
     // Navigate to greet page
     this.router.navigate(['/greet']);
   }, 30000);
+}
+
+addBatteryTransaction(){
+  const rfIdFromSessionStorage = sessionStorage.getItem("rfId");
+  this.rfId = rfIdFromSessionStorage ? rfIdFromSessionStorage : this.rfId; // Use the passed rfId or the one from session storage
+  if(rfIdFromSessionStorage){
+    
+  this.apiService.addBatteryTransactions(rfIdFromSessionStorage).subscribe({
+    next: (response: ApiResponse<BatteryTransaction>) => {
+      console.log('Battery transaction added successfully:', response.data);
+    },
+    error: (error: any) => {
+      console.error('Error adding battery transaction:', error);
+    },
+  });}else{
+    console.error('No RFID found in session storage.');
+  }
 }
 
 
