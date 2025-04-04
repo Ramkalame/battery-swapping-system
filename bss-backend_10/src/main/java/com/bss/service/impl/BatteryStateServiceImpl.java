@@ -156,11 +156,11 @@ public class BatteryStateServiceImpl implements BatteryStateService {
                     )
                     .toList();
             long fullChargedCount = batteryStates.stream()
-                    .filter(battery -> "FULLCHARGED".equalsIgnoreCase(String.valueOf(battery.getBatteryStatus())))
+                    .filter(battery -> "FULL_CHARGED".equalsIgnoreCase(String.valueOf(battery.getBatteryStatus())))
                     .count();
             // Logic to update only the available slots
-            // station.setAvailableSlotsForElectricRickshaw((int) fullChargedCount);
-           station.setAvailableSlotsForElectricScooter((int) fullChargedCount);
+             station.setAvailableSlotsForElectricRickshaw((int) fullChargedCount);
+//           station.setAvailableSlotsForElectricScooter((int) fullChargedCount);
 
             swappingStationRepository.save(station);
 
