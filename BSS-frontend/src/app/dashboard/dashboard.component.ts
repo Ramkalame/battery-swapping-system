@@ -49,7 +49,6 @@ import { Subscription } from 'rxjs';
   ],
 })
 export class DashboardComponent implements OnInit {
-
   Status = Status;
 
   //var to remove after component destruction
@@ -67,27 +66,28 @@ export class DashboardComponent implements OnInit {
   //to store the battery status fetched from database
   batteryState: BatteryStatus[] = [];
 
-
-
   constructor(
     private webSocketService: WebsocketService,
     private apiService: ApiService,
     private route: ActivatedRoute,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     // Retrieve the rfId parameter from the route
     this.route.params.subscribe((params) => {
       this.rfId = params['rfId'];
-      console.log("rfid in the dashboard component")
+      console.log('rfid in the dashboard component');
     });
     const storedBatteryState = localStorage.getItem('batteryState');
 
-  if (storedBatteryState) {
-    this.batteryState = JSON.parse(storedBatteryState);
-    console.log('Loaded Battery Status from localStorage:', this.batteryState);
-  }
+    if (storedBatteryState) {
+      this.batteryState = JSON.parse(storedBatteryState);
+      console.log(
+        'Loaded Battery Status from localStorage:',
+        this.batteryState
+      );
+    }
     //to get the user details on the page load
     this.getUserDetails(this.rfId);
   }
@@ -118,21 +118,18 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-
-
   getBatteryStatusImage(status: Status): string {
     switch (status) {
       case Status.EMPTY:
-        return './assets/empty-battery.png';  // Path to "empty" battery image
+        return './assets/empty-battery.png'; // Path to "empty" battery image
       case Status.CHARGING:
-        return './assets/charging-battery.png';  // Path to "charging" battery image
+        return './assets/charging-battery.png'; // Path to "charging" battery image
       case Status.FULL_CHARGED:
-        return './assets/charged-battery.png';  // Path to "full" battery image
+        return './assets/charged-battery.png'; // Path to "full" battery image
       default:
-        return './assets/empty-battery.png';  // Default to empty if unknown status
+        return './assets/empty-battery.png'; // Default to empty if unknown status
     }
   }
-
 
   // Show the popup
   openPopup(): void {
