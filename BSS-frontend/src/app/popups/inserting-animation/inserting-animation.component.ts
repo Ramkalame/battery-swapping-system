@@ -159,14 +159,19 @@ selectBoxForTaking() {
   this.isTakingBatteryAnimationShow=true;
   this.commandToOpenTheDoor(`OPEN${this.openDoorDuringTaking}`);
   this.navigateGreatePageInterval = setTimeout(()=>{
-    // this.apiService.addBatteryTransactions(this.rfId).subscribe({
-    //   next:(response:any)=>{
-    //     console.log(response.message);
-    //   },
-    //   error:(error:any)=>{
-    //     console.log(error.error.message);
-    //   }
-    // })
+    const rfId = sessionStorage.getItem("rfId");
+    if (!rfId) {
+      console.error("RFID not found in session storage.");
+      return;
+    }
+    this.apiService.addBatteryTransactions(rfId).subscribe({
+      next:(response:any)=>{
+        console.log(response.message);
+      },
+      error:(error:any)=>{
+        console.log(error.error.message);
+      }
+    })
     this.router.navigate(['/greet'])
   }, 5000)
   

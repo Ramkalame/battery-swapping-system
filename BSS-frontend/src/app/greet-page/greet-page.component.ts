@@ -17,6 +17,7 @@ export class GreetPageComponent implements OnInit {
 
   ngOnInit(){
   this.timeOutId = setTimeout(() => {
+    sessionStorage.removeItem('rfId');
     this.router.navigate(['/']);
   }, 3000); 
   }

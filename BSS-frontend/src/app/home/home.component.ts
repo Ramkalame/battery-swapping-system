@@ -28,6 +28,7 @@ export class HomeComponent implements OnInit {
       .subscribe((message: string) => {
         console.log('Received message RF:', message);
         this.rfId = message;
+        sessionStorage.setItem('rfId', this.rfId);
         // After receiving the RFID, redirect to the Dashboard
         this.router.navigate(['/wait', this.rfId]);
       });
