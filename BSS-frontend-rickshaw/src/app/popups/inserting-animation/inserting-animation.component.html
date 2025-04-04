@@ -15,7 +15,7 @@
                     </div>
                 </div>
                 <div class="battery-box-container" *ngIf="isTakingBatteryAnimationShow">
-                    <div  class="battery-box" *ngFor="let box of batteryStatusForTaking; let i = index" [ngClass]="{
+                    <div  class="battery-box" *ngFor="let box of batteryStatusForInserting; let i = index" [ngClass]="{
                             'blinking-box-taking': box.batteryStatus === 'FULL_CHARGED' && openDoorDuringTaking === box.boxNumber
                         }">
                         {{ i+1 }}

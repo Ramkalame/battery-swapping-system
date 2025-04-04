@@ -16,7 +16,9 @@ import java.util.regex.Pattern;
 @RequiredArgsConstructor
 @Slf4j
 public class SecondPortService {
-    private final String portName = "COM4";
+
+    private final String portName = "COM8";
+
     private final BatteryStateService batteryStateService;
     private SerialPort serialPort;
 

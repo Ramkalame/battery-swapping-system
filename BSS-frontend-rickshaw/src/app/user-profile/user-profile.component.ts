@@ -31,6 +31,7 @@ export class UserProfileComponent implements OnInit {
     this.route.params.subscribe((params) => {
       this.rfId = params['rfId']; // Access the rfId parameter
     });
+    sessionStorage.setItem('rfId', this.rfId);
     this.getUserDetails(this.rfId);
   }
   getUserDetails(rfId: string) {
