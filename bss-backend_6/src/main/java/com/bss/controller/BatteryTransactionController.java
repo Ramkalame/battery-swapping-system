@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/transactions")
+@CrossOrigin(origins = "http://localhost:4200")
 public class BatteryTransactionController {
 
     private final BatteryTransactionService batteryTransactionService;

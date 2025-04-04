@@ -31,7 +31,6 @@ export class BufferingComponent implements OnInit {
     this.route.params.subscribe((params) => {
       this.rfId = params['rfId']; // Access the rfId parameter
     });
-
     this.getUserDetails(this.rfId);
   }
   ngOnDestroy(): void {
