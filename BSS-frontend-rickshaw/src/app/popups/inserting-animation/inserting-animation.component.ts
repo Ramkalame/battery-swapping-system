@@ -95,7 +95,6 @@ export class InsertingAnimationComponent implements OnInit {
     clearTimeout(this.OpneBufferingDelay);
     //Unsubscribe all the subscriptions
     this.openDoorSubscription?.unsubscribe();
-
   }
 
   

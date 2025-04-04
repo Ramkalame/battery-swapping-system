@@ -17,5 +17,4 @@ public class ArduinoServiceImpl implements ArduinoService {
         secondPortService.sendToArduino(command);
         return "MSG Sent";
     }
-
 }
