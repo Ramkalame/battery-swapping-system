@@ -1,12 +1,4 @@
 import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ApiService } from '../../services/api.service';
@@ -15,6 +7,7 @@ import { BatteryTransaction, EmptyBox } from '../../models/BatteryTransaction';
 import { WebsocketService } from '../../services/websocket.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-inserting-animation',
