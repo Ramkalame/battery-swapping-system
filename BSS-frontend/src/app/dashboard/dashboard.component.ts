@@ -79,6 +79,7 @@ export class DashboardComponent implements OnInit {
       this.rfId = params['rfId'];
       console.log('rfid in the dashboard component');
     });
+    sessionStorage.setItem('rfId',this.rfId)
     const storedBatteryState = localStorage.getItem('batteryState');
 
     if (storedBatteryState) {
