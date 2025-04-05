@@ -121,8 +121,8 @@ export class DashboardComponent implements OnInit {
     switch (status) {
       case Status.EMPTY:
         return 'assets/empty-battery.png';  // Path to "empty" battery image
-      case Status.CHARGING:
-        return 'assets/charging-battery.png';  // Path to "charging" battery image
+      // case Status.CHARGING:
+      //   return 'assets/charging-battery.png';  // Path to "charging" battery image
       case Status.FULL_CHARGED:
         return 'assets/charged-battery.png';  // Path to "full" battery image
       default:

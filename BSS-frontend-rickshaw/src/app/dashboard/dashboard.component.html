@@ -17,7 +17,7 @@
                         <div class="battery-box">
                           <div *ngIf="batteryStatus.batteryStatus != Status.EMPTY">
                             <app-test-animation *ngIf="batteryStatus.batteryStatus === Status.CHARGING"></app-test-animation>
-                            <img [src]="getBatteryStatusImage(batteryStatus.batteryStatus)" alt="battery-status-image" />
+                            <img *ngIf="batteryStatus.batteryStatus === Status.FULL_CHARGED" [src]="getBatteryStatusImage(batteryStatus.batteryStatus)" alt="battery-status-image" />
                           </div>
                           <img *ngIf="batteryStatus.batteryStatus === Status.EMPTY" [src]="getBatteryStatusImage(batteryStatus.batteryStatus)" alt="dead-battery" />
                         </div>
