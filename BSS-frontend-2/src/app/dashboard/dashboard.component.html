@@ -1,0 +1,70 @@
+<div class="container">
+    <div class="hero-sec">
+        <div class="available-batteries">
+            <div class="available-batteries-heading">
+                <h6>उपलब्ध बैटरियां</h6>
+            </div>
+            <div class="battery-indicator-div">
+                <div class="batteries-box">
+                    <div *ngFor="let batteryStatus of batteryState; let i = index">
+                        <div class="battery-box-p">
+                            <div class="battery-box-heading">
+                                <p>{{ 'बैटरी-' + (i + 1) }}</p> <!-- Display the box number dynamically -->
+                            </div>
+                            <div class="battery-box">
+                                <div *ngIf="batteryStatus.batteryStatus != Status.EMPTY">
+                                    <app-test-animation
+                                        *ngIf="batteryStatus.batteryStatus === Status.CHARGING"></app-test-animation>
+                                    <img *ngIf="batteryStatus.batteryStatus === Status.FULL_CHARGED"
+                                        [src]="getBatteryStatusImage(batteryStatus.batteryStatus)"
+                                        alt="battery-status-image" />
+                                </div>
+                                <img *ngIf="batteryStatus.batteryStatus === Status.EMPTY"
+                                    [src]="getBatteryStatusImage(batteryStatus.batteryStatus)" alt="dead-battery" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="status-indicators">
+                    <div class="barttery-status-indicator">
+                        <div class="indicator-box">
+                            <div class="indicator-icon">
+                                <img src="./assets/charged-battery.png" alt="charged-battery.png" class="ibattery">
+
+                            </div>
+                            <div class="indicator-text">
+                                <p>पूरी तरह चार्ज है</p>
+                            </div>
+                        </div>
+                        <div class="indicator-box">
+                            <div class="indicator-icon">
+                                <img src="./assets/charging-battery.png" alt="charging-battery.png" class="ibattery">
+
+                            </div>
+                            <div class="indicator-text">
+                                <p>चार्ज हो रहा है</p>
+                            </div>
+                        </div>
+                        <div class="indicator-box">
+                            <div class="indicator-icon">
+                                <img src="./assets/empty-battery.png" alt="empty-battery.png" class="ibattery">
+
+                            </div>
+                            <div class="indicator-text">
+                                <p>बैटरी नहीं है</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Popup Background Blur -->
+        <div class="popup-overlay" *ngIf="showPopup"></div>
+
+        <!-- Popup Component -->
+        <div class="popup-window" *ngIf="showPopup">
+            <app-inserting-animation (close)="closePopup()" [rfId]="rfId"></app-inserting-animation>
+        </div>
+    </div>
+</div>

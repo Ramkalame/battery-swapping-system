@@ -1,0 +1,30 @@
+<div class="customer-display">
+    <div class="display-header">
+        <h1>ग्राहक विवरण</h1>
+    </div>
+
+    <div class="customer-profile">
+        <div class="profile-image-container">
+            <img [src]="customer?.customerImage?.imgUrl" alt="Customer Photo" class="profile-image">
+        </div>
+
+        <div class="customer-details">
+            <div class="detail-pair">
+                <span class="detail-label">ग्राहक आईडी:</span>
+                <span class="detail-value">{{customer?.tagId}}</span>
+            </div>
+            <div class="detail-pair">
+                <span class="detail-label">नाम:</span>
+                <span class="detail-value">{{customer?.fullName}}</span>
+            </div>
+            <div class="detail-pair">
+                <span class="detail-label">मोबाइल नंबर:</span>
+                <span class="detail-value">{{customer?.mobileNumber}}</span>
+            </div>
+            <div class="detail-pair">
+                <span class="detail-label">वाहन नंबर:</span>
+                <span class="detail-value">{{customer?.vehicle?.vehicleNumber}}</span>
+            </div>
+        </div>
+    </div>
+</div>
