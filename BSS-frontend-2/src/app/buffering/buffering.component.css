@@ -1,0 +1,42 @@
+.container{
+    width: 100vw;
+    height: 100vh;
+    background-color: #56AB2F;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.message-text{
+    color: wheat;
+}
+.message-text h1{
+    font-size:70px;
+    margin-bottom:50px;
+    font-weight: bold;
+}
+.buffering-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.spinner {
+    width: 250px;
+    height: 250px;
+    border: 15px solid #ddd; 
+    border-top: 15px solid #56AB2F; 
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

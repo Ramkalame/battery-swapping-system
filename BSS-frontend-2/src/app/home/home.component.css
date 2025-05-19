@@ -1,0 +1,96 @@
+.screen-container {
+  width: 1360px;
+  height: 768px;
+  background: linear-gradient(to bottom, #bdf4b4, #56ab2f);
+  font-family: "Segoe UI", sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+.top-logos {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 40px;
+  gap: 30px;
+}
+.top-logos .div-1,
+.top-logos .div-2 {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.top-logos .div-2 {
+  width: 500px;
+}
+
+.logo-tadoba {
+  height: 93px;
+}
+.logo-ibitf {
+  height: 200px;
+}
+.logo-makeinindia {
+  height: 64px;
+}
+.logo-atmanirbhar {
+  height: 101px;
+}
+.logo-startup {
+  height: 115px;
+}
+
+.patent-label {
+  float: right;
+  width: 550px;
+  margin-right: 50px;
+  margin-bottom: 20px;
+  font-size: 24px;
+  background-color: #ffcf00;
+  color: #000;
+  font-weight: 600;
+  padding: 12px 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.main-section {
+  width: 98%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 10px;
+  /* border: 2px solid black; */
+}
+
+.text-section {
+  width: 50%;
+  padding: 40px;
+}
+
+.main-heading h1 {
+  font-size: 49px;
+  font-weight: bold;
+  line-height: 1.4;
+  color: #000;
+  font-weight: 700;
+  text-align: center;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+.image-section {
+  width: 50%;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.vehicle {
+  height: 300px;
+}
+
+.station {
+  height: 270px;
+}

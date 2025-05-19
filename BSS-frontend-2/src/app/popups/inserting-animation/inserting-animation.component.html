@@ -1,0 +1,105 @@
+<div class="popup-content">
+    <div class="container">
+        <div class="box-container" *ngIf="isTakingBatteryAnimationShow || isInsertingBatteryAnimationShow">
+            <div class="battery-container">
+                <div class="heading">
+                    <h3 *ngIf="isInsertingBatteryAnimationShow">बैटरी अंदर रखें</h3>
+                    <h3 *ngIf="isTakingBatteryAnimationShow">चार्ज बैटरी बाहर निकालें</h3>
+                </div>
+
+                <div *ngIf="isInsertingBatteryAnimationShow" class="battery-box-container">
+                    <div class="battery-box" *ngFor="let box of batteryStatusForInserting; let i = index" [ngClass]="{
+                            'blinking-box-inserting': box.batteryStatus === 'EMPTY' && openDoorDuringInserting === box.boxNumber
+                        }">
+                        {{ i+1 }}
+                    </div>
+                </div>
+                <div class="battery-box-container" *ngIf="isTakingBatteryAnimationShow">
+                    <div  class="battery-box" *ngFor="let box of batteryStatusForInserting; let i = index" [ngClass]="{
+                            'blinking-box-taking': box.batteryStatus === 'FULL_CHARGED' && openDoorDuringTaking === box.boxNumber
+                        }">
+                        {{ i+1 }}
+                    </div>
+
+                </div>
+            </div>
+            <div class="animation-container">
+                <div class="col" *ngIf="isTakingBatteryAnimationShow">
+                    <div class="step">
+                        <div id="step-1" class="step-1 process" [class.animate]="activeStep === 1">
+                            <video width="200" height="200" controls autoplay loop muted>
+                                <source src="assets/Video/taking/taking-battery-box-door-open.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="hide-video-player">
+                            <h5>1: दरवाजा खाेलें।</h5>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div id="step-2" class="step-2 process" [class.animate]="activeStep === 2">
+                            <video width="200" height="200" controls autoplay loop muted>
+                                <source src="assets/Video/taking/taking-battery-out-from-box.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="hide-video-player">
+                            <h5>2: बैटरी निकालें।</h5>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div id="step-3" class="step-3 process" [class.animate]="activeStep === 3">
+                            <video width="200" height="200" controls autoplay loop muted>
+                                <source src="assets/Video/taking/taking-battery-close-door-of-box.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="hide-video-player">
+                            <h5>3: दरवाजा बंद करें।</h5>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col" *ngIf="isInsertingBatteryAnimationShow">
+                    <div class="step">
+                        <div id="step-1" class="step-1 process" [class.animate]="activeStep === 1">
+                            <video width="200" height="200" controls autoplay loop muted>
+                                <source src="assets/Video/inserting/insert-box-open.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="hide-video-player">
+                            <h5>1: दरवाजा खाेलें।</h5>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div id="step-2" class="step-2 process" [class.animate]="activeStep === 2">
+                            <video width="200" height="200" controls autoplay loop muted>
+                                <source src="assets/Video/inserting/battery-insert-inbox.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="hide-video-player">
+                            <h5>2: बैटरी अंदर रखें।</h5>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div id="step-3" class="step-3 process" [class.animate]="activeStep === 3">
+                            <video width="200" height="200" controls autoplay loop muted>
+                                <source src="assets/Video/inserting/insert-battery-box-door-close.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="hide-video-player">
+                            <h5>3: दरवाजा बंद करें।</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="box-container-second" *ngIf="isWaitingAnimationShow">
+            <div class="center">
+                <div class="message-text">
+                    <h1>कृपया प्रतीक्षा करें ....</h1>
+                </div>
+                <div class="buffering-container">
+                    <div class="spinner"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

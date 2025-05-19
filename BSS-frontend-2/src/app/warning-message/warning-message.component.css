@@ -1,0 +1,34 @@
+.container{
+    width: 100vw;
+    height: 100vh;
+    background-color: #3F62F0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.message-text{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: wheat;
+    font-weight: bold;
+    font-size: 70px;
+}
+p{
+    line-height: 15px;
+}
+.margin{
+    margin-bottom: 170px;
+    
+}
+.warning-img{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.warning-img img{
+    height: 500px;
+}

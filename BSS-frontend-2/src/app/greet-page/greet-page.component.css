@@ -1,0 +1,74 @@
+.completion-screen {
+  width: 1360px;
+  height: 768px;
+  background: linear-gradient(to bottom, #bdf4b4, #56ab2f);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: "Arial", sans-serif;
+}
+
+.logo-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 80%;
+  margin-bottom: 40px;
+}
+
+.logo-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.logo-tadoba {
+  height: 140px;
+  width: auto;
+  object-fit: contain;
+}
+
+.logo-ibitf {
+  height: 250px;
+  width: auto;
+  object-fit: contain;
+}
+
+.message-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  text-align: center;
+}
+
+.completion-message {
+  margin-bottom: 40px;
+}
+
+.completion-message h2 {
+  font-size: 74px;
+  color: white;
+  font-weight: 500;
+  text-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
+  margin: 0;
+  padding: 0;
+  line-height: 1.2;
+}
+
+.thankyou-message h1 {
+  font-size: 120px;
+  color: white;
+  font-weight: 600;
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+}
+
