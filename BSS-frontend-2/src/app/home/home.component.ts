@@ -15,6 +15,7 @@ export class HomeComponent implements OnInit {
   private rfSubscription!: Subscription;
   private timeoutId!: any;
   rfId!: string;
+  loaded = false;
 
   constructor(
     private router: Router,
@@ -22,6 +23,9 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+     setTimeout(() => {
+      this.loaded = true;
+    }, 100);
     // Subscribe to the /rf Topic
     this.rfSubscription = this.webSocketService
       .subscribeToTopic<string>('/topic/rf')
@@ -34,7 +38,7 @@ export class HomeComponent implements OnInit {
 
     this.timeoutId = setTimeout(() => {
       this.router.navigate(['/card-swaipe-message']);
-    }, 4500);
+    }, 8000);
   }
 
   ngOnDestroy(): void {

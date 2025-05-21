@@ -1,7 +1,10 @@
 .container {
-  width: 100vw;
-  height: 100vh;
-  background-color: #3f62f0;
+  width: 1360px;
+  height: 768px;
+  background: linear-gradient(to bottom, #bdf4b4, #56ab2f);
+  font-family: "Segoe UI", sans-serif;
+  position: relative;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -12,10 +15,11 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: wheat;
+  color: white;
   font-weight: bold;
   font-size: 50px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
 }
 p {
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }

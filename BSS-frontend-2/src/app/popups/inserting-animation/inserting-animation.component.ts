@@ -124,58 +124,6 @@ export class InsertingAnimationComponent implements OnInit {
   }, 30000);
 }
 
-
-  //this is to give command to the arduino to open the door of empty box
-  // commandToOpenTheDoor(command: string) {
-  //   this.openDoorSubscription = this.apiService
-  //     .sendCommandToArduino(command)
-  //     .subscribe({
-  //       next: (response: ApiResponse<string>) => {
-  //         console.log('-------OPEN Door Called------', command);
-
-  //         // Clear local storage
-  //         localStorage.removeItem('batteryState');
-  //         console.log('Battery status cleared from localStorage.');
-
-  //         // Fetch updated battery status
-  //         this.fetchbatteryStatusInterval = setTimeout(() => {
-  //           console.log('Fetching updated battery status after 15 seconds...');
-  //           this.fetchUpdatedBatteryStatus();
-  //         }, 5000);
-  //       },
-  //       error: (error: any) => {
-  //         console.log(error.error.message);
-  //       },
-  //     });
-  // }
-
-  // /**
-  //  * Select the first fully charged battery for removal.
-  //  */
-  // selectBoxForTaking() {
-  //   const fullBox = this.batteryStatusForTaking.find(
-  //     (box) => box.batteryStatus === Status.FULL_CHARGED
-  //   );
-  //   console.log('this is  battery status for full charged: ', fullBox);
-  //   this.openDoorDuringTaking = fullBox ? fullBox.boxNumber.toString() : null;
-  //   console.log('Fuly CHarged Box Now: ', this.openDoorDuringTaking);
-  //   this.isWaitingAnimationShow = false;
-  //   this.isTakingBatteryAnimationShow = true;
-  //   this.commandToOpenTheDoor(`OPEN${this.openDoorDuringTaking}`);
-  //   this.navigateGreatePageInterval = setTimeout(() => {
-  //     // this.apiService.addBatteryTransactions(this.rfId).subscribe({
-  //     //   next:(response:any)=>{
-  //     //     console.log(response.message);
-  //     //   },
-  //     //   error:(error:any)=>{
-  //     //     console.log(error.error.message);
-  //     //   }
-  //     // })
-  //     this.router.navigate(['/greet']);
-  //   }, 25000);
-  // }
-
-
   //this is to give command to the arduino to open the door of empty box
 commandToOpenTheDoor(command: string) {
   this.openDoorSubscription = this.apiService
@@ -187,13 +135,6 @@ commandToOpenTheDoor(command: string) {
         // Clear local storage
         localStorage.removeItem("batteryState");
         console.log("Battery status cleared from localStorage.");
-
-        // Fetch updated battery status
-        // this.fetchbatteryStatusInterval = setTimeout(()=>{
-        //   console.log("Fetching updated battery status after 15 seconds...");
-        //   // this.fetchUpdatedBatteryStatus();
-          
-        // }, 5000);
         
       },
       error: (error: any) => {
@@ -239,28 +180,6 @@ addBatteryTransaction(){
   }
 }
 
-
-// Method to get the latest battery status
-// fetchUpdatedBatteryStatus() {
-//   this.apiService.getAllBatteryStatus().subscribe({
-//     next: (status: ApiResponse<BatteryStatus[]>) => {
-//       this.batteryStatusForTaking = status.data;
-//       console.log("Updated battery status fetched:", this.batteryStatusForTaking);
-//       // Store updated battery status in localStorage
-//       localStorage.setItem("batteryState2", JSON.stringify(this.batteryStatusForTaking));
-//       this.isInsertingBatteryAnimationShow=false;
-//       this.isWaitingAnimationShow=true;
-//       this.callAssignOpenDoorIndicesDuringTakingInterval = setTimeout(()=>{
-//         // Reassign open door indices
-//       // this.assignOpenDoorIndicesDuringTaking();
-//       this.selectBoxForTaking();
-//       }, 5000);
-//     },
-//     error: (error: any) => {
-//       console.error("Error fetching updated battery status:", error);
-//     },
-//   });
-// }
 
 
 }

@@ -1,42 +1,46 @@
-.container{
-    width: 100vw;
-    height: 100vh;
-    background-color: #56AB2F;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.container {
+  width: 1360px;
+  height: 768px;
+  background: linear-gradient(to bottom, #bdf4b4, #56ab2f);
+  font-family: "Segoe UI", sans-serif;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.message-text{
-    color: wheat;
+.message-text {
+  color: white;
 }
-.message-text h1{
-    font-size:70px;
-    margin-bottom:50px;
-    font-weight: bold;
+.message-text h1 {
+  font-size: 70px;
+  margin-bottom: 50px;
+  font-weight: bold;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 .buffering-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 
 .spinner {
-    width: 250px;
-    height: 250px;
-    border: 15px solid #ddd; 
-    border-top: 15px solid #56AB2F; 
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
+  width: 250px;
+  height: 250px;
+  border: 15px solid white;
+  border-top: 15px solid #56ab2f;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
 }
 
 @keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

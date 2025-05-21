@@ -17,7 +17,7 @@ export class WarningMessageComponent implements OnInit {
   ngOnInit(): void {
     this.timeoutId = setTimeout(() => {
       this.router.navigate(['/']);
-    }, 4000);
+    }, 8000);
   }
 
   ngOnDestroy(): void {
