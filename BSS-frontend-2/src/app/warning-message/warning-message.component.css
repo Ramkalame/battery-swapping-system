@@ -1,34 +1,36 @@
-.container{
-    width: 100vw;
-    height: 100vh;
-    background-color: #3F62F0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.container {
+  width: 1360px;
+  height: 768px;
+  background: linear-gradient(to bottom, #bdf4b4, #56ab2f);
+  font-family: "Segoe UI", sans-serif;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
-.message-text{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: wheat;
-    font-weight: bold;
-    font-size: 70px;
+.message-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-weight: bold;
+  font-size: 50px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
-p{
-    line-height: 15px;
+p {
+  line-height: 15px;
 }
-.margin{
-    margin-bottom: 170px;
-    
+.margin {
+  margin-bottom: 70px;
 }
-.warning-img{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
+.warning-img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.warning-img img{
-    height: 500px;
+.warning-img img {
+  height: 400px;
 }

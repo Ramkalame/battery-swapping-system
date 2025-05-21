@@ -6,7 +6,7 @@ body{
     padding: 0;
     box-sizing: border-box;
     overflow-x: hidden;
-    /* cursor: none; */
+    cursor: none;
 }
 
 html, body { height: 100%; }

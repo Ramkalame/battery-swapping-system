@@ -63,12 +63,80 @@
 }
 
 .thankyou-message h1 {
-  font-size: 120px;
+  font-size: 74px;
   color: white;
-  font-weight: 600;
+  font-weight: 500;
   text-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
   margin: 0;
   padding: 0;
   line-height: 1;
 }
 
+.footer-section {
+  padding: 95px 40px 5px 40px;
+  width: 98%;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* border: 1px solid black; */
+}
+.footer-logo-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  width: 45%;
+}
+.logo-makeinindia {
+  height: 70px;
+}
+.logo-atmanirbhar {
+  height: 101px;
+}
+.logo-startup {
+  height: 135px;
+}
+.contact-div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  width: 40%;
+  /* background-color: rgba(255, 255, 255, 0.8); */
+  border-radius: 12px;
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+}
+
+.number-div,
+.web-loc-div {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.number,
+.info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.icon {
+  font-size: 18px;
+  color: #000;
+  width: 20px;
+  text-align: center;
+}
+
+.whatsapp-icon {
+  color: #000;
+  font-size: 20px;
+}
+
+.contact-div h6 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #000;
+}

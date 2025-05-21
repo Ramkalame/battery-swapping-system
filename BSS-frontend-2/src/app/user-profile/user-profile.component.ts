@@ -75,7 +75,7 @@ export class UserProfileComponent implements OnInit {
               'batteryState',
               JSON.stringify(this.batteryStatus)
             );
-            // this.checkIfAllBatteryIsDischarged();
+            this.checkIfAllBatteryIsDischarged();
             // Navigate to the dashboard after battery status is fetched
             this.timeoutId = setTimeout(() => {
               this.router.navigate(['/dashboard', this.rfId]);
