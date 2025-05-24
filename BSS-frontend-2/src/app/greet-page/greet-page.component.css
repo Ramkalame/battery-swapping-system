@@ -1,5 +1,5 @@
 .completion-screen {
-  width: 1360px;
+  width: 1366px;
   height: 768px;
   background: linear-gradient(to bottom, #bdf4b4, #56ab2f);
   display: flex;
@@ -73,7 +73,7 @@
 }
 
 .footer-section {
-  padding: 95px 40px 5px 40px;
+  padding: 70px 40px 5px 40px;
   width: 98%;
   margin: auto;
   display: flex;

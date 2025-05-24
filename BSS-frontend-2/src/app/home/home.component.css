@@ -1,5 +1,5 @@
 .screen-container {
-  width: 1360px;
+  width: 1366px;
   height: 768px;
   background: linear-gradient(to bottom, #bdf4b4, #56ab2f);
   font-family: "Segoe UI", sans-serif;
@@ -11,10 +11,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 40px;
+  padding: 5px 40px 0px 40px;
   gap: 30px;
   /* border: 1px solid red; */
-  height: 150px;
+  height: 145px;
 }
 .top-logos .div-1,
 .top-logos .div-2 {
@@ -46,7 +46,7 @@
 
 .patent-label {
   float: left;
-  width: 550px;
+  width: 600px;
   margin-left: 45px;
   margin-top: 20px;
   font-size: 24px;
@@ -100,7 +100,7 @@
 
 /* Footer Section */
 .footer-section {
-  padding: 15px 40px 5px 40px;
+  padding: 1px 40px 5px 40px;
   width: 98%;
   margin: auto;
   display: flex;
