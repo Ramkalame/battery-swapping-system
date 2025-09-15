@@ -69,6 +69,7 @@ int calculateSoC(float voltage) {
   if (voltage >= HIGH_CUTOFF) return 100;
   else if (voltage >= 52.0) return 90;
   else if (voltage >= 50.0) return 80;
+  else if (voltage >= 50.0) return 75;
   else if (voltage >= 48.0) return 70;
   else if (voltage >= 46.0) return 60;
   else if (voltage >= 44.5) return 50;
@@ -90,7 +91,7 @@ void BatteryStatus() {
 
     // ✅ Send the correct battery status
     if (soc == 0) Serial.println("0"); 
-    else if (soc < 80) Serial.println("1");
+    else if ( soc < 75 ) Serial.println("1");
     else Serial.println("2");
     delay(1000);
   }

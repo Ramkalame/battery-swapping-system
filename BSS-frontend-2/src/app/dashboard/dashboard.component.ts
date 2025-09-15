@@ -52,6 +52,7 @@ export class DashboardComponent implements OnInit {
 
   //var to remove after component destruction
   private timeoutId!: any;
+  private timeoutId2!: any;
   private userDetailsSubscription!: Subscription;
   //to store the user details
   selectedUser!: Customer;
@@ -103,9 +104,10 @@ export class DashboardComponent implements OnInit {
         //assign the fetched response to the selected user var
         this.selectedUser = response;
         //after 5 seconds delay open the popup
-        this.timeoutId = setTimeout(() => {
-          this.openPopup();
-        }, 5000);
+        // this.timeoutId = setTimeout(() => {
+        //   this.openPopup();
+        // }, 5000);
+        this.checkIfAllBatteryIsDischarged();
       },
       error: (error: any) => {
         //if any error navigate to the invalid credentials page
@@ -113,6 +115,25 @@ export class DashboardComponent implements OnInit {
         console.log('Something Went Wrong');
       },
     });
+  }
+
+
+
+  checkIfAllBatteryIsDischarged() {
+    this.timeoutId2 = setTimeout(() => {
+      // Check if all batteryStatus values are either 0 or 1
+      const allDischarged = this.batteryState.every(
+        (status) =>
+          status.batteryStatus === Status.EMPTY ||
+          status.batteryStatus === Status.CHARGING
+      );
+      if (allDischarged) {
+        console.log('All batteries are discharged. Redirecting...');
+        this.router.navigate(['/no-swapping']);
+      }else{
+        this.openPopup();
+      }
+    }, 8000);
   }
 
 

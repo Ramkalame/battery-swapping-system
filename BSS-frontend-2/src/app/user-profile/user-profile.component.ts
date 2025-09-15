@@ -75,7 +75,7 @@ export class UserProfileComponent implements OnInit {
               'batteryState',
               JSON.stringify(this.batteryStatus)
             );
-            this.checkIfAllBatteryIsDischarged();
+            // this.checkIfAllBatteryIsDischarged();
             // Navigate to the dashboard after battery status is fetched
             this.timeoutId = setTimeout(() => {
               this.router.navigate(['/dashboard', this.rfId]);
@@ -90,20 +90,20 @@ export class UserProfileComponent implements OnInit {
       });
   }
 
-  checkIfAllBatteryIsDischarged() {
-    this.timeoutId2 = setTimeout(() => {
-      // Check if all batteryStatus values are either 0 or 1
-      const allDischarged = this.batteryStatus.every(
-        (status) =>
-          status.batteryStatus === Status.EMPTY ||
-          status.batteryStatus === Status.CHARGING
-      );
-      if (allDischarged) {
-        console.log('All batteries are discharged. Redirecting...');
-        this.router.navigate(['/no-swapping']);
-      }
-    }, 6000);
-  }
+  // checkIfAllBatteryIsDischarged() {
+  //   this.timeoutId2 = setTimeout(() => {
+  //     // Check if all batteryStatus values are either 0 or 1
+  //     const allDischarged = this.batteryStatus.every(
+  //       (status) =>
+  //         status.batteryStatus === Status.EMPTY ||
+  //         status.batteryStatus === Status.CHARGING
+  //     );
+  //     if (allDischarged) {
+  //       console.log('All batteries are discharged. Redirecting...');
+  //       this.router.navigate(['/no-swapping']);
+  //     }
+  //   }, 6000);
+  // }
 
   ngOnDestroy(): void {
     clearTimeout(this.timeoutId);

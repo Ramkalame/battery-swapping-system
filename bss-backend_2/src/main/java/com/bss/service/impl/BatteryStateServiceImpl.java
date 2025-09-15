@@ -30,14 +30,13 @@ public class BatteryStateServiceImpl implements BatteryStateService {
     private final BatteryStateRepository batteryStateRepository;
     private final RedisTemplate<String, Object> redisTemplate;
     private final SwappingStationRepository swappingStationRepository;
-    private static final String BATTERY_REDIS_KEY="battery-status";
-
+    private static final String BATTERY_REDIS_KEY = "battery-status";
 
 
     @Override
     public List<BatteryState> getAllBatteriesStatus() {
         List<BatteryState> batteryStateList = batteryStateRepository.findAll();
-        if (batteryStateList.isEmpty()){
+        if (batteryStateList.isEmpty()) {
             throw new EntityNotFoundException("There is no battery status available in the database.");
         }
         return batteryStateList;
@@ -45,7 +44,7 @@ public class BatteryStateServiceImpl implements BatteryStateService {
 
     @Override
     public BatteryState updateBatteryStatusById(Long batteryStatusId, BatteryState updatedBatteryState) {
-        BatteryState existingBatteryState = batteryStateRepository.findById(batteryStatusId).orElseThrow(()-> new EntityNotFoundException("Battery box not available with this id: "+ batteryStatusId));
+        BatteryState existingBatteryState = batteryStateRepository.findById(batteryStatusId).orElseThrow(() -> new EntityNotFoundException("Battery box not available with this id: " + batteryStatusId));
         existingBatteryState.setBatteryStatus(updatedBatteryState.getBatteryStatus());
         existingBatteryState.setBoxNumber(updatedBatteryState.getBoxNumber());
         log.info("Battery status updated now: {} from the frontend", LocalDateTime.now());
@@ -90,14 +89,15 @@ public class BatteryStateServiceImpl implements BatteryStateService {
     }
 
 
-    private BatteriesStatus convertStatusCode(String statusCode){
-        return switch (statusCode){
+    private BatteriesStatus convertStatusCode(String statusCode) {
+        return switch (statusCode) {
             case "0" -> BatteriesStatus.EMPTY;
             case "1" -> BatteriesStatus.CHARGING;
             case "2" -> BatteriesStatus.FULL_CHARGED;
-            default -> throw new IllegalArgumentException("Invalid status code: "+ statusCode);
+            default -> throw new IllegalArgumentException("Invalid status code: " + statusCode);
         };
     }
+
     //Update Battery Status in the Redis database
     @Override
     public void updateBatteryState(String boxNumber, String data) {
@@ -123,14 +123,13 @@ public class BatteryStateServiceImpl implements BatteryStateService {
             log.warn("No battery status data found in Redis. Returning last known database values.");
             return batteryStateRepository.findAll(); // Fallback if Redis is empty
         }
-        System.out.println("======================================================================================"+ allBatteryStatus.entrySet().stream()
+        System.out.println("======================================================================================" + allBatteryStatus.entrySet().stream()
                 .map(entry -> BatteryState.builder()
                         .boxNumber(entry.getKey().toString())
                         .batteryStatus(BatteriesStatus.valueOf(entry.getValue().toString()))
                         .build()
                 )
-                .toList()+"====================================================");
-
+                .toList() + "====================================================");
         return allBatteryStatus.entrySet().stream()
                 .map(entry -> BatteryState.builder()
                         .boxNumber(entry.getKey().toString())
@@ -140,32 +139,39 @@ public class BatteryStateServiceImpl implements BatteryStateService {
                 .toList(); // No need for an explicit cast
 
     }
+
     @Scheduled(fixedRate = 120000) // Runs every 2 minutes
     @Transactional
     public void updateAvailableSlots() {
-        List<SwappingStation> stations = swappingStationRepository.findAll();
-        for (SwappingStation station : stations) {
-            Map<Object, Object> allBatteryStatus = redisTemplate.opsForHash().entries(BATTERY_REDIS_KEY);
+        SwappingStation station = swappingStationRepository
+                .findById("6832ce73530de17a1673b9c3")
+                .orElseThrow(() -> new EntityNotFoundException("Not Found"));
 
+        // Fetch all battery statuses from Redis
+        Map<Object, Object> allBatteryStatus = redisTemplate.opsForHash().entries(BATTERY_REDIS_KEY);
 
-            List<BatteryState> batteryStates = allBatteryStatus.entrySet().stream()
-                    .map(entry -> BatteryState.builder()
-                            .boxNumber(entry.getKey().toString())
-                            .batteryStatus(BatteriesStatus.valueOf(entry.getValue().toString()))
-                            .build()
-                    )
-                    .toList();
-            long fullChargedCount = batteryStates.stream()
-                    .filter(battery -> "FULL_CHARGED".equalsIgnoreCase(String.valueOf(battery.getBatteryStatus())))
-                    .count();
-            // Logic to update only the available slots
-             station.setAvailableSlotsForElectricRickshaw((int) fullChargedCount);
-//           station.setAvailableSlotsForElectricScooter((int) fullChargedCount);
-            swappingStationRepository.save(station);
+        // Convert Redis entries to List<BatteryState>
+        List<BatteryState> batteryStates = allBatteryStatus.entrySet().stream()
+                .map(entry -> BatteryState.builder()
+                        .boxNumber(entry.getKey().toString())
+                        .batteryStatus(BatteriesStatus.valueOf(entry.getValue().toString()))
+                        .build()
+                )
+                .toList();
 
-        }
+        // Count batteries with status FULL_CHARGED
+        long fullChargedCount = batteryStates.stream()
+                .filter(battery -> BatteriesStatus.FULL_CHARGED.equals(battery.getBatteryStatus()))
+                .count();
+
+        // Update available slots only for this station
+        station.setAvailableSlotsForElectricRickshaw((int) fullChargedCount);
+        // station.setAvailableSlotsForElectricScooter((int) fullChargedCount); // optional
+
+        // Save updated station
+        swappingStationRepository.save(station);
+
     }
-
 
 
 }
