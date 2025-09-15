@@ -57,6 +57,7 @@ public class UnifiedPortService {
     private void handleIncomingData(byte[] buffer, int numRead) {
         String rawData = logRawData(buffer, numRead);
         String message = formatToPlainString(asciiToHex(rawData));
+        log.info("Message: - {}",message);
 
         if (message.startsWith("RF") && message.length() >= 10) {
             String rfId = message.substring(2, 10);
