@@ -1,12 +1,13 @@
 package com.bss.service.portListener;
 
-
 import com.bss.service.BatteryStateService;
+import com.bss.service.impl.SocketService;
 import com.fazecast.jSerialComm.SerialPort;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.regex.Matcher;
@@ -15,21 +16,28 @@ import java.util.regex.Pattern;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class SecondPortService {
-    private final String portName = "COM6";
+public class UnifiedPortService {
+
+    @Value("${serial.port.name}")
+    private String portName;
+
+    @Value("${serial.port.baudrate}")
+    private int baudRate;
+
+    private final SocketService socketService;
     private final BatteryStateService batteryStateService;
+
     private SerialPort serialPort;
 
     @PostConstruct
     public void init() {
         serialPort = SerialPort.getCommPort(portName);
-        serialPort.setComPortParameters(9600, 8, 1, SerialPort.NO_PARITY);
+        serialPort.setComPortParameters(baudRate, 8, 1, SerialPort.NO_PARITY);
         serialPort.setComPortTimeouts(SerialPort.TIMEOUT_READ_BLOCKING, 1000, 0);
 
         logAvailablePorts();
         if (serialPort.openPort()) {
-            log.info("✅ Serial port {} opened successfully!", portName);
-            // Start listening thread
+            log.info("✅ Serial port {} (baud {}) opened successfully!", portName, baudRate);
             new Thread(this::startListening).start();
         } else {
             log.error("❌ Failed to open serial port {}", portName);
@@ -53,6 +61,33 @@ public class SecondPortService {
         }
     }
 
+    private void handleIncomingData(byte[] buffer, int numRead) {
+        String rawData = logRawData(buffer, numRead);
+        String message = formatToPlainString(asciiToHex(rawData));
+        log.info("📩 Decoded Message: {}", message);
+
+        // ✅ RFID messages
+        if (message.startsWith("RF") && message.length() >= 10) {
+            String rfId = message.substring(2, 10);
+            log.info("📶 RFID Detected: {}", rfId);
+            socketService.sendRfSensorMessage(rfId);
+            return;
+        }
+
+        // ✅ Battery messages
+        Pattern batteryPattern = Pattern.compile("B\\d{2}[0-2]");
+        Matcher matcher = batteryPattern.matcher(message);
+
+        while (matcher.find()) {
+            String batteryMessage = matcher.group(); // e.g. B010
+            String boxNumber = batteryMessage.substring(0, 3); // B01
+            String status = batteryMessage.substring(3);       // 0/1/2
+
+            log.info("🔋 Battery Update - Box: {} | Status: {}", boxNumber, status);
+            batteryStateService.updateBatteryState(boxNumber, status);
+        }
+    }
+
     public void sendToArduino(String command) {
         String formattedCommand = command.toUpperCase() + "\n";
         log.info("🛠 Sending command to Arduino: {}", formattedCommand);
@@ -62,32 +97,6 @@ public class SecondPortService {
             log.error("❌ Failed to send command to Arduino on port {}: {}", portName, e.getMessage());
         }
     }
-
-    private void handleIncomingData(byte[] buffer, int numRead) {
-        String rawData = logRawData(buffer, numRead);
-        String message = formatToPlainString(asciiToHex(rawData)).trim();
-
-        log.info("🔄 Received message: {}", message);
-
-        // ✅ Split the combined message into individual parts (BXXY format)
-        Pattern pattern = Pattern.compile("B0[1-9][0-2]|B10[0-2]"); // Matches B01X to B10X
-        Matcher matcher = pattern.matcher(message);
-
-        while (matcher.find()) {
-            String parsedMessage = matcher.group();
-
-            if (parsedMessage.length() == 4) { // Ensure it follows BXXY format
-                String boxNumber = parsedMessage.substring(0, 3);
-                String status = parsedMessage.substring(3, 4);
-
-                log.info("✅ Parsed Data - Box: {} | Status: {}", boxNumber, status);
-                batteryStateService.updateBatteryState(boxNumber, status);
-            } else {
-                log.warn("⚠️ Invalid parsed message format: {}", parsedMessage);
-            }
-        }
-    }
-
 
     private String logRawData(byte[] buffer, int length) {
         StringBuilder rawData = new StringBuilder();
@@ -105,7 +114,7 @@ public class SecondPortService {
         for (String code : codes) {
             try {
                 int asciiValue = Integer.parseInt(code, 16);
-                if (asciiValue >= 32 && asciiValue <= 126) {
+                if (asciiValue >= 32 && asciiValue <= 126) { // printable chars only
                     result.append((char) asciiValue);
                 }
             } catch (NumberFormatException e) {
