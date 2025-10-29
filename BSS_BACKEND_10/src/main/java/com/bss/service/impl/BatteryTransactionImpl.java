@@ -23,7 +23,7 @@ public class BatteryTransactionImpl implements BatteryTransactionService {
         Customer existingCustomer = customerService.getCustomerByRFID(rfid);
         BatteryTransaction newBatteryTransaction = BatteryTransaction.builder()
                 .batterySwappingCost("28")
-                .batterySwappingDateTime(LocalDateTime.now()) // ✅ Preserve exact local time
+                .batterySwappingDateTime(LocalDateTime.now())
                 .batteryUniqueId("BUID")
                 .customer(existingCustomer)
                 .adminId("A1")

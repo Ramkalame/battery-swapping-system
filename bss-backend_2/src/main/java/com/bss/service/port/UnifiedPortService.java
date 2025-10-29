@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 @Slf4j
 public class UnifiedPortService {
 
-    private final String portName = "COM3";
+    private final String portName = "COM8";
     private final SocketService socketService;
     private final BatteryStateService batteryStateService;
 

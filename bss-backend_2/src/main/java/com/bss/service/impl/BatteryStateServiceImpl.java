@@ -144,7 +144,7 @@ public class BatteryStateServiceImpl implements BatteryStateService {
     @Transactional
     public void updateAvailableSlots() {
         SwappingStation station = swappingStationRepository
-                .findById("6832ce73530de17a1673b9c3")
+                .findById("6901b16afc120b2beb64bd44")
                 .orElseThrow(() -> new EntityNotFoundException("Not Found"));
 
         // Fetch all battery statuses from Redis

@@ -24,8 +24,10 @@
 }
 
 .top-logos .div-2 {
-  width: 530px;
-  gap: 20px;
+  width: 550px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 .logo-tadoba {
@@ -34,16 +36,9 @@
 .logo-ibitf {
   height: 200px;
 }
-.logo-dst {
-  height: 60px;
+.logo-mguevv {
+  height: 120px;
 }
-.logo-iitb {
-  height: 96px;
-}
-.logo-nmicps {
-  height: 102px;
-}
-
 .patent-label {
   float: left;
   width: 600px;
