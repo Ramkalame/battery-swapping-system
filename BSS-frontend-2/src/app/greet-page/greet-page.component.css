@@ -16,7 +16,7 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  width: 80%;
+  width: 90%;
   margin-bottom: 40px;
 }
 
@@ -38,6 +38,13 @@
   width: auto;
   object-fit: contain;
 }
+
+.logo-mguevv {
+  height: 190px;
+  width: auto;
+  object-fit: contain;
+}
+
 
 .message-container {
   display: flex;

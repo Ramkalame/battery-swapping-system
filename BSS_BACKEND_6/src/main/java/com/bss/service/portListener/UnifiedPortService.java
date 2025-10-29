@@ -29,6 +29,8 @@ public class UnifiedPortService {
 
     private SerialPort serialPort;
 
+    private final StringBuilder lineBuffer = new StringBuilder();
+
     @PostConstruct
     public void init() {
         serialPort = SerialPort.getCommPort(portName);
@@ -62,29 +64,34 @@ public class UnifiedPortService {
     }
 
     private void handleIncomingData(byte[] buffer, int numRead) {
-        String rawData = logRawData(buffer, numRead);
-        String message = formatToPlainString(asciiToHex(rawData));
-        log.info("📩 Decoded Message: {}", message);
+        for (int i = 0; i < numRead; i++) {
+            char c = (char) buffer[i];
 
-        // ✅ RFID messages
-        if (message.startsWith("RF") && message.length() >= 10) {
-            String rfId = message.substring(2, 10);
-            log.info("📶 RFID Detected: {}", rfId);
-            socketService.sendRfSensorMessage(rfId);
-            return;
-        }
+            if (c == '\n') { // end of frame
+                String frame = lineBuffer.toString().trim();
+                lineBuffer.setLength(0); // reset buffer
 
-        // ✅ Battery messages
-        Pattern batteryPattern = Pattern.compile("B\\d{2}[0-2]");
-        Matcher matcher = batteryPattern.matcher(message);
+                if (!frame.isEmpty()) {
+                    log.info("📩 Frame: {}", frame);
 
-        while (matcher.find()) {
-            String batteryMessage = matcher.group(); // e.g. B010
-            String boxNumber = batteryMessage.substring(0, 3); // B01
-            String status = batteryMessage.substring(3);       // 0/1/2
-
-            log.info("🔋 Battery Update - Box: {} | Status: {}", boxNumber, status);
-            batteryStateService.updateBatteryState(boxNumber, status);
+                    if (frame.startsWith("RF") && frame.length() >= 10) {
+                        String rfId = frame.substring(2, 10);
+                        log.info("📶 RFID Detected: {}", rfId);
+                        socketService.sendRfSensorMessage(rfId);
+                    } else {
+                        Matcher matcher = Pattern.compile("B\\d{2}[0-2]").matcher(frame);
+                        while (matcher.find()) {
+                            String batteryMessage = matcher.group(); // e.g. B040
+                            String boxNumber = batteryMessage.substring(0, 3); // B04
+                            String status = batteryMessage.substring(3);       // 0/1/2
+                            log.info("🔋 Battery Update - Box: {} | Status: {}", boxNumber, status);
+                            batteryStateService.updateBatteryState(boxNumber, status);
+                        }
+                    }
+                }
+            } else if (c != '\r') { // ignore CR
+                lineBuffer.append(c);
+            }
         }
     }
 
@@ -114,15 +121,22 @@ public class UnifiedPortService {
         for (String code : codes) {
             try {
                 int asciiValue = Integer.parseInt(code, 16);
-                if (asciiValue >= 32 && asciiValue <= 126) { // printable chars only
+
+                if (asciiValue == 13) {        // CR
+                    result.append("\r");
+                } else if (asciiValue == 10) { // LF
+                    result.append("\n");
+                } else if (asciiValue >= 32 && asciiValue <= 126) {
                     result.append((char) asciiValue);
                 }
+
             } catch (NumberFormatException e) {
                 log.error("❌ Invalid ASCII code: {}", code);
             }
         }
         return result.toString();
     }
+
 
     private String formatToPlainString(String asciiCodes) {
         return asciiCodes.replaceAll("[, ]+", "").trim();
